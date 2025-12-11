@@ -4,9 +4,9 @@ import Footer from "./components/Footer/Footer";
 
 const App = () => {
     return (
-        <main>
+        <main className="min-h-screen flex flex-col">
             <Header />
-            <section>
+            <section className="flex-1">
                 <Outlet />
             </section>
             <Footer />

@@ -1,1 +1,36 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --color-brand: #2563eb;
+    --color-brand-hover: #1d4ed8;
+
+    /* Light */
+    --color-main: #f9fafb;
+    --color-header: #ffffff;
+    --color-footer: #111827;
+
+    --color-primary-text: #000000;
+    --color-footer-text: #ffffff;
+    --color-footer-links: #9ca3af;
+    --color-footer-border: #1f2937;
+
+    --color-border: #e5e7eb;
+
+    /* Dark */
+    --color-main-dark: #030712;
+    --color-header-dark: #111827;
+    --color-footer-dark: #000000;
+
+    --color-text-dark: #ffffff;
+    --color-footer-text-dark: #ffffff;
+    --color-footer-links-dark: #6b7279;
+    --color-footer-border-dark: #111827;
+
+    --color-border-dark: #374151;
+}
+
+html {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
