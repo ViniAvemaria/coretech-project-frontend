@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import App from "../App";
-import Home from "../pages/Home/Home";
-import Profile from "../pages/Profile/Profile";
-import Cart from "../pages/Cart/Cart";
-import NotFound from "../pages/NotFound/NotFound";
+import Home from "../pages/Home";
+import Profile from "../pages/Profile";
+import Cart from "../pages/Cart";
+import NotFound from "../pages/NotFound";
 
 const AppRoutes = () => {
     return (
