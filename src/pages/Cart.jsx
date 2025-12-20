@@ -12,7 +12,7 @@ const Cart = () => {
     const cartTotal = subTotal + tax;
 
     return (
-        <div className="max-w-[1200px] p-16 w-full">
+        <div className="max-w-[1200px] w-full py-16 ">
             <div className="flex flex-col w-fit text-primary-text dark:text-primary-text-dark mb-6 gap-4">
                 <Link to={"/"} className="text-brand">
                     <i className="fa-solid fa-arrow-left mr-2"></i>

@@ -46,7 +46,7 @@ const Home = () => {
             description: "Modern smartwatch with health tracking, GPS, and customizable watch faces.",
             price: 1799.9,
             rating: 4.3,
-            image: "https://images.unsplash.com/photo-1660844817855-3ecc7ef21f12?q=80&w=786&auto=format&fit=crop",
+            image: "https://images.unsplash.com/photo-1637160151663-a410315e4e75?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             quantity: 0,
         },
         {
@@ -81,8 +81,8 @@ const Home = () => {
     ];
 
     return (
-        <div className="w-full p-16">
-            <div className="max-w-[1200px] mx-auto grid grid-cols-[repeat(auto-fit,minmax(275px,1fr))] place-items-center gap-8">
+        <div className="max-w-[1200px] w-full py-16">
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(275px,1fr))] place-items-center gap-8">
                 {products.map((product) => (
                     <ProductCard key={product.id} product={product} />
                 ))}

@@ -18,14 +18,14 @@ const ItemCard = ({ product }) => {
                     <div className="flex items-center gap-6">
                         <button
                             onClick={() => decrementItem(product.id)}
-                            className="hover:cursor-pointer border border-border dark:border-border-dark px-2 py-0.5 rounded-sm hover:bg-gray-300 hover:dark:bg-gray-600 transition-colors duration-300 ease"
+                            className="flex items-center hover:cursor-pointer border border-border dark:border-border-dark px-2 pt-1.75 pb-1.25 rounded-sm hover:bg-gray-300 hover:dark:bg-gray-600 transition-colors duration-300 ease"
                         >
                             <i className="fa-solid fa-minus text-sm"></i>
                         </button>
                         <p>{product.quantity}</p>
                         <button
                             onClick={() => addToCart(product)}
-                            className="hover:cursor-pointer border border-border dark:border-border-dark px-2 py-0.5 rounded-sm hover:bg-gray-300 hover:dark:bg-gray-600 transition-colors duration-300 ease"
+                            className="flex items-center hover:cursor-pointer border border-border dark:border-border-dark px-2 pt-1.75 pb-1.25 rounded-sm hover:bg-gray-300 hover:dark:bg-gray-600 transition-colors duration-300 ease"
                         >
                             <i className="fa-solid fa-plus text-sm"></i>
                         </button>

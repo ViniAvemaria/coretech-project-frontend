@@ -40,7 +40,6 @@
         font-size: 1.3rem;
         color: var(--color-primary-text);
         transition: color 0.3s ease;
-
         @variant dark {
             color: var(--color-primary-text-dark);
         }
@@ -56,7 +55,6 @@
         padding: 5px 13px;
         cursor: pointer;
         transition: background-color 0.3s ease;
-
         &:hover {
             background-color: var(--color-brand-hover);
         }
