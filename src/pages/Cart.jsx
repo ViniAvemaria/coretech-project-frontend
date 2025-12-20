@@ -1,7 +1,55 @@
-import React from "react";
+import { Link } from "react-router-dom";
+import { useCart } from "../contexts/CartContext";
+import { getTotalItems, getTotalPrice } from "../utils/cartUtils";
+import { formatMoney } from "../utils/formatMoney";
+import ItemCard from "../components/ItemCard";
 
 const Cart = () => {
-    return <div>Cart</div>;
+    const { cartArray } = useCart();
+    const itemsQuantity = getTotalItems(cartArray);
+    const subTotal = getTotalPrice(cartArray);
+    const tax = subTotal * 0.1;
+    const cartTotal = subTotal + tax;
+
+    return (
+        <div className="max-w-[1200px] p-16 w-full">
+            <div className="flex flex-col w-fit text-primary-text dark:text-primary-text-dark mb-6 gap-4">
+                <Link to={"/"} className="text-brand">
+                    <i className="fa-solid fa-arrow-left mr-2"></i>
+                    Continue Shopping
+                </Link>
+                <h2 className="text-lg">Shopping Cart</h2>
+            </div>
+            <div className="flex justify-between">
+                <div className="w-[68%] flex flex-col gap-6">
+                    {cartArray.map((product) => (
+                        <ItemCard key={product.id} product={product} />
+                    ))}
+                </div>
+                <div className="flex flex-col gap-3 sticky top-26 h-fit w-[28%] p-5 bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-2xl text-primary-text dark:text-primary-text-dark shadow-sm">
+                    <p className="mb-4">Order Summary</p>
+                    <div className="flex justify-between text-muted-text-dark dark:text-muted-text">
+                        <p>
+                            Subtotal ({itemsQuantity} {itemsQuantity == 1 ? "item" : "items"})
+                        </p>
+                        <p>{formatMoney(subTotal)}</p>
+                    </div>
+                    <div className="flex justify-between text-muted-text-dark dark:text-muted-text">
+                        <p>Tax (10%)</p>
+                        <p>{formatMoney(tax)}</p>
+                    </div>
+                    <hr className="text-muted-text-dark dark:text-muted-text my-2" />
+                    <div className="flex justify-between">
+                        <p>Total</p>
+                        <p className="text-brand">{formatMoney(cartTotal)}</p>
+                    </div>
+                    <button className="mt-2 bg-brand text-white rounded-xl py-3 hover:cursor-pointer hover:bg-brand-hover transition-color duration-300 ease">
+                        Proceed to Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default Cart;

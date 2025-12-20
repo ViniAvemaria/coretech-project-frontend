@@ -1,6 +1,11 @@
-const ProductCard = (product) => {
+import { useCart } from "../contexts/CartContext";
+import { formatMoney } from "../utils/formatMoney";
+
+const ProductCard = ({ product }) => {
+    const { addToCart } = useCart();
+
     return (
-        <div className="h-[545px] w-[250px] bg-card dark:bg-card-dark border rounded-2xl border-border dark:border-border-dark overflow-hidden shadow-sm">
+        <div className="h-[545px] w-[275px] bg-card dark:bg-card-dark border rounded-2xl border-border dark:border-border-dark overflow-hidden shadow-sm">
             <div className="group h-[300px] overflow-hidden">
                 <img
                     src={product.image}
@@ -18,8 +23,8 @@ const ProductCard = (product) => {
                 </p>
                 <p className="text-muted-text-dark dark:text-muted-text text-sm line-clamp-3">{product.description}</p>
                 <div className="flex justify-between items-end-safe mt-auto">
-                    <p className="text-brand">${product.price}</p>
-                    <button className="bg-brand text-white rounded-md px-3.25 py-1.25 hover:cursor-pointer hover:bg-brand-hover transition-color duration-300 ease">
+                    <p className="text-brand">{formatMoney(product.price)}</p>
+                    <button onClick={() => addToCart(product)} className="add-button">
                         <i className="fa-solid fa-cart-shopping mr-2"></i>
                         Add
                     </button>

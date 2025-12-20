@@ -40,11 +40,28 @@
         font-size: 1.3rem;
         color: var(--color-primary-text);
         transition: color 0.3s ease;
+
         @variant dark {
             color: var(--color-primary-text-dark);
         }
         &:hover {
             color: var(--color-focus-ring);
+        }
+    }
+
+    .add-button {
+        color: white;
+        background-color: var(--color-brand);
+        border-radius: 6px;
+        padding: 5px 13px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: var(--color-brand-hover);
+        }
+        &:active {
+            scale: 95%;
         }
     }
 }

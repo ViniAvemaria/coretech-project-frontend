@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
+import { useCart } from "../contexts/CartContext";
+import { getTotalItems } from "../utils/cartUtils";
 
 const Header = () => {
     const { theme, toggleTheme } = useTheme();
+    const { cartArray } = useCart();
 
     return (
         <header className="flex justify-between items-center h-20 py-4 px-10 fixed w-full bg-header dark:bg-header-dark gap-10 border-b border-b-border dark:border-b-border-dark z-100">
@@ -19,7 +22,7 @@ const Header = () => {
             <nav>
                 <ul className="flex gap-10">
                     <li className="flex justify-center nav-icons">
-                        <button onClick={toggleTheme} className="cursor-pointer">
+                        <button onClick={toggleTheme} className="flex items-center cursor-pointer">
                             {theme == "light" ? (
                                 <i className="fa-solid fa-moon"></i>
                             ) : (
@@ -27,12 +30,17 @@ const Header = () => {
                             )}
                         </button>
                     </li>
-                    <li className="nav-icons">
+                    <li className="nav-icons flex items-center">
                         <Link to={"/cart"}>
+                            {cartArray.length != 0 && (
+                                <span className="bg-brand py-0.5 px-1.5 text-white text-xs fixed top-4 right-22 rounded-full">
+                                    {getTotalItems(cartArray)}
+                                </span>
+                            )}
                             <i className="fa-solid fa-cart-shopping"></i>
                         </Link>
                     </li>
-                    <li className="nav-icons">
+                    <li className="nav-icons flex items-center">
                         <Link to={"/profile"}>
                             <i className="fa-solid fa-user"></i>
                         </Link>
