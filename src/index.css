@@ -12,6 +12,7 @@
     --color-header: #ffffff;
     --color-footer: #111827;
     --color-card: #ffffff;
+    --color-input: #ffffff;
 
     --color-primary-text: #000000;
     --color-muted-text: #9ca3af;
@@ -26,6 +27,7 @@
     --color-header-dark: #111827;
     --color-footer-dark: #000000;
     --color-card-dark: #1f2937;
+    --color-input-dark: #1f2937;
 
     --color-primary-text-dark: #ffffff;
     --color-muted-text-dark: #6b7279;
