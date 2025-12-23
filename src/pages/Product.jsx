@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { formatMoney } from "../utils/formatMoney";
 import { useCart } from "../contexts/CartContext";
-
 const Product = () => {
     const { addToCart } = useCart();
     const { state } = useLocation();
@@ -57,11 +56,11 @@ const Product = () => {
                     ref={contentRef}
                     className="flex flex-col w-1/2 h-fit gap-6 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-2xl p-8"
                 >
-                    <p className="text-lg">
+                    <p className="">
                         <i className="fa-solid fa-star mr-2 text-yellow-400"></i>
                         {product.rating}
                     </p>
-                    <p className="text-lg">{product.name}</p>
+                    <p className="">{product.name}</p>
 
                     <p className="text-xl text-brand">{formatMoney(product.price)}</p>
 

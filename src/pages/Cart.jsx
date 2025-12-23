@@ -20,13 +20,13 @@ const Cart = () => {
                 </Link>
                 <h2 className="text-lg">Shopping Cart</h2>
             </div>
-            <div className="flex justify-between">
-                <div className="w-[68%] flex flex-col gap-6">
+            <div className="grid grid-cols-3 gap-8">
+                <div className="col-span-2 flex flex-col gap-6">
                     {cartArray.map((product) => (
                         <ItemCard key={product.id} product={product} />
                     ))}
                 </div>
-                <div className="flex flex-col gap-3 sticky top-26 h-fit w-[28%] p-5 bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-2xl text-primary-text dark:text-primary-text-dark shadow-sm">
+                <div className="flex flex-col gap-3 sticky top-26 h-fit p-5 bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-2xl text-primary-text dark:text-primary-text-dark shadow-sm">
                     <p className="mb-4">Order Summary</p>
                     <div className="flex justify-between text-muted-text-dark dark:text-muted-text">
                         <p>
