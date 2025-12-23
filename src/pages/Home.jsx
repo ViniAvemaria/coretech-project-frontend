@@ -10,7 +10,19 @@ const Home = () => {
             price: 1299.9,
             rating: 4.6,
             image: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?q=80&w=688&auto=format&fit=crop",
+            photoCredit: {
+                name: "Luke Peterson",
+                url: "https://unsplash.com/@ldpeterson11",
+                source: "Unsplash",
+            },
             quantity: 0,
+            specifications: [
+                "Active noise cancellation (ANC)",
+                "Bluetooth 5.2 connectivity",
+                "Up to 30 hours battery life",
+                "Built-in microphone for calls",
+            ],
+            inStock: true,
         },
         {
             id: 2,
@@ -19,7 +31,19 @@ const Home = () => {
             price: 649.9,
             rating: 4.5,
             image: "https://images.unsplash.com/photo-1625130694338-4110ba634e59?q=80&w=735&auto=format&fit=crop",
+            photoCredit: {
+                name: "Bryan Natanael",
+                url: "https://unsplash.com/@bryannatanael",
+                source: "Unsplash",
+            },
             quantity: 0,
+            specifications: [
+                "Mechanical tactile switches",
+                "Customizable RGB backlighting",
+                "Anti-ghosting keys",
+                "USB wired connection",
+            ],
+            inStock: true,
         },
         {
             id: 3,
@@ -28,7 +52,19 @@ const Home = () => {
             price: 399.9,
             rating: 4.4,
             image: "https://images.unsplash.com/photo-1625750188088-f6cd6756349c?q=80&w=687&auto=format&fit=crop",
+            photoCredit: {
+                name: "Auguras Pipiras",
+                url: "https://unsplash.com/@obuol",
+                source: "Unsplash",
+            },
             quantity: 0,
+            specifications: [
+                "Adjustable DPI up to 16,000",
+                "Ultra-low latency wireless",
+                "Ergonomic design",
+                "Rechargeable battery",
+            ],
+            inStock: true,
         },
         {
             id: 4,
@@ -38,7 +74,19 @@ const Home = () => {
             price: 6999.9,
             rating: 4.7,
             image: "https://images.unsplash.com/photo-1527800792452-506aacb2101f?w=500&auto=format&fit=crop&q=60",
+            photoCredit: {
+                name: "Alexandru Acea",
+                url: "https://unsplash.com/@alexacea",
+                source: "Unsplash",
+            },
             quantity: 0,
+            specifications: [
+                "OLED 4K Ultra HD resolution",
+                "HDR support with wide color gamut",
+                "Ultrawide curved display",
+                "Eye-care and low blue light technology",
+            ],
+            inStock: false,
         },
         {
             id: 5,
@@ -46,8 +94,20 @@ const Home = () => {
             description: "Modern smartwatch with health tracking, GPS, and customizable watch faces.",
             price: 1799.9,
             rating: 4.3,
-            image: "https://images.unsplash.com/photo-1637160151663-a410315e4e75?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            image: "https://images.unsplash.com/photo-1637160151663-a410315e4e75?q=80&w=1974&auto=format&fit=crop",
+            photoCredit: {
+                name: "Klim Musalimov",
+                url: "https://unsplash.com/@klim11",
+                source: "Unsplash",
+            },
             quantity: 0,
+            specifications: [
+                "Heart rate and sleep monitoring",
+                "Built-in GPS",
+                "Water-resistant design",
+                "Customizable watch faces",
+            ],
+            inStock: true,
         },
         {
             id: 6,
@@ -56,7 +116,19 @@ const Home = () => {
             price: 299.9,
             rating: 4.2,
             image: "https://images.unsplash.com/photo-1507878566509-a0dbe19677a5?q=80&w=687&auto=format&fit=crop",
+            photoCredit: {
+                name: "Jonas Jacobsson",
+                url: "https://unsplash.com/@jonasjacobsson",
+                source: "Unsplash",
+            },
             quantity: 0,
+            specifications: [
+                "Bluetooth wireless streaming",
+                "Water-resistant (IPX rating)",
+                "Deep bass enhancement",
+                "Up to 12 hours battery life",
+            ],
+            inStock: true,
         },
         {
             id: 7,
@@ -66,7 +138,19 @@ const Home = () => {
             price: 599.9,
             rating: 4.4,
             image: "https://images.unsplash.com/photo-1645020089405-ee44c2cd7c58?q=80&w=711&auto=format&fit=crop",
+            photoCredit: {
+                name: "Hrushi Chavhan",
+                url: "https://unsplash.com/@hcphotos",
+                source: "Unsplash",
+            },
             quantity: 0,
+            specifications: [
+                "True wireless design",
+                "Active noise cancellation",
+                "Compact charging case",
+                "Touch controls",
+            ],
+            inStock: false,
         },
         {
             id: 8,
@@ -76,7 +160,19 @@ const Home = () => {
             price: 449.9,
             rating: 4.5,
             image: "https://images.unsplash.com/photo-1721333092193-ad0a76de3d9c?w=500&auto=format&fit=crop&q=60",
+            photoCredit: {
+                name: "Samsung Memory",
+                url: "https://unsplash.com/@samsungmemory",
+                source: "Unsplash",
+            },
             quantity: 0,
+            specifications: [
+                "Full HD video recording",
+                "Night vision support",
+                "Motion detection alerts",
+                "Mobile app integration",
+            ],
+            inStock: true,
         },
     ];
 

@@ -1,5 +1,6 @@
 import { useCart } from "../contexts/CartContext";
 import { formatMoney } from "../utils/formatMoney";
+import { Link } from "react-router-dom";
 
 const ItemCard = ({ product }) => {
     const { addToCart, decrementItem, removeFromCart } = useCart();
@@ -7,9 +8,13 @@ const ItemCard = ({ product }) => {
 
     return (
         <div className="flex gap-8 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark p-5 rounded-2xl border border-border dark:border-border-dark shadow-sm">
-            <img src={product.image} alt={product.name} className="w-40 h-40 object-cover rounded-2xl" />
+            <img src={product.image} alt={product.name} className="w-40 h-40 object-cover rounded-xl" />
             <div className="flex flex-col w-full gap-1.5">
-                <p className="line-clamp-2 min-h-10 leading-snug">{product.name}</p>
+                <p className="line-clamp-2 min-h-10 leading-snug hover:cursor-pointer hover:text-brand transition-color duration-300 ease">
+                    <Link to={`/product/${product.id}`} state={{ product, from: location.pathname }}>
+                        {product.name}
+                    </Link>
+                </p>
                 <p className="line-clamp-2 min-h-10 leading-snug text-muted-text-dark dark:text-muted-text text-sm">
                     {product.description}
                 </p>
