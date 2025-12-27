@@ -9,7 +9,7 @@ const Login = () => {
     };
 
     return (
-        <div className="flex items-center justify-center max-w-[425px] w-full">
+        <div className="max-w-[425px] w-full py-16">
             <div className="flex flex-col gap-2 w-full h-fit border border-border dark:border-border-dark rounded-2xl p-8 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark">
                 <p className="place-self-center">Welcome Back</p>
                 <p className="text-muted-text-dark dark:text-muted-text place-self-center">Sign in to your account</p>
@@ -23,7 +23,7 @@ const Login = () => {
                                 id="email"
                                 type="email"
                                 placeholder="Enter your email"
-                                className="focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
+                                className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
                         </div>
                     </div>
@@ -37,7 +37,7 @@ const Login = () => {
                                 id="password"
                                 type={showPassword ? "text" : "password"}
                                 placeholder="Enter your password"
-                                className="focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
+                                className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
                             <button
                                 type="button"

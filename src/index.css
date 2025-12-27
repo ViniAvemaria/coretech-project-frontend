@@ -78,6 +78,28 @@
             scale: 100%;
         }
     }
+
+    .input-autofill {
+        &::placeholder {
+            color: var(--color-muted-text-dark);
+        }
+
+        &:-webkit-autofill {
+            box-shadow: 0 0 0 1000px var(--color-input) inset;
+            -webkit-text-fill-color: var(--color-primary-text);
+        }
+
+        @variant dark {
+            &::placeholder {
+                color: var(--color-muted-text);
+            }
+
+            &:-webkit-autofill {
+                box-shadow: 0 0 0 1000px var(--color-input-dark) inset;
+                -webkit-text-fill-color: var(--color-primary-text-dark);
+            }
+        }
+    }
 }
 
 html {
