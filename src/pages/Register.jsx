@@ -4,6 +4,7 @@ import { register as registerUser } from "../api/authService";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import z from "zod";
 
 const registerSchema = z.object({
@@ -26,8 +27,17 @@ const Register = () => {
     });
 
     const onSubmit = async (data) => {
-        await registerUser(data);
-        navigate("/login");
+        try {
+            const response = await registerUser(data);
+            toast.success(response.data || "Registered successfully!");
+            navigate("/login");
+        } catch (err) {
+            if (err.response) {
+                toast.error(err.response.data || "Registration failed");
+            } else {
+                toast.error("Network error");
+            }
+        }
     };
 
     return (
@@ -41,9 +51,8 @@ const Register = () => {
                         <div className="flex border bg-input dark:bg-input-dark border-border dark:border-border-dark px-3 py-1.5 mt-2 rounded-md bg-i rounded-2md focus-within:border-focus-ring transition-colors duration-300 ease">
                             <input
                                 id="firstName"
-                                name="firstName"
-                                {...register("firstName")}
                                 type="text"
+                                {...register("firstName")}
                                 placeholder="Enter your first name"
                                 className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
@@ -58,9 +67,8 @@ const Register = () => {
                         <div className="flex border bg-input dark:bg-input-dark border-border dark:border-border-dark px-3 py-1.5 mt-2 rounded-md bg-i rounded-2md focus-within:border-focus-ring transition-colors duration-300 ease">
                             <input
                                 id="lastName"
-                                name="lastName"
-                                {...register("lastName")}
                                 type="text"
+                                {...register("lastName")}
                                 placeholder="Enter your last name"
                                 className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
@@ -77,9 +85,8 @@ const Register = () => {
                         <div className="flex border bg-input dark:bg-input-dark border-border dark:border-border-dark px-3 py-1.5 mt-2 rounded-md bg-i rounded-2md focus-within:border-focus-ring transition-colors duration-300 ease">
                             <input
                                 id="email"
-                                name="email"
-                                {...register("email")}
                                 type="email"
+                                {...register("email")}
                                 placeholder="Enter your email"
                                 className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
@@ -94,9 +101,8 @@ const Register = () => {
                         <div className="flex border bg-input dark:bg-input-dark border-border dark:border-border-dark px-3 py-1.5 mt-2 rounded-md bg-i rounded-2md focus-within:border-focus-ring transition-colors duration-300 ease">
                             <input
                                 id="password"
-                                name="password"
-                                {...register("password")}
                                 type={showPassword ? "text" : "password"}
+                                {...register("password")}
                                 placeholder="Create a password"
                                 className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />

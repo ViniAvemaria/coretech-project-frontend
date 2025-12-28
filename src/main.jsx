@@ -8,14 +8,14 @@ import { ThemeProvider } from "./contexts/ThemeContext.jsx";
 import { CartProvider } from "./contexts/CartContext.jsx";
 
 createRoot(document.getElementById("root")).render(
-    <StrictMode>
-        <BrowserRouter>
-            <ThemeProvider>
-                <CartProvider>
-                    <ScrollToTop />
-                    <AppRoutes />
-                </CartProvider>
-            </ThemeProvider>
-        </BrowserRouter>
-    </StrictMode>
+    // <StrictMode>
+    <BrowserRouter>
+        <ThemeProvider>
+            <CartProvider>
+                <ScrollToTop />
+                <AppRoutes />
+            </CartProvider>
+        </ThemeProvider>
+    </BrowserRouter>
+    // </StrictMode>
 );

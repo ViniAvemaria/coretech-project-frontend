@@ -1,11 +1,42 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { login } from "../api/authService";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import z from "zod";
+
+const loginSchema = z.object({
+    email: z.email(),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+});
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: zodResolver(loginSchema),
+    });
+
+    const onSubmit = async (data) => {
+        try {
+            const response = await login(data);
+            sessionStorage.setItem("accessToken", response.data.accessToken);
+            toast.success("Logged in successfully!");
+            navigate("/");
+        } catch (err) {
+            if (err.response) {
+                toast.error(err.response.data || "Login failed");
+            } else {
+                toast.error("Network error");
+            }
+        }
     };
 
     return (
@@ -13,7 +44,7 @@ const Login = () => {
             <div className="flex flex-col gap-2 w-full h-fit border border-border dark:border-border-dark rounded-2xl p-8 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark">
                 <p className="place-self-center">Welcome Back</p>
                 <p className="text-muted-text-dark dark:text-muted-text place-self-center">Sign in to your account</p>
-                <form action="" className="flex flex-col mt-6 gap-5">
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-6 gap-5">
                     <div>
                         <label htmlFor="email" className="block w-fit">
                             Email
@@ -22,10 +53,12 @@ const Login = () => {
                             <input
                                 id="email"
                                 type="email"
+                                {...register("email")}
                                 placeholder="Enter your email"
                                 className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
                         </div>
+                        {errors.email && <p className="text-red-600 dark:text-red-500 mt-2">{errors.email.message}</p>}
                     </div>
 
                     <div>
@@ -36,6 +69,7 @@ const Login = () => {
                             <input
                                 id="password"
                                 type={showPassword ? "text" : "password"}
+                                {...register("password")}
                                 placeholder="Enter your password"
                                 className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
@@ -51,11 +85,13 @@ const Login = () => {
                                 )}
                             </button>
                         </div>
+                        {errors.password && (
+                            <p className="text-red-600 dark:text-red-500 mt-2">{errors.password.message}</p>
+                        )}
                     </div>
 
                     <button
                         type="submit"
-                        onClick={handleSubmit}
                         className="bg-brand text-white px-3.5 py-2.5 rounded-xl hover:bg-brand-hover transition-colors duration-300 ease cursor-pointer"
                     >
                         Sign-in
