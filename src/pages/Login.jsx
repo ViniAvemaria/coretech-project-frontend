@@ -27,12 +27,12 @@ const Login = () => {
     const onSubmit = async (data) => {
         try {
             const response = await login(data);
-            sessionStorage.setItem("accessToken", response.data.accessToken);
-            toast.success("Logged in successfully!");
+            sessionStorage.setItem("accessToken", response.data.data.accessToken);
+            toast.success(response.data.data.message || "Logged in successfully!");
             navigate("/");
         } catch (err) {
             if (err.response) {
-                toast.error(err.response.data || "Login failed");
+                toast.error(err.response.data?.message || "Login failed");
             } else {
                 toast.error("Network error");
             }

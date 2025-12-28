@@ -24,8 +24,8 @@ api.interceptors.response.use(
             originalRequest._retry = true;
             try {
                 const refreshRes = await api.post("/auth/refresh-token");
-                sessionStorage.setItem("accessToken", refreshRes.data.accessToken);
-                originalRequest.headers.Authorization = `Bearer ${refreshRes.data.accessToken}`;
+                sessionStorage.setItem("accessToken", refreshRes.data.data.accessToken);
+                originalRequest.headers.Authorization = `Bearer ${refreshRes.data.data.accessToken}`;
                 return api(originalRequest);
             } catch {
                 sessionStorage.removeItem("accessToken");

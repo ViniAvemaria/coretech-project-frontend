@@ -13,7 +13,7 @@ const App = () => {
 
     useEffect(() => {
         api.post("/auth/refresh-token")
-            .then((res) => sessionStorage.setItem("accessToken", res.data.accessToken))
+            .then((res) => sessionStorage.setItem("accessToken", res.data.data.accessToken))
             .catch(() => sessionStorage.removeItem("accessToken"));
     }, []);
 

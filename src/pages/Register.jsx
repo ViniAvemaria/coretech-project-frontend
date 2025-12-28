@@ -28,12 +28,12 @@ const Register = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await registerUser(data);
-            toast.success(response.data || "Registered successfully!");
+            await registerUser(data);
+            toast.success("Registered successfully!");
             navigate("/login");
         } catch (err) {
             if (err.response) {
-                toast.error(err.response.data || "Registration failed");
+                toast.error(err.response.data?.message || "Registration failed");
             } else {
                 toast.error("Network error");
             }
