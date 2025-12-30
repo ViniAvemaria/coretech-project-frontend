@@ -41,7 +41,7 @@ const Register = () => {
     };
 
     return (
-        <div className="max-w-[425px] w-full py-16">
+        <div className="max-w-[425px] w-full">
             <div className="flex flex-col gap-2 w-full h-fit border border-border dark:border-border-dark rounded-2xl p-8 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark">
                 <p className="place-self-center">Create Account</p>
                 <p className="text-muted-text-dark dark:text-muted-text place-self-center">Sign up to get started</p>
@@ -54,6 +54,7 @@ const Register = () => {
                                 type="text"
                                 {...register("firstName")}
                                 placeholder="Enter your first name"
+                                autocomplete="given-name"
                                 className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
                         </div>
@@ -70,6 +71,7 @@ const Register = () => {
                                 type="text"
                                 {...register("lastName")}
                                 placeholder="Enter your last name"
+                                autocomplete="family-name"
                                 className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
                         </div>
@@ -88,6 +90,7 @@ const Register = () => {
                                 type="email"
                                 {...register("email")}
                                 placeholder="Enter your email"
+                                autocomplete="email"
                                 className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
                         </div>
@@ -104,6 +107,7 @@ const Register = () => {
                                 type={showPassword ? "text" : "password"}
                                 {...register("password")}
                                 placeholder="Create a password"
+                                autocomplete="new-password"
                                 className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
                             <button

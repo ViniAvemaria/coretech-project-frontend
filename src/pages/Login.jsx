@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { login } from "../api/authService";
+import { useUser } from "../contexts/UserContex";
+import { login as loginUser } from "../api/authService";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +16,7 @@ const loginSchema = z.object({
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const { login } = useUser();
 
     const {
         register,
@@ -26,7 +28,8 @@ const Login = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await login(data);
+            const response = await loginUser(data);
+            login(response.data.data);
             sessionStorage.setItem("accessToken", response.data.data.accessToken);
             toast.success(response.data.data.message || "Logged in successfully!");
             navigate("/");
@@ -40,7 +43,7 @@ const Login = () => {
     };
 
     return (
-        <div className="max-w-[425px] w-full py-16">
+        <div className="max-w-[425px] w-full">
             <div className="flex flex-col gap-2 w-full h-fit border border-border dark:border-border-dark rounded-2xl p-8 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark">
                 <p className="place-self-center">Welcome Back</p>
                 <p className="text-muted-text-dark dark:text-muted-text place-self-center">Sign in to your account</p>
@@ -55,6 +58,7 @@ const Login = () => {
                                 type="email"
                                 {...register("email")}
                                 placeholder="Enter your email"
+                                autocomplete="email"
                                 className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
                         </div>
@@ -71,6 +75,7 @@ const Login = () => {
                                 type={showPassword ? "text" : "password"}
                                 {...register("password")}
                                 placeholder="Enter your password"
+                                autoComplete="current-password"
                                 className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
                             <button

@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { formatMoney } from "../utils/formatMoney";
 import { useCart } from "../contexts/CartContext";
+
 const Product = () => {
     const { addToCart } = useCart();
     const { state } = useLocation();
@@ -24,7 +25,7 @@ const Product = () => {
     }, []);
 
     return (
-        <div className="max-w-[1200px] w-full py-16">
+        <div className="max-w-[1200px] w-full">
             <div className="flex flex-col w-fit text-primary-text dark:text-primary-text-dark mb-6 gap-4">
                 <Link to={from} className="text-brand">
                     <i className="fa-solid fa-arrow-left mr-2"></i>

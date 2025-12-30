@@ -22,6 +22,9 @@
 
     --color-border: #e5e7eb;
 
+    --color-edit-button: #eff6ff;
+    --color-edit-hover: #dbeafe;
+
     /* Dark */
     --color-main-dark: #030712;
     --color-header-dark: #111827;
@@ -35,12 +38,15 @@
     --color-footer-border-dark: #111827;
 
     --color-border-dark: #374151;
+
+    --color-edit-button-dark: #1f2937;
+    --color-edit-hover-dark: #374151;
 }
 
 @layer components {
     .nav-icons {
         font-size: 1.3rem;
-        color: var(--color-primary-text);
+        color: var(--color-gray-700);
         transition: color 0.3s ease;
 
         @variant dark {
@@ -99,6 +105,54 @@
                 -webkit-text-fill-color: var(--color-primary-text-dark);
             }
         }
+    }
+
+    .edit-button {
+        padding: 5px 13px;
+        color: var(--color-brand);
+        background-color: var(--color-edit-button);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: var(--color-edit-hover);
+        }
+
+        @variant dark {
+            background-color: var(--color-edit-button-dark);
+
+            &:hover {
+                background-color: var(--color-edit-hover-dark);
+            }
+        }
+    }
+
+    .action-button {
+        color: white;
+        width: 100%;
+        border-radius: 6px;
+        padding: 10px 13px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+    .active-button {
+        color: white;
+        border-radius: 6px;
+        background-color: var(--color-brand);
+        padding: 7px 15px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+    .inactive-button {
+        color: black;
+        border-radius: 6px;
+        background-color: var(--color-gray-300);
+        padding: 7px 15px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
     }
 }
 

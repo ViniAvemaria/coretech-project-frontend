@@ -177,7 +177,7 @@ const Home = () => {
     ];
 
     return (
-        <div className="max-w-[1200px] w-full py-16">
+        <div className="max-w-[1200px] w-full">
             <div className="grid grid-cols-[repeat(auto-fit,minmax(275px,1fr))] place-items-center gap-8">
                 {products.map((product) => (
                     <ProductCard key={product.id} product={product} />

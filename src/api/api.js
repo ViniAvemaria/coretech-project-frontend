@@ -1,39 +1,36 @@
 import axios from "axios";
+import { refreshToken } from "./refreshApi";
 
 const api = axios.create({
     baseURL: "http://localhost:8080/api",
     withCredentials: true,
 });
 
+const publicPaths = ["/auth/login", "/auth/register", "/auth/refresh-token", "/auth/logout"];
+
 api.interceptors.request.use((config) => {
     const token = sessionStorage.getItem("accessToken");
-    if (token) config.headers.Authorization = `Bearer ${token}`;
+    const isPublic = publicPaths.some((path) => config.url?.includes(path));
+
+    if (token && !isPublic) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+
     return config;
 });
 
 api.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-        const originalRequest = error.config;
-
-        if (
-            error.response?.status === 401 &&
-            !originalRequest._retry &&
-            !originalRequest.url.includes("/auth/refresh-token")
-        ) {
-            originalRequest._retry = true;
-            try {
-                const refreshRes = await api.post("/auth/refresh-token");
-                sessionStorage.setItem("accessToken", refreshRes.data.data.accessToken);
-                originalRequest.headers.Authorization = `Bearer ${refreshRes.data.data.accessToken}`;
-                return api(originalRequest);
-            } catch {
-                sessionStorage.removeItem("accessToken");
-                window.location.href = "/login";
-            }
+    (res) => res,
+    async (err) => {
+        const original = err.config;
+        if (err.response?.status === 401 && !original._retry) {
+            original._retry = true;
+            const newToken = await refreshToken();
+            sessionStorage.setItem("accessToken", newToken);
+            original.headers.Authorization = `Bearer ${newToken}`;
+            return api(original);
         }
-
-        return Promise.reject(error);
+        return Promise.reject(err);
     }
 );
 

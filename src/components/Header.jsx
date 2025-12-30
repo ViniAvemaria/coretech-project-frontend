@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
 import { useCart } from "../contexts/CartContext";
 import { getTotalItems } from "../utils/cartUtils";
@@ -6,6 +6,7 @@ import { getTotalItems } from "../utils/cartUtils";
 const Header = () => {
     const { theme, toggleTheme } = useTheme();
     const { cartArray } = useCart();
+    const location = useLocation();
 
     return (
         <header className="flex justify-between items-center h-20 py-4 px-10 fixed w-full bg-header dark:bg-header-dark gap-10 border-b border-b-border dark:border-b-border-dark z-100">
@@ -20,7 +21,7 @@ const Header = () => {
                 />
             </div>
             <nav>
-                <ul className="flex gap-10">
+                <ul className="flex gap-9">
                     <li className="flex justify-center nav-icons">
                         <button onClick={toggleTheme} className="flex items-center cursor-pointer">
                             {theme == "light" ? (
@@ -41,7 +42,7 @@ const Header = () => {
                         </Link>
                     </li>
                     <li className="nav-icons flex items-center">
-                        <Link to={"/profile"}>
+                        <Link to={"/profile"} state={{ from: location.pathname }}>
                             <i className="fa-solid fa-user"></i>
                         </Link>
                     </li>
