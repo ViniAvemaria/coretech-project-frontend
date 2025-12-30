@@ -10,7 +10,11 @@ const Header = () => {
 
     return (
         <header className="flex justify-between items-center h-20 py-4 px-10 fixed w-full bg-header dark:bg-header-dark gap-10 border-b border-b-border dark:border-b-border-dark z-100">
-            <h1 className="text-brand text-3xl font-bold whitespace-nowrap">Core Tech</h1>
+            <Link to={"/"}>
+                <h1 className="text-brand text-3xl font-bold whitespace-nowrap cursor-pointer hover:scale-105 transition-transform duration-300 ease">
+                    Core Tech
+                </h1>
+            </Link>
             <div className="group flex items-center w-full max-w-xl border-2 bg-input dark:bg-input-dark border-border px-4 py-2 rounded-lg gap-3 dark:border-border-dark focus-within:border-focus-ring transition-colors duration-300 ease">
                 <i className="fa-solid fa-magnifying-glass text-muted-text dark:text-muted-text-dark group-focus-within:text-focus-ring transition-colors duration-300 ease"></i>
                 <input

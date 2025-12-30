@@ -54,7 +54,7 @@ const Register = () => {
                                 type="text"
                                 {...register("firstName")}
                                 placeholder="Enter your first name"
-                                autocomplete="given-name"
+                                autoComplete="given-name"
                                 className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
                         </div>
@@ -71,7 +71,7 @@ const Register = () => {
                                 type="text"
                                 {...register("lastName")}
                                 placeholder="Enter your last name"
-                                autocomplete="family-name"
+                                autoComplete="family-name"
                                 className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
                         </div>
@@ -90,7 +90,7 @@ const Register = () => {
                                 type="email"
                                 {...register("email")}
                                 placeholder="Enter your email"
-                                autocomplete="email"
+                                autoComplete="email"
                                 className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
                         </div>
@@ -107,7 +107,7 @@ const Register = () => {
                                 type={showPassword ? "text" : "password"}
                                 {...register("password")}
                                 placeholder="Create a password"
-                                autocomplete="new-password"
+                                autoComplete="new-password"
                                 className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
                             <button

@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useUser } from "../contexts/UserContex";
 import { useLocation } from "react-router-dom";
-import { logout as logoutUser } from "../api/authService";
+import { logout } from "../api/authService";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
     const [activeTab, setActiveTab] = useState("account");
-    const { user, logout } = useUser();
+    const { user, removeUser } = useUser();
     const { state } = useLocation();
     const navigate = useNavigate();
 
@@ -16,8 +16,8 @@ const Profile = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await logoutUser();
-            logout();
+            const response = await logout();
+            removeUser();
             sessionStorage.removeItem("accessToken");
             toast.success(response.data?.data?.message || "Logged out successfully!");
             navigate("/");
@@ -104,7 +104,7 @@ const Profile = () => {
 
                     {activeTab === "orders" && (
                         <div className="flex flex-col items-center gap-5 w-full px-10 py-12 rounded-xl border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark mt-8">
-                            <i class="fa-solid fa-box text-5xl text-muted-text-dark dark:text-muted-text"></i>
+                            <i className="fa-solid fa-box text-5xl text-muted-text-dark dark:text-muted-text"></i>
                             <p className="text-primary-text dark:text-primary-text-dark">No orders yet</p>
                             <p className="text-muted-text-dark dark:text-muted-text">
                                 Your order history will appear here after you complete a purchase.

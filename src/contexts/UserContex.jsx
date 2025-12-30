@@ -8,17 +8,17 @@ export function UserProvider({ children }) {
         return storedUser ? JSON.parse(storedUser) : null;
     });
 
-    const login = (data) => {
+    const saveUser = (data) => {
         setUser(data);
         localStorage.setItem("user", JSON.stringify(data));
     };
 
-    const logout = () => {
+    const removeUser = () => {
         setUser(null);
         localStorage.removeItem("user");
     };
 
-    return <UserContext.Provider value={{ user, login, logout }}>{children}</UserContext.Provider>;
+    return <UserContext.Provider value={{ user, saveUser, removeUser }}>{children}</UserContext.Provider>;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components

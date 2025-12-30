@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../contexts/UserContex";
-import { login as loginUser } from "../api/authService";
+import { login } from "../api/authService";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ const loginSchema = z.object({
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
-    const { login } = useUser();
+    const { saveUser } = useUser();
 
     const {
         register,
@@ -28,8 +28,8 @@ const Login = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await loginUser(data);
-            login(response.data.data);
+            const response = await login(data);
+            saveUser(response.data.data);
             sessionStorage.setItem("accessToken", response.data.data.accessToken);
             toast.success(response.data.data.message || "Logged in successfully!");
             navigate("/");
@@ -58,7 +58,7 @@ const Login = () => {
                                 type="email"
                                 {...register("email")}
                                 placeholder="Enter your email"
-                                autocomplete="email"
+                                autoComplete="email"
                                 className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
                             />
                         </div>

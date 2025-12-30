@@ -1,20 +1,35 @@
 import { useEffect } from "react";
-import api from "./api/api";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ScrollToTopButton from "./components/ScrollToTopButton";
-import { ToastContainer } from "react-toastify";
 import { useTheme } from "./contexts/ThemeContext";
-import "react-toastify/dist/ReactToastify.css";
+import { useUser } from "./contexts/UserContex";
+import { userInfo } from "./api/userService";
+import { refresh } from "./api/authService";
 
 const App = () => {
+    const { saveUser } = useUser();
     const { theme } = useTheme();
 
     useEffect(() => {
-        api.post("/auth/refresh-token")
-            .then((res) => sessionStorage.setItem("accessToken", res.data.data.accessToken))
-            .catch(() => sessionStorage.removeItem("accessToken"));
+        const init = async () => {
+            try {
+                const refreshRes = await refresh();
+                const token = refreshRes.data.data.accessToken;
+                sessionStorage.setItem("accessToken", token);
+
+                const userRes = await userInfo(token);
+                saveUser(userRes.data.data);
+            } catch {
+                sessionStorage.removeItem("accessToken");
+            }
+        };
+
+        init();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
