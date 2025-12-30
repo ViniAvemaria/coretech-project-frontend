@@ -9,7 +9,7 @@ const ProductCard = ({ product }) => {
     return (
         <div className="h-[545px] w-[275px] bg-card dark:bg-card-dark border rounded-2xl border-border dark:border-border-dark overflow-hidden shadow-sm">
             <div className="group h-[300px] overflow-hidden">
-                <Link to={`/product/${product.id}`} state={{ product, from: location.pathname }}>
+                <Link to={`/product/${product.id}`} state={{ from: location.pathname }}>
                     <img
                         src={product.image}
                         alt={product.name}
@@ -23,15 +23,13 @@ const ProductCard = ({ product }) => {
                     {product.rating}
                 </p>
                 <p className="line-clamp-2 min-h-10 leading-snug hover:cursor-pointer hover:text-brand transition-color duration-300 ease">
-                    <Link to={`/product/${product.id}`} state={{ product, from: location.pathname }}>
-                        {product.name}
-                    </Link>
+                    <Link to={`/product/${product.id}`}>{product.name}</Link>
                 </p>
                 <p className="text-muted-text-dark dark:text-muted-text text-sm line-clamp-3">{product.description}</p>
                 <div className="flex justify-between items-end-safe mt-auto">
                     <p className="text-brand">{formatMoney(product.price)}</p>
                     <button
-                        disabled={!product.inStock}
+                        disabled={product.stockQuantity == 0}
                         onClick={() => addToCart(product)}
                         className="add-button"
                     >
