@@ -46,15 +46,22 @@
 @layer components {
     .nav-icons {
         font-size: 1.3rem;
+        padding: 10px 8px;
+        min-width: 40px;
         color: var(--color-gray-700);
-        transition: color 0.3s ease;
+        transition: background-color 0.3s ease;
+        border-radius: 8px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #dbeafe;
+        }
 
         @variant dark {
             color: var(--color-primary-text-dark);
-        }
-
-        &:hover {
-            color: var(--color-focus-ring);
+            &:hover {
+                background-color: #374151;
+            }
         }
     }
 
@@ -153,6 +160,17 @@
         padding: 7px 15px;
         transition: background-color 0.3s ease;
         cursor: pointer;
+    }
+
+    .section-title {
+        color: var(--color-primary-text);
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 24px;
+
+        @variant dark {
+            color: var(--color-primary-text-dark);
+        }
     }
 }
 

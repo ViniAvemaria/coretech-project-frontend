@@ -43,7 +43,7 @@ const Product = () => {
             <div className="flex flex-col w-fit text-primary-text dark:text-primary-text-dark mb-6 gap-4">
                 <Link to={from} className="text-brand">
                     <i className="fa-solid fa-arrow-left mr-2"></i>
-                    {from == "/" ? "Back to Products" : "Back to Cart"}
+                    Back
                 </Link>
             </div>
             {product && (
@@ -68,6 +68,7 @@ const Product = () => {
                             on {product.photoCredit.source}
                         </p>
                     </div>
+
                     <div
                         ref={contentRef}
                         className="flex flex-col w-1/2 h-fit gap-6 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-2xl p-8"

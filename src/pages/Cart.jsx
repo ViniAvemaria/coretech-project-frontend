@@ -13,13 +13,8 @@ const Cart = () => {
 
     return (
         <div className="max-w-[1200px] w-full">
-            <div className="flex flex-col w-fit text-primary-text dark:text-primary-text-dark mb-6 gap-4">
-                <Link to={"/"} className="text-brand">
-                    <i className="fa-solid fa-arrow-left mr-2"></i>
-                    Continue Shopping
-                </Link>
-                <h2 className="text-lg">Shopping Cart</h2>
-            </div>
+            <h2 className="section-title">Shopping Cart</h2>
+
             <div className="grid grid-cols-3 gap-8">
                 <div className="col-span-2 flex flex-col gap-6">
                     {cartArray.map((product) => (

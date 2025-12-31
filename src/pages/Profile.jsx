@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useUser } from "../contexts/UserContex";
-import { useLocation } from "react-router-dom";
-import { logout } from "../api/authService";
+import { handleLogout } from "../api/authService";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -9,40 +8,15 @@ import { useNavigate } from "react-router-dom";
 const Profile = () => {
     const [activeTab, setActiveTab] = useState("account");
     const { user, removeUser } = useUser();
-    const { state } = useLocation();
     const navigate = useNavigate();
-
-    const from = state?.from;
-
-    const handleLogout = async () => {
-        try {
-            const response = await logout();
-            removeUser();
-            sessionStorage.removeItem("accessToken");
-            toast.success(response.data?.data?.message || "Logged out successfully!");
-            navigate("/");
-        } catch (err) {
-            if (err.response) {
-                toast.error(err.response.data?.message || "Logout failed");
-            } else {
-                toast.error("Network error");
-            }
-        }
-    };
 
     return (
         <div className="max-w-[800px] w-full">
-            <div className="flex flex-col w-fit text-primary-text dark:text-primary-text-dark mb-6 gap-4">
-                <Link to={from} className="text-brand">
-                    <i className="fa-solid fa-arrow-left mr-2"></i>
-                    Back
-                </Link>
-                <h2 className="text-lg">My Profile</h2>
-            </div>
-
+            <h2 className="section-title">My Profile</h2>
+        
             {user && (
                 <>
-                    <div className="flex flex-col gap-8 w-full px-6 py-8 rounded-xl border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark">
+                    <div className="flex flex-col gap-8 w-full p-6 rounded-xl border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark">
                         <p>Account information</p>
                         <div className="flex items-center">
                             <div className="flex items-center bg-gray-200 dark:bg-gray-700 px-4.5 py-4 rounded-[50%] mr-4">
@@ -80,7 +54,7 @@ const Profile = () => {
 
                     {activeTab === "account" && (
                         <>
-                            <div className="flex flex-col gap-5 w-full px-6 py-8 rounded-xl border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark mt-8">
+                            <div className="flex flex-col gap-5 w-full p-6 rounded-xl border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark mt-8">
                                 <div className="flex items-center justify-between">
                                     <p>Change Email</p>
                                     <button className="edit-button">Edit</button>
@@ -90,7 +64,7 @@ const Profile = () => {
                                 </p>
                             </div>
 
-                            <div className="flex flex-col gap-5 w-full px-6 py-8 rounded-xl border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark mt-8">
+                            <div className="flex flex-col gap-5 w-full p-6 rounded-xl border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark mt-8">
                                 <div className="flex items-center justify-between">
                                     <p>Change Password</p>
                                     <button className="edit-button">Edit</button>
@@ -115,12 +89,17 @@ const Profile = () => {
                     <div className="flex flex-col gap-5 w-full px-6 py-8 rounded-xl border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark mt-8">
                         <p>Account Actions</p>
                         {user.roles.includes("ADMIN") && (
-                            <button className="action-button bg-purple-600 hover:bg-purple-700">
-                                <i className="fa-solid fa-shield mr-2 "></i>
-                                Admin Dashboard
-                            </button>
+                            <Link to={"/admin"}>
+                                <button className="action-button bg-purple-600 hover:bg-purple-700">
+                                    <i className="fa-solid fa-shield mr-2 "></i>
+                                    Admin Dashboard
+                                </button>
+                            </Link>
                         )}
-                        <button onClick={() => handleLogout()} className="action-button bg-gray-500 hover:bg-gray-600">
+                        <button
+                            onClick={() => handleLogout({ removeUser, navigate, toast })}
+                            className="action-button bg-gray-500 hover:bg-gray-600"
+                        >
                             <i className="fa-solid fa-arrow-right-from-bracket mr-2"></i>
                             Sign Out
                         </button>

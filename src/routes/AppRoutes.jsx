@@ -8,6 +8,8 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Product from "../pages/Product";
 import ProtectedRoute from "./ProtectedRoute";
+import AdminRoute from "./AdminRoute";
+import AdminDashboard from "../pages/AdminDashboard";
 
 const AppRoutes = () => {
     return (
@@ -16,6 +18,8 @@ const AppRoutes = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/product/:id" element={<Product />} />
+                <Route path="*" element={<NotFound />} />
 
                 <Route
                     path="/profile"
@@ -34,8 +38,14 @@ const AppRoutes = () => {
                     }
                 />
 
-                <Route path="/product/:id" element={<Product />} />
-                <Route path="*" element={<NotFound />} />
+                <Route
+                    path="/admin"
+                    element={
+                        <AdminRoute>
+                            <AdminDashboard />
+                        </AdminRoute>
+                    }
+                />
             </Route>
         </Routes>
     );
