@@ -1,35 +1,64 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import FileUpload from "../modals/fileUpload";
+import ExistingProducts from "../modals/ExistingProducts";
 import { getAll } from "../api/productService";
 import { formatMoney } from "../utils/formatMoney";
+import { createFromImport } from "../api/productService";
+import { toast } from "react-toastify";
 
 const AdminDashborad = () => {
     const [products, setProducts] = useState([]);
-    const [isOpen, setIsOpen] = useState(false);
+    const [existingProducts, setExistingProducts] = useState([]);
     const [orders, setOrders] = useState([]);
     const [activeTab, setActiveTab] = useState("products");
     const location = useLocation();
+    const formRef = useRef(null);
+    const fileInputRef = useRef(null);
+
+    const fetchProducts = async () => {
+        try {
+            const res = await getAll();
+            setProducts(res.data.data);
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const res = await getAll();
-                setProducts(res.data.data);
-            } catch (err) {
-                console.error(err);
-            }
+        const init = () => {
+            fetchProducts();
         };
 
-        fetchProducts();
+        init();
     }, []);
 
     useEffect(() => {
-        document.body.style.overflow = isOpen ? "hidden" : "auto";
+        document.body.style.overflow = existingProducts.length > 0 ? "hidden" : "auto";
         return () => {
             document.body.style.overflow = "auto";
         };
-    }, [isOpen]);
+    }, [existingProducts]);
+
+    const handleFileChange = () => {
+        formRef.current.requestSubmit();
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const token = sessionStorage.getItem("accessToken");
+            const formData = new FormData();
+            formData.append("file", fileInputRef.current.files[0]);
+            const response = await createFromImport(token, formData);
+            toast.success(response.data?.message || "Products imported successfully");
+            fetchProducts();
+            if (response.data.data) setExistingProducts(response.data.data);
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Failed to import products");
+        } finally {
+            fileInputRef.current.value = "";
+        }
+    };
 
     const handleAddProduct = () => {};
 
@@ -79,21 +108,33 @@ const AdminDashborad = () => {
                         <h2>Product Management</h2>
                         <div className="flex gap-4">
                             <button
+                                onClick={() => fileInputRef.current.click()}
+                                className="edit-button py-2 px-3.5 rounded-xl"
+                            >
+                                <i className="fa-solid fa-file-import mr-2"></i>
+                                Import CSV
+                            </button>
+
+                            <form ref={formRef} onSubmit={handleSubmit}>
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    accept=".csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                    onChange={handleFileChange}
+                                    className="hidden"
+                                />
+                            </form>
+
+                            <button
                                 onClick={handleAddProduct()}
                                 className="text-white bg-brand py-2 px-3.5 rounded-xl cursor-pointer hover:bg-brand-hover transition-colors duration-300 ease"
                             >
                                 <i className="fa-solid fa-plus text-sm mr-2"></i>
                                 Add Product
                             </button>
-                            <button
-                                onClick={() => setIsOpen(true)}
-                                className="text-white bg-brand py-2 px-3.5 rounded-xl cursor-pointer hover:bg-brand-hover transition-colors duration-300 ease"
-                            >
-                                <i className="fa-solid fa-file-import mr-2"></i>
-                                Import CSV
-                            </button>
                         </div>
                     </div>
+
                     <div className="rounded-xl overflow-hidden text-primary-text dark:text-primary-text-dark text-left border border-border dark:border-border-dark bg-header dark:bg-header-dark">
                         <table className="min-w-full table-fixed ">
                             <thead className="bg-card dark:bg-card-dark text-gray-300">
@@ -143,7 +184,9 @@ const AdminDashborad = () => {
                     </div>
                 </>
             )}
-            {isOpen && <FileUpload setIsOpen={setIsOpen} setProducts={setProducts} />}
+            {existingProducts.length > 0 && (
+                <ExistingProducts existingProducts={existingProducts} setExistingProducts={setExistingProducts} />
+            )}
         </div>
     );
 };

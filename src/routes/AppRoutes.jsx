@@ -7,19 +7,35 @@ import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Product from "../pages/Product";
+import AdminDashboard from "../pages/AdminDashboard";
 import ProtectedRoute from "./ProtectedRoute";
 import AdminRoute from "./AdminRoute";
-import AdminDashboard from "../pages/AdminDashboard";
+import PublicRoute from "./PublicRoute";
 
 const AppRoutes = () => {
     return (
         <Routes>
             <Route element={<App />}>
                 <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
                 <Route path="/product/:id" element={<Product />} />
                 <Route path="*" element={<NotFound />} />
+
+                <Route
+                    path="/login"
+                    element={
+                        <PublicRoute>
+                            <Login />
+                        </PublicRoute>
+                    }
+                />
+                <Route
+                    path="/register"
+                    element={
+                        <PublicRoute>
+                            <Register />
+                        </PublicRoute>
+                    }
+                />
 
                 <Route
                     path="/profile"
