@@ -163,6 +163,8 @@
     }
 
     .section-title {
+        display: flex;
+        align-items: center;
         color: var(--color-primary-text);
         font-size: 18px;
         font-weight: bold;
@@ -170,6 +172,24 @@
 
         @variant dark {
             color: var(--color-primary-text-dark);
+        }
+    }
+
+    .input {
+        width: 100%;
+        padding: 8px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--color-border);
+        background-color: var(--color-input);
+
+        &:focus {
+            outline: none;
+            border-color: var(--color-focus-ring);
+        }
+
+        @variant dark {
+            border: 1px solid var(--color-border-dark);
+            background-color: var(--color-input-dark);
         }
     }
 }

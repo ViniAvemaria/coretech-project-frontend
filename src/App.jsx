@@ -34,7 +34,7 @@ const App = () => {
 
     return (
         <main className="min-h-screen flex flex-col bg-main dark:bg-main-dark">
-            <ToastContainer theme={theme == "dark" ? "dark" : "light"} />
+            <ToastContainer theme={theme == "dark" ? "dark" : "light"} limit={3} />
             <Header />
             <section className="flex justify-center min-h-dvh flex-1 p-16">
                 <Outlet />

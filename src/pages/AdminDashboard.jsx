@@ -1,16 +1,20 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import ExistingProducts from "../modals/ExistingProducts";
-import { getAll } from "../api/productService";
+import ImportConflictsModal from "../modals/ImportConflictsModal";
+import { getAll, createFromImport, deleteProduct } from "../api/productService";
 import { formatMoney } from "../utils/formatMoney";
-import { createFromImport } from "../api/productService";
 import { toast } from "react-toastify";
+import ProductModal from "../modals/ProductModal";
 
 const AdminDashborad = () => {
     const [products, setProducts] = useState([]);
     const [existingProducts, setExistingProducts] = useState([]);
     const [orders, setOrders] = useState([]);
     const [activeTab, setActiveTab] = useState("products");
+    const [productModalObj, setProductModalObj] = useState({
+        action: null,
+        product: null,
+    });
     const location = useLocation();
     const formRef = useRef(null);
     const fileInputRef = useRef(null);
@@ -60,7 +64,16 @@ const AdminDashborad = () => {
         }
     };
 
-    const handleAddProduct = () => {};
+    const handleDelete = async (id) => {
+        try {
+            const token = sessionStorage.getItem("accessToken");
+            await deleteProduct(token, id);
+            toast.success("Product deleted successfully");
+            fetchProducts();
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Failed to delete product");
+        }
+    };
 
     return (
         <div className="max-w-[1200px] w-full">
@@ -106,7 +119,7 @@ const AdminDashborad = () => {
                 <>
                     <div className="flex items-center justify-between text-primary-text dark:text-primary-text-dark mt-6 mb-6">
                         <h2>Product Management</h2>
-                        <div className="flex gap-4">
+                        <div className="flex gap-2">
                             <button
                                 onClick={() => fileInputRef.current.click()}
                                 className="edit-button py-2 px-3.5 rounded-xl"
@@ -126,7 +139,12 @@ const AdminDashborad = () => {
                             </form>
 
                             <button
-                                onClick={handleAddProduct()}
+                                onClick={() =>
+                                    setProductModalObj({
+                                        action: "add",
+                                        product: null,
+                                    })
+                                }
                                 className="text-white bg-brand py-2 px-3.5 rounded-xl cursor-pointer hover:bg-brand-hover transition-colors duration-300 ease"
                             >
                                 <i className="fa-solid fa-plus text-sm mr-2"></i>
@@ -170,10 +188,21 @@ const AdminDashborad = () => {
                                         <td className="px-5 py-3">{formatMoney(product.price)}</td>
                                         <td className="px-5 py-3">{product.stockQuantity}</td>
                                         <td className="px-5 py-3">
-                                            <button className="px-2 py-1 text-blue-600 hover:text-blue-500 cursor-pointer transition-colors duration-300 ease">
+                                            <button
+                                                onClick={() =>
+                                                    setProductModalObj({
+                                                        action: "edit",
+                                                        product: product,
+                                                    })
+                                                }
+                                                className="px-2 py-1 text-blue-600 hover:text-blue-500 cursor-pointer transition-colors duration-300 ease"
+                                            >
                                                 <i className="fa-solid fa-pen"></i>
                                             </button>
-                                            <button className="px-2 py-1 text-red-600 hover:text-red-500 cursor-pointer transition-colors duration-300 ease">
+                                            <button
+                                                onClick={() => handleDelete(product.id)}
+                                                className="px-2 py-1 text-red-600 hover:text-red-500 cursor-pointer transition-colors duration-300 ease"
+                                            >
                                                 <i className="fa-solid fa-trash-can"></i>
                                             </button>
                                         </td>
@@ -185,7 +214,15 @@ const AdminDashborad = () => {
                 </>
             )}
             {existingProducts.length > 0 && (
-                <ExistingProducts existingProducts={existingProducts} setExistingProducts={setExistingProducts} />
+                <ImportConflictsModal existingProducts={existingProducts} setExistingProducts={setExistingProducts} />
+            )}
+
+            {productModalObj.action && (
+                <ProductModal
+                    productModalObj={productModalObj}
+                    setProducts={setProducts}
+                    setProductModalObj={setProductModalObj}
+                />
             )}
         </div>
     );
