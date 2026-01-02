@@ -11,7 +11,7 @@ import { userInfo } from "./api/userService";
 import { refresh } from "./api/authService";
 
 const App = () => {
-    const { saveUser } = useUser();
+    const { saveUser, removeUser } = useUser();
     const { theme } = useTheme();
 
     useEffect(() => {
@@ -24,7 +24,7 @@ const App = () => {
                 const userRes = await userInfo(token);
                 saveUser(userRes.data.data);
             } catch {
-                sessionStorage.removeItem("accessToken");
+                removeUser();
             }
         };
 
@@ -36,7 +36,7 @@ const App = () => {
         <main className="min-h-screen flex flex-col bg-main dark:bg-main-dark">
             <ToastContainer theme={theme == "dark" ? "dark" : "light"} />
             <Header />
-            <section className="flex justify-center min-h-dvh flex-1 mt-20 p-16">
+            <section className="flex justify-center min-h-dvh flex-1 p-16">
                 <Outlet />
                 <ScrollToTopButton />
             </section>

@@ -13,7 +13,6 @@ export const logout = () => api.post(`${API_URL}/logout`);
 export const handleLogout = async ({ removeUser, navigate, toast }) => {
     const response = await logout();
     removeUser();
-    sessionStorage.removeItem("accessToken");
-    toast.success(response.data?.data?.message || "Logged out successfully!");
+    toast.success(response.data?.data?.message || "Sign out Successful");
     navigate("/");
 };

@@ -6,13 +6,12 @@ const api = axios.create({
     withCredentials: true,
 });
 
-const publicPaths = ["/auth/login", "/auth/register", "/auth/refresh-token", "/auth/logout"];
+const authPaths = ["/auth/login", "/auth/register", "/auth/refresh-token", "/auth/logout"];
 
 api.interceptors.request.use((config) => {
     const token = sessionStorage.getItem("accessToken");
-    const isPublic = publicPaths.some((path) => config.url?.includes(path));
 
-    if (token && !isPublic) {
+    if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
 
@@ -23,7 +22,11 @@ api.interceptors.response.use(
     (res) => res,
     async (err) => {
         const original = err.config;
-        if (err.response?.status === 401 && !original._retry) {
+        if (
+            err.response?.status === 401 &&
+            !original._retry &&
+            !authPaths.some((path) => original.url?.includes(path))
+        ) {
             original._retry = true;
             const newToken = await refreshToken();
             sessionStorage.setItem("accessToken", newToken);

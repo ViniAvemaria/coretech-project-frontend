@@ -29,7 +29,7 @@ const Register = () => {
     const onSubmit = async (data) => {
         try {
             await registerUser(data);
-            toast.success("Registered successfully!");
+            toast.success("Registration Successful");
             navigate("/login");
         } catch (err) {
             if (err.response) {

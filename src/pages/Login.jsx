@@ -31,7 +31,7 @@ const Login = () => {
             const response = await login(data);
             saveUser(response.data.data);
             sessionStorage.setItem("accessToken", response.data.data.accessToken);
-            toast.success(response.data.data.message || "Logged in successfully!");
+            toast.success(response.data?.message || "Login Successful");
             navigate("/");
         } catch (err) {
             if (err.response) {

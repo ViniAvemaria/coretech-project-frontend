@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import FileUpload from "../modals/fileUpload";
 import { getAll } from "../api/productService";
 import { formatMoney } from "../utils/formatMoney";
 
 const AdminDashborad = () => {
     const [products, setProducts] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);
     const [orders, setOrders] = useState([]);
     const [activeTab, setActiveTab] = useState("products");
     const location = useLocation();
@@ -21,6 +23,15 @@ const AdminDashborad = () => {
 
         fetchProducts();
     }, []);
+
+    useEffect(() => {
+        document.body.style.overflow = isOpen ? "hidden" : "auto";
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, [isOpen]);
+
+    const handleAddProduct = () => {};
 
     return (
         <div className="max-w-[1200px] w-full">
@@ -53,23 +64,35 @@ const AdminDashborad = () => {
             </div>
 
             {activeTab === "orders" && (
-                <>
-                    <h2 className="section-title">Orders Management</h2>
+                <div className="text-primary-text dark:text-primary-text-dark mt-6 mb-6">
+                    <h2>Orders Management</h2>
                     <div className="flex flex-col items-center gap-5 w-full px-10 py-12 rounded-xl border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark mt-8">
                         <i className="fa-solid fa-box text-5xl text-muted-text-dark dark:text-muted-text"></i>
                         <p className="text-primary-text dark:text-primary-text-dark">No orders yet</p>
                     </div>
-                </>
+                </div>
             )}
 
             {activeTab === "products" && (
                 <>
                     <div className="flex items-center justify-between text-primary-text dark:text-primary-text-dark mt-6 mb-6">
                         <h2>Product Management</h2>
-                        <button className="text-white bg-brand py-2.5 px-3 rounded-xl cursor-pointer hover:bg-brand-hover transition-colors duration-300 ease">
-                            <i className="fa-solid fa-plus text-sm mr-2"></i>
-                            Add Product
-                        </button>
+                        <div className="flex gap-4">
+                            <button
+                                onClick={handleAddProduct()}
+                                className="text-white bg-brand py-2 px-3.5 rounded-xl cursor-pointer hover:bg-brand-hover transition-colors duration-300 ease"
+                            >
+                                <i className="fa-solid fa-plus text-sm mr-2"></i>
+                                Add Product
+                            </button>
+                            <button
+                                onClick={() => setIsOpen(true)}
+                                className="text-white bg-brand py-2 px-3.5 rounded-xl cursor-pointer hover:bg-brand-hover transition-colors duration-300 ease"
+                            >
+                                <i className="fa-solid fa-file-import mr-2"></i>
+                                Import CSV
+                            </button>
+                        </div>
                     </div>
                     <div className="rounded-xl overflow-hidden text-primary-text dark:text-primary-text-dark text-left border border-border dark:border-border-dark bg-header dark:bg-header-dark">
                         <table className="min-w-full table-fixed ">
@@ -120,6 +143,7 @@ const AdminDashborad = () => {
                     </div>
                 </>
             )}
+            {isOpen && <FileUpload setIsOpen={setIsOpen} setProducts={setProducts} />}
         </div>
     );
 };

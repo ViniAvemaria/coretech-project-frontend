@@ -16,6 +16,7 @@ export function UserProvider({ children }) {
     const removeUser = () => {
         setUser(null);
         localStorage.removeItem("user");
+        sessionStorage.removeItem("accessToken");
     };
 
     return <UserContext.Provider value={{ user, saveUser, removeUser }}>{children}</UserContext.Provider>;

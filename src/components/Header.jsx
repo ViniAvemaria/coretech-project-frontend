@@ -15,7 +15,7 @@ const Header = () => {
     const navigate = useNavigate();
 
     return (
-        <header className="flex justify-between items-center h-20 py-4 px-10 fixed w-full bg-header dark:bg-header-dark gap-10 border-b border-b-border dark:border-b-border-dark z-100">
+        <header className="flex justify-between items-center h-20 py-4 px-10 w-full bg-header dark:bg-header-dark gap-10 border-b border-b-border dark:border-b-border-dark">
             <Link to={"/"}>
                 <h1 className="text-brand text-3xl font-bold whitespace-nowrap cursor-pointer hover:scale-105 transition-transform duration-300 ease">
                     Core Tech
@@ -74,7 +74,7 @@ const Header = () => {
                                 <ul className="flex flex-col">
                                     <Link to={"/profile"}>
                                         <li className="flex items-center px-4 py-3 hover:bg-[#f3f4f6] dark:hover:bg-[#111827] transition-colors duration-300 ease cursor-pointer">
-                                            <i className="fa-regular fa-user text-sm mr-2"></i>
+                                            <i className="fa-solid fa-user text-sm mr-2"></i>
                                             My Profile
                                         </li>
                                     </Link>
