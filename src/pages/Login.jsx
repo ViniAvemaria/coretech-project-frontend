@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useUser } from "../contexts/UserContex";
-import { login } from "../api/authService";
+import { useAuth } from "../contexts/AuthContext";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
@@ -14,9 +13,9 @@ const loginSchema = z.object({
 });
 
 const Login = () => {
+    const { login } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
-    const { saveUser } = useUser();
 
     const {
         register,
@@ -28,10 +27,8 @@ const Login = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await login(data);
-            saveUser(response.data.data);
-            sessionStorage.setItem("accessToken", response.data.data.accessToken);
-            toast.success(response.data?.message || "Login Successful");
+            await login(data);
+            toast.success("Login Successful");
             navigate("/");
         } catch (err) {
             if (err.response) {
@@ -44,7 +41,7 @@ const Login = () => {
 
     return (
         <div className="max-w-[425px] w-full">
-            <div className="flex flex-col gap-2 w-full h-fit border border-border dark:border-border-dark rounded-2xl p-8 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark">
+            <div className="flex flex-col gap-2 w-full h-fit border border-border dark:border-border-dark rounded-xl p-8 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark">
                 <p className="place-self-center">Welcome Back</p>
                 <p className="text-muted-text-dark dark:text-muted-text place-self-center">Sign in to your account</p>
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-6 gap-5">

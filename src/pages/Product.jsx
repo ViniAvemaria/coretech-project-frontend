@@ -1,17 +1,13 @@
 import { useState, useEffect, useRef } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { formatMoney } from "../utils/formatMoney";
 import { useCart } from "../contexts/CartContext";
 import { getById } from "../api/productService";
 
 const Product = () => {
-    const { addToCart } = useCart();
-    const { state } = useLocation();
+    const { addItem } = useCart();
     const { id } = useParams();
     const [product, setProduct] = useState(null);
-
-    const from = state?.from;
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -40,12 +36,6 @@ const Product = () => {
 
     return (
         <div className="max-w-[1200px] w-full">
-            <div className="flex flex-col w-fit text-primary-text dark:text-primary-text-dark mb-6 gap-4">
-                <Link to={from} className="text-brand">
-                    <i className="fa-solid fa-arrow-left mr-2"></i>
-                    Back
-                </Link>
-            </div>
             {product && (
                 <div className="flex text-primary-text dark:text-primary-text-dark gap-10">
                     <div className="w-1/2 relative">
@@ -53,7 +43,7 @@ const Product = () => {
                             ref={imageRef}
                             src={product.image}
                             alt={product.name}
-                            className="w-full object-cover rounded-2xl border border-border dark:border-border-dark"
+                            className="w-full object-cover rounded-xl border border-border dark:border-border-dark"
                         />
                         <p className="absolute bottom-3 right-3 text-xs text-white bg-black/60 px-2 py-1 rounded-md">
                             Photo by{" "}
@@ -71,7 +61,7 @@ const Product = () => {
 
                     <div
                         ref={contentRef}
-                        className="flex flex-col w-1/2 h-fit gap-6 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-2xl p-8"
+                        className="flex flex-col w-1/2 h-fit gap-6 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-xl p-8"
                     >
                         <p className="">
                             <i className="fa-solid fa-star mr-2 text-yellow-400"></i>
@@ -109,7 +99,7 @@ const Product = () => {
                             )}
                             <button
                                 disabled={product.stockQuantity == 0}
-                                onClick={() => addToCart(product)}
+                                onClick={() => addItem(product)}
                                 className="add-button py-3.5 rounded-xl w-full mt-4"
                             >
                                 <i className="fa-solid fa-cart-shopping mr-2"></i>

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { refreshToken } from "./refreshApi";
 
 const api = axios.create({
     baseURL: "http://localhost:8080/api",
@@ -8,31 +7,21 @@ const api = axios.create({
 
 const authPaths = ["/auth/login", "/auth/register", "/auth/refresh-token", "/auth/logout"];
 
-api.interceptors.request.use((config) => {
-    const token = sessionStorage.getItem("accessToken");
-
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-
-    return config;
-});
-
 api.interceptors.response.use(
     (res) => res,
     async (err) => {
         const original = err.config;
+
         if (
             err.response?.status === 401 &&
             !original._retry &&
             !authPaths.some((path) => original.url?.includes(path))
         ) {
             original._retry = true;
-            const newToken = await refreshToken();
-            sessionStorage.setItem("accessToken", newToken);
-            original.headers.Authorization = `Bearer ${newToken}`;
+            await api.post("/auth/refresh-token");
             return api(original);
         }
+
         return Promise.reject(err);
     }
 );

@@ -1,79 +1,77 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useAuth } from "./AuthContext";
+import {
+    getCart,
+    addItem as addItemApi,
+    incrementItem as incrementItemApi,
+    decrementItem as decrementItemApi,
+    deleteFromCart as deleteFromCartApi,
+} from "../api/cartService";
 
 const CartContext = createContext(null);
 
 export const CartProvider = ({ children }) => {
-    const [cartItems, setCartItems] = useState(() => {
-        const stored = localStorage.getItem("cartItems");
-        return stored ? JSON.parse(stored) : {};
-    });
+    const { isAuthenticated } = useAuth();
+    const [cart, setCart] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    const fetchCart = async () => {
+        if (!isAuthenticated) {
+            setCart(null);
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const { data } = await getCart();
+            setCart(data.data);
+        } catch {
+            setCart(null);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    }, [cartItems]);
+        fetchCart();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAuthenticated]);
 
-    const addToCart = (product) => {
-        setCartItems((prev) => {
-            const id = product.id;
-
-            if (prev[id]) {
-                return {
-                    ...prev,
-                    [id]: {
-                        ...prev[id],
-                        quantity: prev[id].quantity + 1,
-                    },
-                };
-            }
-
-            return {
-                ...prev,
-                [id]: {
-                    ...product,
-                    quantity: 1,
-                },
-            };
-        });
+    const addItem = async (payload) => {
+        await addItemApi(payload);
+        await fetchCart();
     };
 
-    const removeFromCart = (id) => {
-        setCartItems((prev) => {
-            const { [id]: _, ...rest } = prev;
-            return rest;
-        });
+    const incrementItem = async (id) => {
+        await incrementItemApi(id);
+        await fetchCart();
     };
 
-    const decrementItem = (id) => {
-        setCartItems((prev) => {
-            const item = prev[id];
-            if (!item) return prev;
-
-            if (item.quantity === 1) {
-                const { [id]: _, ...rest } = prev;
-                return rest;
-            }
-
-            return {
-                ...prev,
-                [id]: {
-                    ...item,
-                    quantity: item.quantity - 1,
-                },
-            };
-        });
+    const decrementItem = async (id) => {
+        await decrementItemApi(id);
+        await fetchCart();
     };
 
-    const clearCart = () => {
-        setCartItems({});
+    const deleteFromCart = async (id) => {
+        await deleteFromCartApi(id);
+        await fetchCart();
     };
+
+    const itemCount = cart ? cart.items.reduce((sum, item) => sum + item.quantity, 0) : 0;
+
+    const totalPrice = cart?.items?.reduce((sum, item) => sum + item.product.price * item.quantity, 0) ?? 0;
 
     const value = {
-        cartItems,
-        cartArray: Object.values(cartItems),
-        addToCart,
-        removeFromCart,
+        cart,
+        items: cart?.items ?? [],
+        itemCount,
+        totalPrice,
+        fetchCart,
+        addItem,
+        incrementItem,
         decrementItem,
-        clearCart,
+        deleteFromCart,
+        loading,
     };
 
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

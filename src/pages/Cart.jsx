@@ -1,13 +1,10 @@
-import { Link } from "react-router-dom";
 import { useCart } from "../contexts/CartContext";
-import { getTotalItems, getTotalPrice } from "../utils/cartUtils";
 import { formatMoney } from "../utils/formatMoney";
 import ItemCard from "../components/ItemCard";
 
 const Cart = () => {
-    const { cartArray } = useCart();
-    const itemsQuantity = getTotalItems(cartArray);
-    const subTotal = getTotalPrice(cartArray);
+    const { items, itemCount, totalPrice } = useCart();
+    const subTotal = totalPrice;
     const tax = subTotal * 0.1;
     const cartTotal = subTotal + tax;
 
@@ -17,15 +14,15 @@ const Cart = () => {
 
             <div className="grid grid-cols-3 gap-8">
                 <div className="col-span-2 flex flex-col gap-6">
-                    {cartArray.map((product) => (
+                    {items.map((product) => (
                         <ItemCard key={product.id} product={product} />
                     ))}
                 </div>
-                <div className="flex flex-col gap-3 sticky top-26 h-fit p-5 bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-2xl text-primary-text dark:text-primary-text-dark shadow-sm">
+                <div className="flex flex-col gap-3 sticky top-26 h-fit p-5 bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-xl text-primary-text dark:text-primary-text-dark shadow-sm">
                     <p className="mb-4">Order Summary</p>
                     <div className="flex justify-between text-muted-text-dark dark:text-muted-text">
                         <p>
-                            Subtotal ({itemsQuantity} {itemsQuantity == 1 ? "item" : "items"})
+                            Subtotal ({itemCount} {itemCount == 1 ? "item" : "items"})
                         </p>
                         <p>{formatMoney(subTotal)}</p>
                     </div>

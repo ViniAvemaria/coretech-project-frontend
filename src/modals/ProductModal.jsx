@@ -96,14 +96,13 @@ const ProductModal = ({ productModalObj, setProductModalObj, setProducts }) => {
         e.preventDefault();
         if (productModalObj.action == "add") {
             try {
-                const token = sessionStorage.getItem("accessToken");
                 const payload = {
                     ...form,
                     price: Number(form.price),
                     rating: Number(form.rating),
                     stockQuantity: Number(form.stockQuantity),
                 };
-                await create(token, payload);
+                await create(payload);
                 toast.success("Product added successfully");
                 fetchProducts();
                 setForm({
@@ -122,14 +121,13 @@ const ProductModal = ({ productModalObj, setProductModalObj, setProducts }) => {
             }
         } else {
             try {
-                const token = sessionStorage.getItem("accessToken");
                 const payload = {
                     ...form,
                     price: Number(form.price),
                     rating: Number(form.rating),
                     stockQuantity: Number(form.stockQuantity),
                 };
-                await update(token, productModalObj.product.id, payload);
+                await update(productModalObj.product.id, payload);
                 toast.success("Product updated successfully");
                 fetchProducts();
                 setProductModalObj({

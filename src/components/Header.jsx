@@ -1,18 +1,30 @@
 import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
 import { useCart } from "../contexts/CartContext";
-import { useUser } from "../contexts/UserContex";
-import { getTotalItems } from "../utils/cartUtils";
-import { handleLogout } from "../api/authService";
+import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Header = () => {
+    const { user, isAuthenticated, logout } = useAuth();
     const { theme, toggleTheme } = useTheme();
-    const { cartArray } = useCart();
-    const { user, removeUser } = useUser();
+    const { itemCount } = useCart();
     const location = useLocation();
     const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            toast.success("Sign out Successful");
+            navigate("/");
+        } catch (err) {
+            if (err.response) {
+                toast.error(err.response.data?.message || "Sign out failed");
+            } else {
+                toast.error("Network error");
+            }
+        }
+    };
 
     return (
         <header className="flex justify-between items-center h-20 py-4 px-10 w-full bg-header dark:bg-header-dark gap-10 border-b border-b-border dark:border-b-border-dark">
@@ -43,9 +55,9 @@ const Header = () => {
                     </li>
                     <li>
                         <Link to={"/cart"} className="flex items-center justify-center h-full nav-icons relative">
-                            {cartArray.length != 0 && (
+                            {itemCount > 0 && (
                                 <span className="absolute bg-brand py-0.5 px-1.5 ml-7.5 mb-7.5 text-white text-xs rounded-full">
-                                    {getTotalItems(cartArray)}
+                                    {itemCount}
                                 </span>
                             )}
                             <i className="fa-solid fa-cart-shopping"></i>
@@ -55,14 +67,14 @@ const Header = () => {
                         <Link
                             to={"/profile"}
                             className={`flex items-center justify-center h-full nav-icons relative ${
-                                user ? "cursor-auto" : ""
+                                isAuthenticated ? "cursor-auto" : ""
                             }`}
-                            onClick={(e) => user && e.preventDefault()}
+                            onClick={(e) => isAuthenticated && e.preventDefault()}
                             state={{ from: location.pathname }}
                         >
                             <i className="fa-solid fa-user"></i>
                         </Link>
-                        {user && (
+                        {isAuthenticated && (
                             <div className="flex flex-col w-60 absolute right-0 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark border border-border rounded-xl dark:border-border-dark opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-300">
                                 <div className="flex flex-col px-4 py-3 gap-0.5">
                                     <p className="text-muted-text-dark dark:text-muted-text">Signed in as</p>
@@ -88,7 +100,7 @@ const Header = () => {
                                     )}
                                     <li className="flex items-center text-red-500 hover:bg-[#f3f4f6] dark:hover:bg-[#111827] transition-colors duration-300 ease rounded-b-xl">
                                         <button
-                                            onClick={() => handleLogout({ removeUser, navigate, toast })}
+                                            onClick={() => handleLogout()}
                                             className="flex items-center px-4 py-3 w-full cursor-pointer"
                                         >
                                             <i className="fa-solid fa-arrow-right-from-bracket text-sm mr-2"></i> Sign

@@ -50,10 +50,9 @@ const AdminDashborad = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const token = sessionStorage.getItem("accessToken");
             const formData = new FormData();
             formData.append("file", fileInputRef.current.files[0]);
-            const response = await createFromImport(token, formData);
+            const response = await createFromImport(formData);
             toast.success(response.data?.message || "Products imported successfully");
             fetchProducts();
             if (response.data.data) setExistingProducts(response.data.data);
@@ -66,8 +65,7 @@ const AdminDashborad = () => {
 
     const handleDelete = async (id) => {
         try {
-            const token = sessionStorage.getItem("accessToken");
-            await deleteProduct(token, id);
+            await deleteProduct(id);
             toast.success("Product deleted successfully");
             fetchProducts();
         } catch (err) {
@@ -155,7 +153,7 @@ const AdminDashborad = () => {
 
                     <div className="rounded-xl overflow-hidden text-primary-text dark:text-primary-text-dark text-left border border-border dark:border-border-dark bg-header dark:bg-header-dark">
                         <table className="min-w-full table-fixed ">
-                            <thead className="bg-card dark:bg-card-dark text-gray-300">
+                            <thead className="bg-card dark:bg-card-dark">
                                 <tr>
                                     <th className="w-2/5 px-5 py-4">Product</th>
                                     <th className="px-5 py-4">Category</th>

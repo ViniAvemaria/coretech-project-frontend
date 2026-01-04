@@ -22,8 +22,8 @@
 
     --color-border: #e5e7eb;
 
-    --color-edit-button: #eff6ff;
-    --color-edit-hover: #dbeafe;
+    --color-edit-button: #dce4f0;
+    --color-edit-hover: #c3d4ee;
 
     /* Dark */
     --color-main-dark: #030712;
@@ -48,13 +48,13 @@
         font-size: 1.3rem;
         padding: 10px 8px;
         min-width: 40px;
-        color: var(--color-gray-700);
+        color: var(--color-primary-text);
         transition: background-color 0.3s ease;
         border-radius: 8px;
         cursor: pointer;
 
         &:hover {
-            background-color: #dbeafe;
+            background-color: var(--color-gray-200);
         }
 
         @variant dark {
@@ -178,7 +178,7 @@
     .input {
         width: 100%;
         padding: 8px 12px;
-        border-radius: 10px;
+        border-radius: 6px;
         border: 1px solid var(--color-border);
         background-color: var(--color-input);
 

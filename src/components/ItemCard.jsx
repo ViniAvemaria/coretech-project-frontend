@@ -3,11 +3,11 @@ import { formatMoney } from "../utils/formatMoney";
 import { Link } from "react-router-dom";
 
 const ItemCard = ({ product }) => {
-    const { addToCart, decrementItem, removeFromCart } = useCart();
+    const { incrementItem, decrementItem, deleteFromCart } = useCart();
     const itemTotal = product.quantity * product.price;
 
     return (
-        <div className="flex gap-8 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark p-5 rounded-2xl border border-border dark:border-border-dark shadow-sm">
+        <div className="flex gap-8 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark p-5 rounded-xl border border-border dark:border-border-dark shadow-sm">
             <img src={product.image} alt={product.name} className="w-40 h-40 object-cover rounded-xl" />
             <div className="flex flex-col w-full gap-1.5">
                 <p className="line-clamp-2 min-h-10 leading-snug hover:cursor-pointer hover:text-brand transition-color duration-300 ease">
@@ -29,7 +29,7 @@ const ItemCard = ({ product }) => {
                         </button>
                         <p>{product.quantity}</p>
                         <button
-                            onClick={() => addToCart(product)}
+                            onClick={() => incrementItem(product)}
                             className="flex items-center hover:cursor-pointer border border-border dark:border-border-dark px-2 pt-1.75 pb-1.25 rounded-sm hover:bg-gray-300 hover:dark:bg-gray-600 transition-colors duration-300 ease"
                         >
                             <i className="fa-solid fa-plus text-sm"></i>
@@ -37,7 +37,7 @@ const ItemCard = ({ product }) => {
                     </div>
                     <div className="flex items-center gap-4">
                         <p>{formatMoney(itemTotal)}</p>
-                        <button onClick={() => removeFromCart(product.id)} className="hover:cursor-pointer">
+                        <button onClick={() => deleteFromCart(product.id)} className="hover:cursor-pointer">
                             <i className="fa-solid fa-trash-can text-red-500"></i>
                         </button>
                     </div>
