@@ -142,7 +142,7 @@ const ProductModal = ({ productModalObj, setProductModalObj, setProducts }) => {
 
     return (
         <div className="flex items-center justify-center fixed inset-0 bg-black/75">
-            <div className="flex flex-col max-w-150 text-primary-text dark:text-primary-text-dark px-6 py-8 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-xl max-h-[80vh] overflow-y-auto">
+            <div className="flex flex-col max-w-150 text-primary-text dark:text-primary-text-dark p-8 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-xl max-h-[80vh] overflow-y-auto">
                 <h2 className="section-title mb-6">
                     {productModalObj.action == "add" ? "Add New Product" : "Edit Product"}
                 </h2>

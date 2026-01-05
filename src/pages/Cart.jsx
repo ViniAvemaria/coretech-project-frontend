@@ -14,10 +14,10 @@ const Cart = () => {
 
             <div className="grid grid-cols-3 gap-8">
                 <div className="col-span-2 flex flex-col gap-6">
-                    {items.map((product) => (
-                        <ItemCard key={product.id} product={product} />
+                    {items.map((item) => (
+                        <ItemCard key={item.id} item={item} />
                     ))}
-                </div>
+                </div> 
                 <div className="flex flex-col gap-3 sticky top-26 h-fit p-5 bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-xl text-primary-text dark:text-primary-text-dark shadow-sm">
                     <p className="mb-4">Order Summary</p>
                     <div className="flex justify-between text-muted-text-dark dark:text-muted-text">

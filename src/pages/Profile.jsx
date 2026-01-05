@@ -10,10 +10,10 @@ const Profile = () => {
     const navigate = useNavigate();
 
     const handleLogout = async () => {
+        navigate("/");
         try {
             await logout();
             toast.success("Sign out Successful");
-            navigate("/");
         } catch (err) {
             if (err.response) {
                 toast.error(err.response.data?.message || "Sign out failed");

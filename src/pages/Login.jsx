@@ -26,10 +26,10 @@ const Login = () => {
     });
 
     const onSubmit = async (data) => {
+        navigate("/");
         try {
             await login(data);
             toast.success("Login Successful");
-            navigate("/");
         } catch (err) {
             if (err.response) {
                 toast.error(err.response.data?.message || "Login failed");

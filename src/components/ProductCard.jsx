@@ -30,7 +30,12 @@ const ProductCard = ({ product }) => {
                     <p className="text-brand">{formatMoney(product.price)}</p>
                     <button
                         disabled={product.stockQuantity == 0}
-                        onClick={() => addItem(product)}
+                        onClick={() =>
+                            addItem({
+                                id: product.id,
+                                quantity: 1,
+                            })
+                        }
                         className="add-button"
                     >
                         <i className="fa-solid fa-cart-shopping mr-2"></i>

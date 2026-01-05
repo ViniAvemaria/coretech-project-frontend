@@ -13,10 +13,10 @@ const Header = () => {
     const navigate = useNavigate();
 
     const handleLogout = async () => {
+        navigate("/");
         try {
             await logout();
             toast.success("Sign out Successful");
-            navigate("/");
         } catch (err) {
             if (err.response) {
                 toast.error(err.response.data?.message || "Sign out failed");
@@ -75,7 +75,7 @@ const Header = () => {
                             <i className="fa-solid fa-user"></i>
                         </Link>
                         {isAuthenticated && (
-                            <div className="flex flex-col w-60 absolute right-0 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark border border-border rounded-xl dark:border-border-dark opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-300">
+                            <div className="flex flex-col w-60 absolute right-0 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark border border-border rounded-xl dark:border-border-dark opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-300 z-10">
                                 <div className="flex flex-col px-4 py-3 gap-0.5">
                                     <p className="text-muted-text-dark dark:text-muted-text">Signed in as</p>
                                     <p className="truncate">{`${user.firstName}${

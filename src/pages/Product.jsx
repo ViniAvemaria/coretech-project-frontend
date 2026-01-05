@@ -99,7 +99,12 @@ const Product = () => {
                             )}
                             <button
                                 disabled={product.stockQuantity == 0}
-                                onClick={() => addItem(product)}
+                                onClick={() =>
+                                    addItem({
+                                        id: product.id,
+                                        quantity: 1,
+                                    })
+                                }
                                 className="add-button py-3.5 rounded-xl w-full mt-4"
                             >
                                 <i className="fa-solid fa-cart-shopping mr-2"></i>
