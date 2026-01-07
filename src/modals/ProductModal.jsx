@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { getAll as getAllProducts, create, update } from "../api/productService";
-import { getAll as getAllCategories } from "../api/categoryService";
+import { create, update } from "../api/productService";
 import { toast } from "react-toastify";
+import { useProducts } from "../contexts/ProductContext";
 
-const ProductModal = ({ productModalObj, setProductModalObj, setProducts }) => {
-    const [categories, setCategories] = useState([]);
+const ProductModal = ({ productModalObj, setProductModalObj }) => {
+    const { action, product } = productModalObj;
+    const { categories, fetchProducts, fetchCategories } = useProducts();
     const [form, setForm] = useState({
         name: "",
         description: "",
@@ -18,53 +19,31 @@ const ProductModal = ({ productModalObj, setProductModalObj, setProducts }) => {
     });
 
     useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const res = await getAllCategories();
-                setCategories(res.data.data);
-            } catch (err) {
-                console.error(err);
-            }
-        };
-
-        fetchCategories();
-    }, []);
-
-    useEffect(() => {
-        console.log(productModalObj.product);
-
         const init = async () => {
-            if (productModalObj.action === "edit" && productModalObj.product) {
+            if (action === "edit" && product) {
                 setForm({
-                    name: productModalObj.product.name ?? "",
-                    description: productModalObj.product.description ?? "",
-                    price: String(productModalObj.product.price ?? ""),
-                    rating: String(productModalObj.product.rating ?? ""),
-                    image: productModalObj.product.image ?? "",
-                    stockQuantity: String(productModalObj.product.stockQuantity ?? ""),
-                    specifications: productModalObj.product.specifications?.length
-                        ? productModalObj.product.specifications
-                        : [""],
+                    name: product.name ?? "",
+                    description: product.description ?? "",
+                    price: String(product.price ?? ""),
+                    rating: String(product.rating ?? ""),
+                    image: product.image ?? "",
+                    stockQuantity: String(product.stockQuantity ?? ""),
+                    specifications: product.specifications?.length ? product.specifications : [""],
                     photoCredit: {
-                        authorName: productModalObj.product.photoCredit?.authorName ?? "",
-                        url: productModalObj.product.photoCredit?.url ?? "",
-                        source: productModalObj.product.photoCredit?.source ?? "",
+                        authorName: product.photoCredit?.authorName ?? "",
+                        url: product.photoCredit?.url ?? "",
+                        source: product.photoCredit?.source ?? "",
                     },
-                    category: productModalObj.product.category ?? "",
+                    category: product.category ?? "",
                 });
             }
         };
         init();
-    }, [productModalObj]);
+    }, [action, product]);
 
-    const fetchProducts = async () => {
-        try {
-            const res = await getAllProducts();
-            setProducts(res.data.data);
-        } catch (err) {
-            console.error(err);
-        }
-    };
+    useEffect(() => {
+        fetchCategories();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -94,7 +73,7 @@ const ProductModal = ({ productModalObj, setProductModalObj, setProducts }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (productModalObj.action == "add") {
+        if (action == "add") {
             try {
                 const payload = {
                     ...form,
@@ -104,7 +83,6 @@ const ProductModal = ({ productModalObj, setProductModalObj, setProducts }) => {
                 };
                 await create(payload);
                 toast.success("Product added successfully");
-                fetchProducts();
                 setForm({
                     name: "",
                     description: "",
@@ -127,9 +105,8 @@ const ProductModal = ({ productModalObj, setProductModalObj, setProducts }) => {
                     rating: Number(form.rating),
                     stockQuantity: Number(form.stockQuantity),
                 };
-                await update(productModalObj.product.id, payload);
+                await update(product.id, payload);
                 toast.success("Product updated successfully");
-                fetchProducts();
                 setProductModalObj({
                     action: null,
                     product: null,
@@ -138,14 +115,14 @@ const ProductModal = ({ productModalObj, setProductModalObj, setProducts }) => {
                 toast.error(err.response?.data?.message || "Failed to update product");
             }
         }
+        fetchProducts();
+        fetchCategories();
     };
 
     return (
         <div className="flex items-center justify-center fixed inset-0 bg-black/75">
             <div className="flex flex-col max-w-150 text-primary-text dark:text-primary-text-dark p-8 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-xl max-h-[80vh] overflow-y-auto">
-                <h2 className="section-title mb-6">
-                    {productModalObj.action == "add" ? "Add New Product" : "Edit Product"}
-                </h2>
+                <h2 className="section-title mb-6">{action == "add" ? "Add New Product" : "Edit Product"}</h2>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                     <div className="grid grid-cols-2 gap-4">
                         <div>

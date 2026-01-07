@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import ImportConflictsModal from "../modals/ImportConflictsModal";
-import { getAll, createFromImport, deleteProduct } from "../api/productService";
+import { createFromImport, deleteProduct } from "../api/productService";
 import { formatMoney } from "../utils/formatMoney";
 import { toast } from "react-toastify";
 import ProductModal from "../modals/ProductModal";
+import { useProducts } from "../contexts/ProductContext";
 
 const AdminDashborad = () => {
-    const [products, setProducts] = useState([]);
+    const { products, fetchProducts, fetchCategories } = useProducts();
     const [existingProducts, setExistingProducts] = useState([]);
     const [orders, setOrders] = useState([]);
     const [activeTab, setActiveTab] = useState("products");
@@ -18,23 +19,6 @@ const AdminDashborad = () => {
     const location = useLocation();
     const formRef = useRef(null);
     const fileInputRef = useRef(null);
-
-    const fetchProducts = async () => {
-        try {
-            const res = await getAll();
-            setProducts(res.data.data);
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-    useEffect(() => {
-        const init = () => {
-            fetchProducts();
-        };
-
-        init();
-    }, []);
 
     useEffect(() => {
         document.body.style.overflow = existingProducts.length > 0 ? "hidden" : "auto";
@@ -55,6 +39,7 @@ const AdminDashborad = () => {
             const response = await createFromImport(formData);
             toast.success(response.data?.message || "Products imported successfully");
             fetchProducts();
+            fetchCategories();
             if (response.data.data) setExistingProducts(response.data.data);
         } catch (err) {
             toast.error(err.response?.data?.message || "Failed to import products");
@@ -216,11 +201,7 @@ const AdminDashborad = () => {
             )}
 
             {productModalObj.action && (
-                <ProductModal
-                    productModalObj={productModalObj}
-                    setProducts={setProducts}
-                    setProductModalObj={setProductModalObj}
-                />
+                <ProductModal productModalObj={productModalObj} setProductModalObj={setProductModalObj} />
             )}
         </div>
     );

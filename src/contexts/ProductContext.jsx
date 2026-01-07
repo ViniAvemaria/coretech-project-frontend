@@ -13,10 +13,10 @@ export const ProductProvider = ({ children }) => {
     const [search, setSearch] = useState("");
     const firstRun = useRef(true);
 
-    const fetchProducts = async (cat = categories, query = search) => {
+    const fetchProducts = async (cat, query) => {
         setLoading(true);
         try {
-            const res = await getAllProducts(cat, query);
+            const res = await getAllProducts(cat ?? undefined, query ?? undefined);
             setProducts(res.data.data);
         } catch (err) {
             console.error(err);
@@ -71,6 +71,7 @@ export const ProductProvider = ({ children }) => {
                 setSearch,
                 setActiveCategory,
                 fetchProducts,
+                fetchCategories,
             }}
         >
             {children}
