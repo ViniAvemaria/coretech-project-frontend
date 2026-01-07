@@ -41,7 +41,7 @@ const Register = () => {
     };
 
     return (
-        <div className="max-w-[425px] w-full">
+        <div className="max-w-[425px] w-full py-12">
             <div className="flex flex-col gap-2 w-full h-fit border border-border dark:border-border-dark rounded-xl p-8 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark">
                 <p className="place-self-center">Create Account</p>
                 <p className="text-muted-text-dark dark:text-muted-text place-self-center">Sign up to get started</p>

@@ -148,71 +148,112 @@ const ProductModal = ({ productModalObj, setProductModalObj, setProducts }) => {
                 </h2>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                     <div className="grid grid-cols-2 gap-4">
-                        <input
-                            className="input input-autofill"
-                            name="name"
-                            placeholder="Name"
-                            value={form.name}
-                            onChange={handleChange}
-                            required
-                        />
-                        <input
-                            className="input input-autofill"
-                            name="image"
-                            placeholder="Image URL"
-                            value={form.image}
-                            onChange={handleChange}
-                            required
-                        />
-                        <input
-                            className="input input-autofill"
-                            type="number"
-                            step="0.01"
-                            name="price"
-                            placeholder="Price"
-                            value={form.price}
-                            onChange={handleChange}
-                            required
-                        />
-                        <input
-                            className="input input-autofill"
-                            type="number"
-                            step="0.1"
-                            name="rating"
-                            placeholder="Rating"
-                            value={form.rating}
-                            onChange={handleChange}
-                            required
-                        />
-                        <input
-                            className="input input-autofill"
-                            type="number"
-                            name="stockQuantity"
-                            placeholder="Stock Quantity"
-                            value={form.stockQuantity}
-                            onChange={handleChange}
-                            required
-                        />
-                        <input
-                            className="input input-autofill"
-                            name="category"
-                            list="categories"
-                            placeholder="Category"
-                            autoComplete="off"
-                            value={form.category}
+                        <div>
+                            <label htmlFor="name" className="font-semibold text-muted-text-dark dark:text-muted-text">
+                                Name
+                            </label>
+                            <input
+                                id="name"
+                                className="input input-autofill mt-2"
+                                name="name"
+                                value={form.name}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="image" className="font-semibold text-muted-text-dark dark:text-muted-text">
+                                Image URL
+                            </label>
+                            <input
+                                id="image"
+                                className="input input-autofill mt-2"
+                                name="image"
+                                value={form.image}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="price" className="font-semibold text-muted-text-dark dark:text-muted-text">
+                                Price
+                            </label>
+                            <input
+                                id="price"
+                                className="input input-autofill mt-2"
+                                type="number"
+                                step="0.01"
+                                name="price"
+                                value={form.price}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="rating" className="font-semibold text-muted-text-dark dark:text-muted-text">
+                                Rating
+                            </label>
+                            <input
+                                id="rating"
+                                className="input input-autofill mt-2"
+                                type="number"
+                                step="0.1"
+                                name="rating"
+                                value={form.rating}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="stock" className="font-semibold text-muted-text-dark dark:text-muted-text">
+                                Stock Quantity
+                            </label>
+                            <input
+                                id="stock"
+                                className="input input-autofill mt-2"
+                                type="number"
+                                name="stockQuantity"
+                                value={form.stockQuantity}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label
+                                htmlFor="category"
+                                className="font-semibold text-muted-text-dark dark:text-muted-text"
+                            >
+                                Category
+                            </label>
+                            <input
+                                id="category"
+                                className="input input-autofill mt-2"
+                                name="category"
+                                list="categories"
+                                autoComplete="off"
+                                value={form.category}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label
+                            htmlFor="description"
+                            className="font-semibold text-muted-text-dark dark:text-muted-text"
+                        >
+                            Description
+                        </label>
+                        <textarea
+                            id="description"
+                            className="input h-28 resize-none input-autofill mt-2"
+                            name="description"
+                            value={form.description}
                             onChange={handleChange}
                             required
                         />
                     </div>
-
-                    <textarea
-                        className="input h-28 resize-none input-autofill"
-                        name="description"
-                        placeholder="Description"
-                        value={form.description}
-                        onChange={handleChange}
-                        required
-                    />
 
                     <datalist id="categories">
                         {categories.map((cat) => (
@@ -221,7 +262,7 @@ const ProductModal = ({ productModalObj, setProductModalObj, setProducts }) => {
                     </datalist>
 
                     <div className="flex flex-col gap-3">
-                        <span className="font-semibold">Specifications</span>
+                        <span className="font-semibold text-muted-text-dark dark:text-muted-text">Specifications</span>
                         {form.specifications.map((spec, i) => (
                             <div key={i} className="flex gap-2">
                                 <input
@@ -250,30 +291,45 @@ const ProductModal = ({ productModalObj, setProductModalObj, setProducts }) => {
                     </div>
 
                     <div className="grid grid-cols-3 gap-4">
-                        <input
-                            className="input input-autofill"
-                            name="photoCredit.authorName"
-                            placeholder="Author"
-                            value={form.photoCredit.authorName}
-                            onChange={handleChange}
-                            required
-                        />
-                        <input
-                            className="input input-autofill"
-                            name="photoCredit.url"
-                            placeholder="URL"
-                            value={form.photoCredit.url}
-                            onChange={handleChange}
-                            required
-                        />
-                        <input
-                            className="input input-autofill"
-                            name="photoCredit.source"
-                            placeholder="Source"
-                            value={form.photoCredit.source}
-                            onChange={handleChange}
-                            required
-                        />
+                        <div>
+                            <label htmlFor="author" className="font-semibold text-muted-text-dark dark:text-muted-text">
+                                Author
+                            </label>
+                            <input
+                                id="author"
+                                className="input input-autofill mt-2"
+                                name="photoCredit.authorName"
+                                value={form.photoCredit.authorName}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="photo" className="font-semibold text-muted-text-dark dark:text-muted-text">
+                                Photo URL
+                            </label>
+                            <input
+                                id="photo"
+                                className="input input-autofill mt-2"
+                                name="photoCredit.url"
+                                value={form.photoCredit.url}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="source" className="font-semibold text-muted-text-dark dark:text-muted-text">
+                                Source
+                            </label>
+                            <input
+                                id="source"
+                                className="input input-autofill mt-2"
+                                name="photoCredit.source"
+                                value={form.photoCredit.source}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
                     </div>
 
                     <div className="flex gap-4 pt-4">

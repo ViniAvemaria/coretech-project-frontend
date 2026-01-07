@@ -74,7 +74,7 @@ const AdminDashborad = () => {
     };
 
     return (
-        <div className="max-w-[1200px] w-full">
+        <div className="max-w-[1200px] w-full py-12">
             <h2 className="text-lg font-bold text-primary-text dark:text-primary-text-dark mb-6">Admin Dashboard</h2>
 
             <div className="flex gap-12 text-muted-text-dark dark:text-muted-text">

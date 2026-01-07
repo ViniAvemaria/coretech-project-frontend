@@ -4,7 +4,13 @@ const API_URL = "/products";
 
 export const getById = (id) => api.get(`${API_URL}/${id}`);
 
-export const getAll = () => api.get(`${API_URL}`);
+export const getAll = (category, search) =>
+    api.get(API_URL, {
+        params: {
+            ...(category && { category }),
+            ...(search && { search }),
+        },
+    });
 
 export const create = (data) => api.post(`${API_URL}`, data);
 

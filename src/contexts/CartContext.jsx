@@ -34,7 +34,6 @@ export const CartProvider = ({ children }) => {
 
     useEffect(() => {
         fetchCart();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthenticated]);
 
     const addItem = async (payload) => {
@@ -77,5 +76,4 @@ export const CartProvider = ({ children }) => {
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useCart = () => useContext(CartContext);

@@ -35,7 +35,7 @@ const Product = () => {
     }, [product]);
 
     return (
-        <div className="max-w-[1200px] w-full">
+        <div className="max-w-[1200px] w-full py-12">
             {product && (
                 <div className="flex text-primary-text dark:text-primary-text-dark gap-10">
                     <div className="w-1/2 relative">

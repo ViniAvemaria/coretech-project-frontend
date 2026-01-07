@@ -192,6 +192,41 @@
             background-color: var(--color-input-dark);
         }
     }
+
+    .category-button {
+        color: white;
+        background-color: var(--color-brand);
+        border-radius: 8px;
+        padding: 7px 13px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: var(--color-brand-hover);
+        }
+    }
+
+    .category-button-off {
+        color: black;
+        background-color: var(--color-edit-button);
+        border-radius: 8px;
+        padding: 7px 13px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #c9d4e6;
+        }
+
+        @variant dark {
+            color: #bfc3cb;
+            background-color: var(--color-edit-button-dark);
+
+            &:hover {
+                background-color: #374151;
+            }
+        }
+    }
 }
 
 html {

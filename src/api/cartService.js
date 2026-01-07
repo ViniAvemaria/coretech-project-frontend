@@ -1,6 +1,6 @@
 import api from "./api";
 
-const API_URL = "/cart";
+const API_URL = "/carts";
 
 export const getCart = () => api.get(`${API_URL}`);
 

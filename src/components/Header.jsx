@@ -3,9 +3,11 @@ import { useTheme } from "../contexts/ThemeContext";
 import { useCart } from "../contexts/CartContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useProducts } from "../contexts/ProductContext";
 import { toast } from "react-toastify";
 
 const Header = () => {
+    const { search, setSearch } = useProducts();
     const { user, isAuthenticated, logout } = useAuth();
     const { theme, toggleTheme } = useTheme();
     const { itemCount } = useCart();
@@ -27,20 +29,29 @@ const Header = () => {
     };
 
     return (
-        <header className="flex justify-between items-center h-20 py-4 px-10 w-full bg-header dark:bg-header-dark gap-10 border-b border-b-border dark:border-b-border-dark">
+        <header className="flex justify-between items-center h-18 py-4 px-10 w-full bg-header dark:bg-header-dark gap-10 border-b border-b-border dark:border-b-border-dark">
             <Link to={"/"}>
                 <h1 className="text-brand text-3xl font-bold whitespace-nowrap cursor-pointer hover:scale-105 transition-transform duration-300 ease">
                     Core Tech
                 </h1>
             </Link>
-            <div className="group flex items-center w-full max-w-xl border-2 bg-input dark:bg-input-dark border-border px-4 py-2 rounded-lg gap-3 dark:border-border-dark focus-within:border-focus-ring transition-colors duration-300 ease">
+            <div className="group flex items-center w-full max-w-xl border bg-input dark:bg-input-dark border-border px-4 py-2 rounded-lg gap-3 dark:border-border-dark focus-within:border-focus-ring transition-colors duration-300 ease">
                 <i className="fa-solid fa-magnifying-glass text-muted-text dark:text-muted-text-dark group-focus-within:text-focus-ring transition-colors duration-300 ease"></i>
                 <input
                     id="search-bar"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                     type="text"
+                    autoComplete="off"
                     placeholder="Search for products..."
                     className="w-full focus:outline-none text-primary-text dark:text-primary-text-dark"
                 />
+                <button
+                    onClick={() => setSearch("")}
+                    className="text-muted-text dark:text-muted-text-dark group-focus-within:text-focus-ring transition-colors duration-300 ease text-sm cursor-pointer"
+                >
+                    {search && <i className="fa-solid fa-x"></i>}
+                </button>
             </div>
             <nav>
                 <ul className="flex gap-8">

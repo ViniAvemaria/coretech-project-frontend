@@ -1,5 +1,5 @@
 import api from "./api";
 
-const API_URL = "/user";
+const API_URL = "/users";
 
 export const userInfo = () => api.get(`${API_URL}/me`);

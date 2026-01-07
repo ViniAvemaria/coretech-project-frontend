@@ -24,7 +24,7 @@ const Profile = () => {
     };
 
     return (
-        <div className="max-w-[800px] w-full">
+        <div className="max-w-[800px] w-full py-12">
             <h2 className="section-title">My Profile</h2>
 
             {isAuthenticated && (
