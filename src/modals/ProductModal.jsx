@@ -10,7 +10,6 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
         name: "",
         description: "",
         price: "",
-        rating: "",
         image: "",
         stockQuantity: "",
         specifications: [""],
@@ -25,7 +24,6 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
                     name: product.name ?? "",
                     description: product.description ?? "",
                     price: String(product.price ?? ""),
-                    rating: String(product.rating ?? ""),
                     image: product.image ?? "",
                     stockQuantity: String(product.stockQuantity ?? ""),
                     specifications: product.specifications?.length ? product.specifications : [""],
@@ -78,7 +76,6 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
                 const payload = {
                     ...form,
                     price: Number(form.price),
-                    rating: Number(form.rating),
                     stockQuantity: Number(form.stockQuantity),
                 };
                 await create(payload);
@@ -87,7 +84,6 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
                     name: "",
                     description: "",
                     price: "",
-                    rating: "",
                     image: "",
                     stockQuantity: "",
                     specifications: [""],
@@ -102,7 +98,6 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
                 const payload = {
                     ...form,
                     price: Number(form.price),
-                    rating: Number(form.rating),
                     stockQuantity: Number(form.stockQuantity),
                 };
                 await update(product.id, payload);
@@ -125,7 +120,7 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
                 <h2 className="section-title mb-6">{action == "add" ? "Add New Product" : "Edit Product"}</h2>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                     <div className="grid grid-cols-2 gap-4">
-                        <div>
+                        <div className="col-span-2">
                             <label htmlFor="name" className="font-semibold text-muted-text-dark dark:text-muted-text">
                                 Name
                             </label>
@@ -162,21 +157,6 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
                                 step="0.01"
                                 name="price"
                                 value={form.price}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="rating" className="font-semibold text-muted-text-dark dark:text-muted-text">
-                                Rating
-                            </label>
-                            <input
-                                id="rating"
-                                className="input input-autofill mt-2"
-                                type="number"
-                                step="0.1"
-                                name="rating"
-                                value={form.rating}
                                 onChange={handleChange}
                                 required
                             />

@@ -6,6 +6,24 @@ const ProductCard = ({ product }) => {
     const { addItem } = useCart();
     const location = useLocation();
 
+    const renderStars = (rating) => {
+        const full = Math.floor(rating);
+        const half = rating % 1 >= 0.5;
+        const empty = 5 - full - (half ? 1 : 0);
+
+        return (
+            <>
+                {[...Array(full)].map((_, i) => (
+                    <i key={`f-${i}`} className="fa-solid fa-star text-sm text-yellow-400"></i>
+                ))}
+                {half && <i className="fa-regular fa-star-half-stroke text-sm text-yellow-400"></i>}
+                {[...Array(empty)].map((_, i) => (
+                    <i key={`e-${i}`} className="fa-regular fa-star text-sm text-yellow-400"></i>
+                ))}
+            </>
+        );
+    };
+
     return (
         <div className="h-[545px] w-[275px] bg-card dark:bg-card-dark border rounded-xl border-border dark:border-border-dark overflow-hidden shadow-sm">
             <div className="group h-[300px] overflow-hidden">
@@ -18,10 +36,10 @@ const ProductCard = ({ product }) => {
                 </Link>
             </div>
             <div className="flex flex-col h-[245px] py-5 px-3 gap-3 text-primary-text dark:text-primary-text-dark">
-                <p className="text-muted-text-dark dark:text-muted-text text-sm">
-                    <i className="fa-solid fa-star mr-2 text-yellow-400"></i>
-                    {product.rating}
-                </p>
+                <div className="flex gap-2">
+                    <p>{renderStars(product.rating)}</p>
+                    <p>{product.rating}</p>
+                </div>
                 <p className="line-clamp-2 min-h-10 leading-snug hover:cursor-pointer hover:text-brand transition-color duration-300 ease">
                     <Link to={`/product/${product.id}`}>{product.name}</Link>
                 </p>

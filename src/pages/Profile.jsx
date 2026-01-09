@@ -29,7 +29,7 @@ const Profile = () => {
 
             {isAuthenticated && (
                 <>
-                    <div className="flex flex-col gap-8 w-full p-6 rounded-xl border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark">
+                    <div className="flex flex-col gap-7 w-full p-6 rounded-xl border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark">
                         <p>Account information</p>
                         <div className="flex items-center">
                             <div className="flex items-center bg-gray-200 dark:bg-gray-700 px-4.5 py-4 rounded-[50%] mr-4">
