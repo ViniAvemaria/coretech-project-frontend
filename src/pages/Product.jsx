@@ -2,34 +2,37 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { formatMoney } from "../utils/formatMoney";
 import { useCart } from "../contexts/CartContext";
-import { getById } from "../api/productService";
-import { getAll } from "../api/reviewService";
 import Loading from "../components/Loading";
 import Review from "../components/Review";
-import RatingDistribution from "../components/RatingDistribution";
+import { useReviews } from "../contexts/ReviewContext";
+import { useProducts } from "../contexts/ProductContext";
+import { toast } from "react-toastify";
+
+const Row = ({ label, value, total }) => (
+    <div className="flex items-center gap-2">
+        <span>{label}</span>
+        <div className="w-80 h-2 bg-gray-200 dark:bg-border-dark rounded">
+            <div className="h-2 bg-yellow-400 rounded" style={{ width: total ? `${(value / total) * 100}%` : "0%" }} />
+        </div>
+        <span>{value}</span>
+    </div>
+);
 
 const Product = () => {
+    const { product, fetchProduct } = useProducts();
+    const { reviews, sort, setSort, refreshReviews, addReview } = useReviews();
     const { addItem } = useCart();
     const { id } = useParams();
-    const [product, setProduct] = useState(null);
-    const [reviews, setReviews] = useState([]);
     const [rating, setRating] = useState(1);
     const [hover, setHover] = useState(0);
 
     useEffect(() => {
-        const fetchProduct = async () => {
-            const res = await getById(id);
-            setProduct(res.data.data);
-        };
-
-        const fetchReview = async () => {
-            const res = await getAll(id);
-            setReviews(res.data.data);
-        };
-
-        fetchProduct();
-        fetchReview();
+        fetchProduct(id);
     }, [id]);
+
+    useEffect(() => {
+        refreshReviews(id);
+    }, [sort]);
 
     const getValue = (e, star) => {
         const half = e.nativeEvent.offsetX < e.currentTarget.offsetWidth / 2;
@@ -54,6 +57,39 @@ const Product = () => {
         );
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const payload = {
+                comment: e.target.review.value,
+                rating: rating,
+            };
+            await addReview(product.id, payload);
+            fetchProduct(product.id);
+            toast.success("Review submitted successfully");
+            e.target.reset();
+            setRating(1);
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Failed to submit review");
+        }
+    };
+
+    const getStarCounts = (reviews) => {
+        const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, total: 0 };
+
+        reviews.forEach((r) => {
+            const star = Math.floor(r.rating);
+            if (counts[star] !== undefined) {
+                counts[star]++;
+                counts.total++;
+            }
+        });
+
+        return counts;
+    };
+
+    const stars = getStarCounts(reviews);
+
     const contentRef = useRef(null);
     const imageRef = useRef(null);
 
@@ -73,7 +109,9 @@ const Product = () => {
     return (
         <div className="max-w-[1100px] w-full py-12">
             {!product ? (
-                <Loading />
+                <div className="flex items-center justify-center h-full">
+                    <Loading />
+                </div>
             ) : (
                 <>
                     <div className="flex text-primary-text dark:text-primary-text-dark gap-7">
@@ -159,7 +197,7 @@ const Product = () => {
                     >
                         <div className="flex gap-6">
                             <div className="flex flex-col gap-6 w-1/2">
-                                <h2 className="section-title m-0">Leave a Review</h2>
+                                <h2 className="section-title m-0 place-self-center">Leave a Review</h2>
                                 <div>
                                     <p className="mb-3">Rating</p>
                                     <div className="flex items-center">
@@ -193,21 +231,22 @@ const Product = () => {
                                         }`}</p>
                                     </div>
                                 </div>
-                                <div>
+                                <form onSubmit={handleSubmit} className="flex flex-col gap-2">
                                     <p>Your Review</p>
                                     <textarea
-                                        className="input h-32 resize-none mt-2"
+                                        className="input h-32 resize-none"
                                         name="review"
                                         id="review"
                                         placeholder="Share your experience with this product..."
+                                        required
                                     ></textarea>
-                                </div>
-                                <button
-                                    type="button"
-                                    className="bg-brand hover:bg-brand-hover cursor-pointer transition-colors duration-300 ease text-white py-3 px-4.5 rounded-lg"
-                                >
-                                    Submit Review
-                                </button>
+                                    <button
+                                        type="submit"
+                                        className="mt-2 bg-brand hover:bg-brand-hover cursor-pointer transition-colors duration-300 ease text-white py-3 px-4.5 rounded-lg"
+                                    >
+                                        Submit Review
+                                    </button>
+                                </form>
                             </div>
 
                             <div className="flex flex-col items-center justify-center w-1/2 gap-8">
@@ -216,16 +255,38 @@ const Product = () => {
                                     <p>{renderStars(product.rating)}</p>
                                     <p>{`${reviews.length} ${reviews.length < 2 ? "review" : "reviews"}`}</p>
                                 </div>
-                                <RatingDistribution reviews={reviews} />
+                                <div className="space-y-1.5">
+                                    <Row label="5" value={stars[5]} total={stars.total} />
+                                    <Row label="4" value={stars[4]} total={stars.total} />
+                                    <Row label="3" value={stars[3]} total={stars.total} />
+                                    <Row label="2" value={stars[2]} total={stars.total} />
+                                    <Row label="1" value={stars[1]} total={stars.total} />
+                                </div>
                             </div>
                         </div>
 
                         <hr className="mt-10 mb-10 text-muted-text-dark dark:text-muted-text" />
 
-                        <h2 className="section-title">Customer reviews</h2>
-                        {reviews.map((review) => (
-                            <Review key={review.id} review={review} />
-                        ))}
+                        <div className="flex justify-between items-center mb-6">
+                            <h2 className="section-title mb-0">Customer reviews</h2>
+                            <select
+                                id="sort-select"
+                                value={sort}
+                                onChange={(e) => setSort(e.target.value)}
+                                className="input w-fit"
+                            >
+                                <option value="newest">Newest</option>
+                                <option value="oldest">Oldest</option>
+                                <option value="highest">Highest rating</option>
+                                <option value="lowest">Lowest rating</option>
+                            </select>
+                        </div>
+
+                        <div className="flex flex-col gap-5">
+                            {reviews.map((review) => (
+                                <Review key={review.id} productId={product.id} review={review} />
+                            ))}
+                        </div>
                     </div>
                 </>
             )}

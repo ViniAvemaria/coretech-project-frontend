@@ -6,11 +6,14 @@ const Home = () => {
     const { products, categories, activeCategory, setActiveCategory, loading } = useProducts();
 
     return (
-        <>
+        <div className="max-w-[1200px] w-full pb-12">
             {loading ? (
-                <Loading />
+                <div className="flex items-center justify-center h-full">
+                    <Loading />
+                </div>
             ) : (
-                <div className="max-w-[1200px] w-full pb-12">
+                <>
+                    {" "}
                     <div className="flex items-center gap-2 px-10 absolute bg-header dark:bg-header-dark border-b border-border dark:border-border-dark h-18 w-full left-0">
                         <button
                             onClick={() => setActiveCategory(null)}
@@ -32,17 +35,15 @@ const Home = () => {
                             </button>
                         ))}
                     </div>
-
                     <h2 className="text-muted-text-dark dark:text-muted-text text-xl mt-26 mb-6">{`${products.length} products found`}</h2>
-
                     <div className="grid grid-cols-[repeat(auto-fit,minmax(275px,1fr))] place-items-center gap-8">
                         {products.map((product) => (
                             <ProductCard key={product.id} product={product} />
                         ))}
                     </div>
-                </div>
+                </>
             )}
-        </>
+        </div>
     );
 };
 

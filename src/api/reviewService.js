@@ -2,7 +2,12 @@ import api from "./api";
 
 const API_URL = "/reviews";
 
-export const getAll = (productId) => api.get(`${API_URL}/${productId}`);
+export const getAll = (productId, sort) =>
+    api.get(`${API_URL}/${productId}`, {
+        params: {
+            sort: sort,
+        },
+    });
 
 export const create = (productId, data) => api.post(`${API_URL}/${productId}`, data);
 

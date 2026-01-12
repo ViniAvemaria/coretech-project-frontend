@@ -1,17 +1,19 @@
-import { useRef } from "react";
-import { createContext, useContext, useEffect, useState } from "react";
-import { getAll as getAllProducts } from "../api/productService";
+import { useNavigate } from "react-router-dom";
+import { createContext, useContext, useEffect, useState, useRef } from "react";
+import { getAll as getAllProducts, getById } from "../api/productService";
 import { getAll as getAllCategories } from "../api/categoryService";
 
 const ProductContext = createContext(null);
 
 export const ProductProvider = ({ children }) => {
+    const [product, setProduct] = useState(null);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [categories, setCategories] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
     const [search, setSearch] = useState("");
     const firstRun = useRef(true);
+    const navigate = useNavigate();
 
     const fetchProducts = async (cat, query) => {
         setLoading(true);
@@ -21,6 +23,19 @@ export const ProductProvider = ({ children }) => {
         } catch (err) {
             console.error(err);
             setProducts([]);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const fetchProduct = async (id) => {
+        setLoading(true);
+        try {
+            const res = await getById(id);
+            setProduct(res.data.data);
+        } catch (err) {
+            console.error(err);
+            setProduct(null);
         } finally {
             setLoading(false);
         }
@@ -53,8 +68,9 @@ export const ProductProvider = ({ children }) => {
         }
 
         const timer = setTimeout(() => {
+            navigate("/");
             fetchProducts(activeCategory, search);
-        }, 500);
+        }, 650);
 
         return () => clearTimeout(timer);
     }, [search]);
@@ -63,6 +79,7 @@ export const ProductProvider = ({ children }) => {
         <ProductContext.Provider
             value={{
                 products,
+                product,
                 loading,
                 categories,
                 search,
@@ -71,6 +88,7 @@ export const ProductProvider = ({ children }) => {
                 setSearch,
                 setActiveCategory,
                 fetchProducts,
+                fetchProduct,
                 fetchCategories,
             }}
         >

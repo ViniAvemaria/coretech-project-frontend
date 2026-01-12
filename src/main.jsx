@@ -8,6 +8,7 @@ import { ThemeProvider } from "./contexts/ThemeContext.jsx";
 import { CartProvider } from "./contexts/CartContext.jsx";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 import { ProductProvider } from "./contexts/ProductContext.jsx";
+import { ReviewProvider } from "./contexts/ReviewContext.jsx";
 
 createRoot(document.getElementById("root")).render(
     // <StrictMode>
@@ -16,8 +17,10 @@ createRoot(document.getElementById("root")).render(
             <ThemeProvider>
                 <ProductProvider>
                     <CartProvider>
-                        <ScrollToTop />
-                        <AppRoutes />
+                        <ReviewProvider>
+                            <ScrollToTop />
+                            <AppRoutes />
+                        </ReviewProvider>
                     </CartProvider>
                 </ProductProvider>
             </ThemeProvider>
