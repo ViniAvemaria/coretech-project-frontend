@@ -1,10 +1,28 @@
 import { useCart } from "../contexts/CartContext";
+import { useAuth } from "../contexts/AuthContext";
 import { formatMoney } from "../utils/formatMoney";
 import { Link, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ProductCard = ({ product }) => {
+    const { isAuthenticated } = useAuth();
     const { addItem } = useCart();
     const location = useLocation();
+
+    const handleAddItem = async () => {
+        try {
+            if (!isAuthenticated) {
+                throw new Error("You must sign in to use the cart");
+            }
+            await addItem({
+                id: product.id,
+                quantity: 1,
+            });
+            toast.success("Product added to cart");
+        } catch (err) {
+            toast.error(err.message || "Failed to add item to cart");
+        }
+    };
 
     const renderStars = (rating) => {
         const full = Math.floor(rating);
@@ -46,16 +64,7 @@ const ProductCard = ({ product }) => {
                 <p className="text-muted-text-dark dark:text-muted-text text-sm line-clamp-3">{product.description}</p>
                 <div className="flex justify-between items-end-safe mt-auto">
                     <p className="text-brand">{formatMoney(product.price)}</p>
-                    <button
-                        disabled={product.stockQuantity == 0}
-                        onClick={() =>
-                            addItem({
-                                id: product.id,
-                                quantity: 1,
-                            })
-                        }
-                        className="add-button"
-                    >
+                    <button disabled={product.stockQuantity == 0} onClick={handleAddItem} className="add-button">
                         <i className="fa-solid fa-cart-shopping mr-2"></i>
                         Add
                     </button>

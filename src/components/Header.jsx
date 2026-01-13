@@ -75,7 +75,7 @@ const Header = () => {
                     </li>
                     <li className="relative group">
                         <Link
-                            to={"/profile"}
+                            to={isAuthenticated ? "/profile" : "/login"}
                             className={`flex items-center justify-center h-full nav-icons relative ${
                                 isAuthenticated ? "cursor-auto" : ""
                             }`}

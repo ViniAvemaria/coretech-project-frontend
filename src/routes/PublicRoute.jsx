@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 const PublicRoute = ({ children }) => {
     const { isAuthenticated } = useAuth();
     if (isAuthenticated) {
-        return <Navigate to="/profile" replace />;
+        return <Navigate to="/" replace />;
     }
     return children;
 };

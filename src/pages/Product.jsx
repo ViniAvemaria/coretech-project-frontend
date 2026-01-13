@@ -4,6 +4,7 @@ import { formatMoney } from "../utils/formatMoney";
 import { useCart } from "../contexts/CartContext";
 import Loading from "../components/Loading";
 import Review from "../components/Review";
+import { useAuth } from "../contexts/AuthContext";
 import { useReviews } from "../contexts/ReviewContext";
 import { useProducts } from "../contexts/ProductContext";
 import { toast } from "react-toastify";
@@ -19,12 +20,14 @@ const Row = ({ label, value, total }) => (
 );
 
 const Product = () => {
+    const { user, isAuthenticated } = useAuth();
     const { product, fetchProduct } = useProducts();
     const { reviews, sort, setSort, refreshReviews, addReview } = useReviews();
     const { addItem } = useCart();
     const { id } = useParams();
     const [rating, setRating] = useState(1);
     const [hover, setHover] = useState(0);
+    const [userReview, setUserReview] = useState(null);
 
     useEffect(() => {
         fetchProduct(id);
@@ -33,6 +36,22 @@ const Product = () => {
     useEffect(() => {
         refreshReviews(id);
     }, [sort]);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            const findUserReview = () => {
+                for (const review of reviews) {
+                    if (review.userId === user.id) {
+                        setUserReview(review);
+                        return;
+                    }
+                }
+                setUserReview(null);
+            };
+
+            findUserReview();
+        }
+    }, [reviews]);
 
     const getValue = (e, star) => {
         const half = e.nativeEvent.offsetX < e.currentTarget.offsetWidth / 2;
@@ -60,6 +79,9 @@ const Product = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            if (!isAuthenticated) {
+                throw new Error("You must sign in to submit a review");
+            }
             const payload = {
                 comment: e.target.review.value,
                 rating: rating,
@@ -70,7 +92,7 @@ const Product = () => {
             e.target.reset();
             setRating(1);
         } catch (err) {
-            toast.error(err.response?.data?.message || "Failed to submit review");
+            toast.error(err.message || "Failed to submit review");
         }
     };
 
@@ -89,6 +111,21 @@ const Product = () => {
     };
 
     const stars = getStarCounts(reviews);
+
+    const handleAddItem = async () => {
+        try {
+            if (!isAuthenticated) {
+                throw new Error("You must sign in to use the cart");
+            }
+            await addItem({
+                id: product.id,
+                quantity: 1,
+            });
+            toast.success("Product added to cart");
+        } catch (err) {
+            toast.error(err.message || "Failed to add item to cart");
+        }
+    };
 
     const contentRef = useRef(null);
     const imageRef = useRef(null);
@@ -176,12 +213,7 @@ const Product = () => {
                                 )}
                                 <button
                                     disabled={product.stockQuantity == 0}
-                                    onClick={() =>
-                                        addItem({
-                                            id: product.id,
-                                            quantity: 1,
-                                        })
-                                    }
+                                    onClick={handleAddItem}
                                     className="add-button py-3.5 rounded-xl w-full mt-4"
                                 >
                                     <i className="fa-solid fa-cart-shopping mr-2"></i>
@@ -266,6 +298,14 @@ const Product = () => {
                         </div>
 
                         <hr className="mt-10 mb-10 text-muted-text-dark dark:text-muted-text" />
+
+                        {userReview && (
+                            <div className="flex flex-col gap-2">
+                                <h2 className="section-title">Your Review</h2>
+                                <Review productId={product.id} review={userReview} />
+                                <hr className="mt-10 mb-10 text-muted-text-dark dark:text-muted-text" />
+                            </div>
+                        )}
 
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="section-title mb-0">Customer reviews</h2>

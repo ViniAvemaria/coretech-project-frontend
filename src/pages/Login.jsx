@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import z from "zod";
 
@@ -15,7 +14,6 @@ const loginSchema = z.object({
 const Login = () => {
     const { login } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
-    const navigate = useNavigate();
 
     const {
         register,
