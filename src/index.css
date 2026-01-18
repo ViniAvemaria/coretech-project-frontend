@@ -43,6 +43,18 @@
     --color-edit-hover-dark: #374151;
 }
 
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+.animate-shimmer {
+    animation: shimmer 1.2s infinite;
+}
+
 @layer components {
     .nav-icons {
         font-size: 1.3rem;

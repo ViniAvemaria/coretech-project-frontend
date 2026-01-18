@@ -17,6 +17,7 @@ const registerSchema = z.object({
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const {
         register,
@@ -27,9 +28,10 @@ const Register = () => {
     });
 
     const onSubmit = async (data) => {
+        setLoading(true);
         try {
             await registerUser(data);
-            toast.success("Registration Successful");
+            toast.success("Check your email to activate your account!");
             navigate("/login");
         } catch (err) {
             if (err.response) {
@@ -37,6 +39,8 @@ const Register = () => {
             } else {
                 toast.error("Network error");
             }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -45,6 +49,7 @@ const Register = () => {
             <div className="flex flex-col gap-2 w-full h-fit border border-border dark:border-border-dark rounded-xl p-8 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark">
                 <p className="place-self-center">Create Account</p>
                 <p className="text-muted-text-dark dark:text-muted-text place-self-center">Sign up to get started</p>
+
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-6 gap-5">
                     <div>
                         <label htmlFor="firstName">First Name</label>
@@ -129,11 +134,16 @@ const Register = () => {
 
                     <button
                         type="submit"
-                        className="bg-brand text-white px-3.5 py-2.5 rounded-xl hover:bg-brand-hover transition-colors duration-300 ease cursor-pointer"
+                        disabled={loading}
+                        className={`relative overflow-hidden px-3.5 py-2.5 rounded-xl text-white transition cursor-pointer ${loading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
                     >
-                        Create Account
+                        {loading && (
+                            <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent via-white/35 to-transparent" />
+                        )}
+                        <span className="relative z-10">{loading ? "Creating..." : "Create Account"}</span>
                     </button>
                 </form>
+
                 <p className="text-md text-muted-text-dark dark:text-muted-text text-center mt-6">
                     Already have an account?
                     <Link to={"/login"} className="ml-1 cursor-pointer text-brand">
