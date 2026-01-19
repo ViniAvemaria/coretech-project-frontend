@@ -1,0 +1,84 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { recoverPassword } from "../api/authService";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { zodResolver } from "@hookform/resolvers/zod";
+import z from "zod";
+
+const emailSchema = z.object({
+    email: z.email(),
+});
+
+const RecoverPassword = () => {
+    const [loading, setLoading] = useState(false);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({ resolver: zodResolver(emailSchema) });
+
+    const onSubmit = async (data) => {
+        setLoading(true);
+        try {
+            await recoverPassword(data);
+            toast.success("If the email exists, a recovery link will be sent.");
+        } catch (err) {
+            if (err.response) {
+                toast.error(err.response.data?.message || "If the email exists, a recovery link will be sent.");
+            } else {
+                toast.error("Network error");
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <div className="max-w-[425px] w-full py-12">
+            <div className="flex flex-col gap-3 border border-border dark:border-border-dark rounded-xl p-8 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark">
+                <p className="place-self-center">Password Recovery</p>
+                <p className="text-center text-muted-text-dark dark:text-muted-text place-self-center">
+                    If your email is registered, you will receive a link to reset your password shortly
+                </p>
+
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-6 gap-5">
+                    <div>
+                        <div className="flex border bg-input dark:bg-input-dark border-border dark:border-border-dark px-3 py-1.5 mt-2 rounded-md bg-i rounded-2md focus-within:border-focus-ring transition-colors duration-300 ease">
+                            <input
+                                id="email"
+                                type="email"
+                                {...register("email")}
+                                placeholder="Enter your email"
+                                autoComplete="email"
+                                className="input-autofill focus:outline-none w-full text-primary-text dark:text-primary-text-dark"
+                            />
+                        </div>
+                        {errors.email && <p className="text-red-600 dark:text-red-500 mt-2">{errors.email.message}</p>}
+                    </div>
+
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className={`relative overflow-hidden px-3.5 py-2.5 rounded-lg text-white transition-colors duration-300 ease cursor-pointer ${loading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
+                    >
+                        {loading && (
+                            <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent via-white/35 to-transparent" />
+                        )}
+                        <span className="relative z-10">{loading ? "Sending..." : "Send Email"}</span>
+                    </button>
+
+                    <Link
+                        to={"/login"}
+                        className="mt-2 text-brand hover:text-brand-hover transition-colors duration-300 ease cursor-pointer place-self-center"
+                    >
+                        Go to Login Page
+                    </Link>
+                </form>
+            </div>
+        </div>
+    );
+};
+
+export default RecoverPassword;

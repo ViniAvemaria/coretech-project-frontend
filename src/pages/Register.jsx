@@ -31,7 +31,7 @@ const Register = () => {
         setLoading(true);
         try {
             await registerUser(data);
-            toast.success("Check your email to activate your account!");
+            toast.success("Check your email to activate your account");
             navigate("/login");
         } catch (err) {
             if (err.response) {
@@ -135,7 +135,7 @@ const Register = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className={`relative overflow-hidden px-3.5 py-2.5 rounded-xl text-white transition cursor-pointer ${loading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
+                        className={`relative overflow-hidden px-3.5 py-2.5 rounded-xl text-white transition-colors duration-300 ease cursor-pointer ${loading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
                     >
                         {loading && (
                             <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent via-white/35 to-transparent" />

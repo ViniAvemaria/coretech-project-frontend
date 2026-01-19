@@ -96,7 +96,7 @@ const Login = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className={`relative overflow-hidden px-3.5 py-2.5 rounded-xl text-white transition cursor-pointer ${loading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
+                        className={`relative overflow-hidden px-3.5 py-2.5 rounded-xl text-white transition-colors duration-300 ease cursor-pointer ${loading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
                     >
                         {loading && (
                             <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent via-white/35 to-transparent" />
@@ -108,6 +108,13 @@ const Login = () => {
                     Don't have an account?
                     <Link to={"/register"} className="ml-1 cursor-pointer text-brand">
                         Register
+                    </Link>
+                </p>
+
+                <p className="text-md text-muted-text-dark dark:text-muted-text text-center">
+                    Forgot your password?
+                    <Link to={"/recover-password"} className="ml-1 cursor-pointer text-brand">
+                        Reset it
                     </Link>
                 </p>
             </div>
