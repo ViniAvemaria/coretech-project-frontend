@@ -14,3 +14,11 @@ export const recoverPassword = (data) => api.post(`${API_URL}/recover-password`,
 
 export const resetPassword = (token, id, password) =>
     api.post(`${API_URL}/reset-password?token=${token}&id=${id}`, { password });
+
+export const requestEmailChange = () => api.get(`${API_URL}/change-email`);
+
+export const requestPasswordChange = () => api.get(`${API_URL}/change-password`);
+
+export const validateEmailChange = (data) => api.post(`${API_URL}/validate-email-change`, data);
+
+export const validatePasswordChange = (data) => api.post(`${API_URL}/validate-password-change`, data);

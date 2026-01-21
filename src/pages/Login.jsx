@@ -111,7 +111,7 @@ const Login = () => {
                     </Link>
                 </p>
 
-                <p className="text-md text-muted-text-dark dark:text-muted-text text-center">
+                <p className="mt-2 text-md text-muted-text-dark dark:text-muted-text text-center">
                     Forgot your password?
                     <Link to={"/recover-password"} className="ml-1 cursor-pointer text-brand">
                         Reset it

@@ -64,6 +64,24 @@ const Review = ({ productId, review }) => {
         );
     };
 
+    function timeAgo(createdAt, updatedAt) {
+        const date = new Date(updatedAt || createdAt);
+        const now = new Date();
+        const diffMs = now - date;
+
+        const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+        if (diffHours < 24) return `${diffHours} hour${diffHours !== 1 ? "s" : ""} ago`;
+
+        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+        if (diffDays < 30) return `${diffDays} day${diffDays !== 1 ? "s" : ""} ago`;
+
+        const diffMonths = Math.floor(diffDays / 30);
+        if (diffMonths < 12) return `${diffMonths} month${diffMonths !== 1 ? "s" : ""} ago`;
+
+        const diffYears = Math.floor(diffMonths / 12);
+        return `${diffYears} year${diffYears !== 1 ? "s" : ""} ago`;
+    }
+
     return (
         <div className="flex flex-col gap-4 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark py-5 px-8 rounded-xl border border-border dark:border-border-dark">
             <div className="flex justify-between">
@@ -89,8 +107,8 @@ const Review = ({ productId, review }) => {
                                                         value >= star
                                                             ? "fa-solid fa-star text-lg text-yellow-400"
                                                             : value >= star - 0.5
-                                                            ? "fa-regular fa-star-half-stroke text-lg text-yellow-400"
-                                                            : "fa-regular fa-star text-lg text-yellow-400"
+                                                              ? "fa-regular fa-star-half-stroke text-lg text-yellow-400"
+                                                              : "fa-regular fa-star text-lg text-yellow-400"
                                                     }
                                                 />
                                             </button>
@@ -109,11 +127,18 @@ const Review = ({ productId, review }) => {
                         </>
                     )}
                 </div>
-                <div className="flex gap-2">
+                <div className="flex items-center gap-2">
                     {review.createdAt != review.updatedAt && (
-                        <span className="flex items-center text-xs px-2 py-0.5 rounded bg-gray-200 text-gray-600 dark:bg-gray-600 dark:text-gray-200">
-                            Edited
-                        </span>
+                        <div className="relative inline-block group cursor-pointer">
+                            <span className="flex items-center text-xs px-2 py-0.5 rounded bg-gray-200 text-gray-600 dark:bg-gray-600 dark:text-gray-200">
+                                Edited
+                            </span>
+                            <div className="absolute right-full top-0 ml-2 py-2 px-3 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg pointer-events-none shadow opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity">
+                                <p className="text-sm whitespace-nowrap text-muted-text-dark dark:text-muted-text">
+                                    {timeAgo(review.createdAt, review.updatedAt)}
+                                </p>
+                            </div>
+                        </div>
                     )}
                     <p className="text-muted-text-dark dark:text-muted-text">
                         {new Date(review.createdAt).toLocaleDateString("en-GB", {
