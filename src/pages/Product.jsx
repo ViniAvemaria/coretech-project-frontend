@@ -10,9 +10,9 @@ import { useProducts } from "../contexts/ProductContext";
 import { toast } from "react-toastify";
 
 const Row = ({ label, value, total }) => (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center justify-center gap-2">
         <span>{label}</span>
-        <div className="w-80 h-2 bg-gray-200 dark:bg-border-dark rounded">
+        <div className="max-w-80 w-full h-2 bg-gray-200 dark:bg-border-dark rounded">
             <div className="h-2 bg-yellow-400 rounded" style={{ width: total ? `${(value / total) * 100}%` : "0%" }} />
         </div>
         <span>{value}</span>
@@ -28,6 +28,7 @@ const Product = () => {
     const [rating, setRating] = useState(1);
     const [hover, setHover] = useState(0);
     const [userReview, setUserReview] = useState(null);
+    const [reviewComment, setReviewComment] = useState("");
 
     useEffect(() => {
         fetchProduct(id);
@@ -83,13 +84,13 @@ const Product = () => {
                 throw new Error("You must sign in to submit a review");
             }
             const payload = {
-                comment: e.target.review.value,
+                comment: reviewComment,
                 rating: rating,
             };
             await addReview(product.id, payload);
             fetchProduct(product.id);
             toast.success("Review submitted successfully");
-            e.target.reset();
+            setReviewComment("");
             setRating(1);
         } catch (err) {
             toast.error(err.message || "Failed to submit review");
@@ -151,13 +152,13 @@ const Product = () => {
                 </div>
             ) : (
                 <>
-                    <div className="flex text-primary-text dark:text-primary-text-dark gap-7">
-                        <div className="w-1/2 relative">
+                    <div className="flex max-md:flex-col text-primary-text dark:text-primary-text-dark gap-7 max-lg:gap-0">
+                        <div className="w-1/2 max-md:w-full relative">
                             <img
                                 ref={imageRef}
                                 src={product.image}
                                 alt={product.name}
-                                className="w-full object-cover rounded-xl border border-border dark:border-border-dark"
+                                className="w-full object-cover rounded-xl max-lg:rounded-tr-none max-lg:rounded-br-none max-lg:border-r-0 border border-border dark:border-border-dark max-md:rounded-bl-none max-md:rounded-tr-lg max-md:border-b-0"
                             />
                             <p className="absolute bottom-3 right-3 text-xs text-white bg-black/60 px-2 py-1 rounded-md">
                                 Photo by{" "}
@@ -175,7 +176,7 @@ const Product = () => {
 
                         <div
                             ref={contentRef}
-                            className="flex flex-col w-1/2 h-fit gap-6 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-xl p-8"
+                            className="flex flex-col w-1/2 max-md:w-full h-fit gap-6 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-xl p-8 max-lg:rounded-tl-none max-lg:rounded-bl-none max-md:rounded-tr-none max-md:rounded-bl-lg"
                         >
                             <div className="flex gap-2">
                                 <p>{renderStars(product.rating)}</p>
@@ -225,10 +226,10 @@ const Product = () => {
 
                     <div
                         id="review-section"
-                        className="mt-7 p-8 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-xl text-primary-text dark:text-primary-text-dark"
+                        className=" mt-7 p-8 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-xl text-primary-text dark:text-primary-text-dark"
                     >
-                        <div className="flex gap-6">
-                            <div className="flex flex-col gap-6 w-1/2">
+                        <div className="flex max-[876px]:flex-col gap-6">
+                            <div className="flex flex-col gap-6 w-1/2 max-[876px]:w-full max-[876px]:order-2">
                                 <h2 className="section-title m-0 place-self-center">Leave a Review</h2>
                                 <div>
                                     <p className="mb-3">Rating</p>
@@ -250,8 +251,8 @@ const Product = () => {
                                                                 value >= star
                                                                     ? "fa-solid fa-star text-3xl text-yellow-400"
                                                                     : value >= star - 0.5
-                                                                    ? "fa-regular fa-star-half-stroke text-3xl text-yellow-400"
-                                                                    : "fa-regular fa-star text-3xl text-yellow-400"
+                                                                      ? "fa-regular fa-star-half-stroke text-3xl text-yellow-400"
+                                                                      : "fa-regular fa-star text-3xl text-yellow-400"
                                                             }
                                                         />
                                                     </button>
@@ -267,27 +268,33 @@ const Product = () => {
                                     <p>Your Review</p>
                                     <textarea
                                         className="input h-32 resize-none"
+                                        value={reviewComment}
+                                        maxLength={1000}
                                         name="review"
                                         id="review"
+                                        onChange={(e) => setReviewComment(e.target.value)}
                                         placeholder="Share your experience with this product..."
                                         required
                                     ></textarea>
+                                    <p className="text-sm text-muted-text-dark dark:text-muted-text">
+                                        {reviewComment.length}/1000
+                                    </p>
                                     <button
                                         type="submit"
-                                        className="mt-2 bg-brand hover:bg-brand-hover cursor-pointer transition-colors duration-300 ease text-white py-3 px-4.5 rounded-lg"
+                                        className="mt-2 bg-brand hover:bg-brand-hover cursor-pointer transition-colors duration-300 ease text-white py-3 px-4.5 rounded-xl"
                                     >
                                         Submit Review
                                     </button>
                                 </form>
                             </div>
 
-                            <div className="flex flex-col items-center justify-center w-1/2 gap-8">
+                            <div className="flex flex-col items-center justify-center w-1/2 max-[876px]:w-full gap-8 max-[876px]:order-1">
                                 <div className="flex flex-col items-center gap-1">
                                     <h2 className="font-bold text-4xl">{product.rating}</h2>
                                     <p>{renderStars(product.rating)}</p>
                                     <p>{`${reviews.length} ${reviews.length < 2 ? "review" : "reviews"}`}</p>
                                 </div>
-                                <div className="space-y-1.5">
+                                <div className="space-y-1.5 w-full">
                                     <Row label="5" value={stars[5]} total={stars.total} />
                                     <Row label="4" value={stars[4]} total={stars.total} />
                                     <Row label="3" value={stars[3]} total={stars.total} />

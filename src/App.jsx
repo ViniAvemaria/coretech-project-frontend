@@ -13,7 +13,7 @@ const App = () => {
     const { theme } = useTheme();
 
     return (
-        <main className="min-h-screen flex flex-col bg-main dark:bg-main-dark">
+        <main className="min-h-screen flex flex-col bg-main dark:bg-main-dark min-w-[360px]">
             <ToastContainer theme={theme == "dark" ? "dark" : "light"} limit={3} position="top-left" />
             <Header />
             <section className="flex justify-center min-h-dvh flex-1 px-12">

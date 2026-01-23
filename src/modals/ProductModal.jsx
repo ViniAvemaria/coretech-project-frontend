@@ -292,7 +292,7 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
                     <div className="flex gap-4 pt-4">
                         <button
                             type="submit"
-                            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg cursor-pointer transition-colors duration-300 ease"
+                            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl cursor-pointer transition-colors duration-300 ease"
                         >
                             Submit
                         </button>
@@ -304,7 +304,7 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
                                     product: null,
                                 })
                             }
-                            className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg cursor-pointer transition-colors duration-300 ease"
+                            className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 rounded-xl cursor-pointer transition-colors duration-300 ease"
                         >
                             Cancel
                         </button>

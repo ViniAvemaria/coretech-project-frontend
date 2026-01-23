@@ -13,22 +13,19 @@ const Home = () => {
                 </div>
             ) : (
                 <>
-                    {" "}
-                    <div className="flex items-center gap-2 px-10 absolute bg-header dark:bg-header-dark border-b border-border dark:border-border-dark h-18 w-full left-0">
+                    <div className="flex items-center w-screen min-w-[360px] gap-2 px-10 absolute bg-header dark:bg-header-dark border-b border-border dark:border-border-dark h-18 left-0 overflow-y-scroll">
                         <button
                             onClick={() => setActiveCategory(null)}
-                            className={`category-button ${
-                                activeCategory === null ? "category-button" : "category-button-off"
-                            }`}
+                            className={`${activeCategory === null ? "category-button" : "category-button-off"} whitespace-nowrap`}
                         >
                             All Products
                         </button>
                         {categories.map((category) => (
                             <button
                                 onClick={() => setActiveCategory(category.name)}
-                                className={`category-button ${
+                                className={`${
                                     activeCategory === category.name ? "category-button" : "category-button-off"
-                                }`}
+                                } whitespace-nowrap`}
                                 key={category.id}
                             >
                                 {category.name.charAt(0).toUpperCase() + category.name.slice(1)}

@@ -12,13 +12,13 @@ const Cart = () => {
         <div className="max-w-[1200px] w-full py-12">
             <h2 className="section-title">Shopping Cart</h2>
 
-            <div className="grid grid-cols-3 gap-8">
-                <div className="col-span-2 flex flex-col gap-6">
+            <div className="grid grid-cols-3 max-lg:grid-cols-1 gap-8 ">
+                <div className="min-[1000px]:col-span-2 flex flex-col gap-6">
                     {items.map((item) => (
                         <ItemCard key={item.id} item={item} />
                     ))}
                 </div>
-                <div className="flex flex-col gap-3 sticky top-26 h-fit p-5 bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-xl text-primary-text dark:text-primary-text-dark shadow-sm">
+                <div className="flex flex-col gap-3 sticky top-10 h-fit p-5 bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-xl text-primary-text dark:text-primary-text-dark shadow-sm">
                     <p className="mb-4">Order Summary</p>
                     <div className="flex justify-between text-muted-text-dark dark:text-muted-text">
                         <p>

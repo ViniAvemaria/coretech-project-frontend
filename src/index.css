@@ -3,6 +3,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+    --breakpoint-xs: 480px;
+
     --color-brand: #2563eb;
     --color-brand-hover: #1d4ed8;
     --color-focus-ring: #3b82f6;
@@ -49,6 +51,25 @@
     --color-cancel-text-dark: #fca5a5;
     --color-cancel-button-dark: #3b1f1f;
     --color-cancel-hover-dark: #4b2626;
+}
+
+@layer base {
+    html {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 16px;
+    }
+
+    @media (max-width: 1024px) {
+        html {
+            font-size: 15px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        html {
+            font-size: 14px;
+        }
+    }
 }
 
 @keyframes shimmer {
@@ -269,8 +290,4 @@
             }
         }
     }
-}
-
-html {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }

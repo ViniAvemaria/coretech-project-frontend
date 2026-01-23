@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useReviews } from "../contexts/ReviewContext";
 import { useProducts } from "../contexts/ProductContext";
@@ -11,13 +11,22 @@ const Review = ({ productId, review }) => {
     const [rating, setRating] = useState(review.rating);
     const [hover, setHover] = useState(0);
     const [editing, setEditing] = useState(false);
-    const reviewComment = review.comment;
+    const [reviewComment, setReviewComment] = useState(review.comment);
+    const ref = useRef(null);
+    const [expanded, setExpanded] = useState(false);
+    const [showBtn, setShowBtn] = useState(false);
+
+    useEffect(() => {
+        if (ref.current) {
+            setShowBtn(ref.current.scrollHeight > ref.current.clientHeight);
+        }
+    }, [review.comment, expanded]);
 
     const handleEdit = async (e) => {
         e.preventDefault();
         try {
             const payload = {
-                comment: e.target.review.value,
+                comment: reviewComment,
                 rating: rating,
             };
             console.log(payload);
@@ -127,47 +136,53 @@ const Review = ({ productId, review }) => {
                         </>
                     )}
                 </div>
-                <div className="flex items-center gap-2">
-                    {review.createdAt != review.updatedAt && (
-                        <div className="relative inline-block group cursor-pointer">
-                            <span className="flex items-center text-xs px-2 py-0.5 rounded bg-gray-200 text-gray-600 dark:bg-gray-600 dark:text-gray-200">
-                                Edited
-                            </span>
-                            <div className="absolute right-full top-0 ml-2 py-2 px-3 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg pointer-events-none shadow opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity">
-                                <p className="text-sm whitespace-nowrap text-muted-text-dark dark:text-muted-text">
-                                    {timeAgo(review.createdAt, review.updatedAt)}
-                                </p>
+                {!editing && (
+                    <div className="flex items-center gap-2 max-xs:flex-col">
+                        {review.createdAt != review.updatedAt && (
+                            <div className="relative inline-block group cursor-pointer">
+                                <span className="flex items-center text-xs px-2 py-0.5 rounded bg-gray-200 text-gray-600 dark:bg-gray-600 dark:text-gray-200">
+                                    Edited
+                                </span>
+                                <div className="absolute right-full top-0 ml-2 py-2 px-3 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-xl pointer-events-none shadow opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity">
+                                    <p className="text-sm whitespace-nowrap text-muted-text-dark dark:text-muted-text">
+                                        {timeAgo(review.createdAt, review.updatedAt)}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    )}
-                    <p className="text-muted-text-dark dark:text-muted-text">
-                        {new Date(review.createdAt).toLocaleDateString("en-GB", {
-                            day: "2-digit",
-                            month: "short",
-                            year: "numeric",
-                        })}
-                    </p>
-                </div>
+                        )}
+                        <p className="text-muted-text-dark dark:text-muted-text">
+                            {new Date(review.createdAt).toLocaleDateString("en-GB", {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric",
+                            })}
+                        </p>
+                    </div>
+                )}
             </div>
 
             {editing ? (
                 <form onSubmit={handleEdit} className="flex flex-col gap-1.5">
                     <h2>Your review</h2>
                     <textarea
-                        className="input h-fit resize-none bg-gray-100 dark:bg-gray-700"
+                        className="input h-30 resize-none bg-gray-100 dark:bg-gray-700"
                         name="review"
                         id="review"
+                        maxLength={1000}
+                        onChange={(e) => setReviewComment(e.target.value)}
                         defaultValue={reviewComment}
                         autoFocus
+                        required
                         onFocus={(e) => {
                             const v = e.target.value.length;
                             e.target.setSelectionRange(v, v);
                         }}
                     />
+                    <p className="text-sm text-muted-text-dark dark:text-muted-text">{reviewComment.length}/1000</p>
                     <div className="flex gap-4 mt-2">
                         <button
                             type="submit"
-                            className="px-3 py-1.5 bg-brand text-white hover:bg-brand-hover rounded-lg transition-colors duration-300 ease cursor-pointer"
+                            className="px-3 py-1.5 bg-brand text-white hover:bg-brand-hover rounded-xl transition-colors duration-300 ease cursor-pointer"
                         >
                             <i className="fa-regular fa-floppy-disk mr-2"></i>
                             Save
@@ -175,21 +190,31 @@ const Review = ({ productId, review }) => {
                         <button
                             type="button"
                             onClick={() => setEditing(false)}
-                            className="px-3 py-1.5 bg-gray-300 dark:bg-gray-500 text-black dark:text-white hover:bg-gray-400 dark:hover:bg-gray-600 rounded-lg transition-colors duration-300 ease cursor-pointer"
+                            className="px-3 py-1.5 bg-gray-300 dark:bg-gray-500 text-black dark:text-white hover:bg-gray-400 dark:hover:bg-gray-600 rounded-xl transition-colors duration-300 ease cursor-pointer"
                         >
                             Cancel
                         </button>
                     </div>
                 </form>
             ) : (
-                <p>{review.comment}</p>
+                <div className="flex flex-col gap-1">
+                    <p ref={ref} className={expanded ? "" : "line-clamp-3"}>
+                        {review.comment}
+                    </p>
+                    {showBtn && (
+                        <button
+                            className="text-muted-text-dark dark:text-muted-text"
+                            onClick={() => setExpanded(!expanded)}
+                        >
+                            {expanded ? "Show less" : "Show more"}
+                        </button>
+                    )}
+                </div>
             )}
 
             {!editing && (
                 <div className="flex justify-between items-center">
-                    <p className="text-muted-text-dark dark:text-muted-text">
-                        {`-- ${review.firstName} ${review.lastName ? review.lastName : ""}`}
-                    </p>
+                    <p className="text-muted-text-dark dark:text-muted-text">{`-- ${review.firstName}`}</p>
                     {isAuthenticated && review.userId == user.id && (
                         <div className="flex gap-5">
                             <button

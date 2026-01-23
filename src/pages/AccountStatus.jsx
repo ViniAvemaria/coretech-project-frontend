@@ -41,7 +41,7 @@ const AccountStatus = () => {
     return (
         <div className="max-w-[425px] w-full py-12">
             <div className="flex justify-center items-center text-primary-text dark:text-primary-text-dark">
-                <div className="flex flex-col items-center bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg p-10">
+                <div className="flex flex-col items-center bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-xl p-10">
                     {icon}
                     <h1 className="text-center font-semibold text-xl mt-10 mb-4">{title}</h1>
                     <h2 className="text-center text-muted-text-dark dark:text-muted-text">{message}</h2>

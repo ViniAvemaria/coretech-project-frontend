@@ -279,7 +279,7 @@ const Profile = () => {
                                             }}
                                             type="submit"
                                             disabled={emailLoading}
-                                            className={`relative overflow-hidden px-3.5 py-2.5 rounded-lg text-white transition-colors duration-300 ease cursor-pointer ${emailLoading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
+                                            className={`relative overflow-hidden px-3.5 py-2.5 rounded-xl text-white transition-colors duration-300 ease cursor-pointer ${emailLoading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
                                         >
                                             {emailLoading && (
                                                 <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent via-white/35 to-transparent" />
@@ -309,7 +309,7 @@ const Profile = () => {
                                         <button
                                             type="submit"
                                             disabled={emailLoading}
-                                            className={`relative overflow-hidden px-3.5 py-2.5 rounded-lg text-white transition-colors duration-300 ease cursor-pointer ${emailLoading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
+                                            className={`relative overflow-hidden px-3.5 py-2.5 rounded-xl text-white transition-colors duration-300 ease cursor-pointer ${emailLoading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
                                         >
                                             {emailLoading && (
                                                 <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent via-white/35 to-transparent" />
@@ -347,7 +347,7 @@ const Profile = () => {
                                         <button
                                             type="submit"
                                             disabled={emailLoading}
-                                            className={`relative overflow-hidden px-3.5 py-2.5 rounded-lg text-white transition-colors duration-300 ease cursor-pointer ${emailLoading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
+                                            className={`relative overflow-hidden px-3.5 py-2.5 rounded-xl text-white transition-colors duration-300 ease cursor-pointer ${emailLoading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
                                         >
                                             {emailLoading && (
                                                 <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent via-white/35 to-transparent" />
@@ -404,7 +404,7 @@ const Profile = () => {
                                             }}
                                             type="submit"
                                             disabled={passwordLoading}
-                                            className={`relative overflow-hidden px-3.5 py-2.5 rounded-lg text-white transition-colors duration-300 ease cursor-pointer ${passwordLoading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
+                                            className={`relative overflow-hidden px-3.5 py-2.5 rounded-xl text-white transition-colors duration-300 ease cursor-pointer ${passwordLoading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
                                         >
                                             {passwordLoading && (
                                                 <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent via-white/35 to-transparent" />
@@ -434,7 +434,7 @@ const Profile = () => {
                                         <button
                                             type="submit"
                                             disabled={passwordLoading}
-                                            className={`relative overflow-hidden px-3.5 py-2.5 rounded-lg text-white transition-colors duration-300 ease cursor-pointer ${passwordLoading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
+                                            className={`relative overflow-hidden px-3.5 py-2.5 rounded-xl text-white transition-colors duration-300 ease cursor-pointer ${passwordLoading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
                                         >
                                             {passwordLoading && (
                                                 <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent via-white/35 to-transparent" />
@@ -511,7 +511,7 @@ const Profile = () => {
                                         <button
                                             type="submit"
                                             disabled={passwordLoading}
-                                            className={`relative overflow-hidden mt-2 px-3.5 py-2.5 rounded-lg text-white transition-colors duration-300 ease cursor-pointer ${passwordLoading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
+                                            className={`relative overflow-hidden mt-2 px-3.5 py-2.5 rounded-xl text-white transition-colors duration-300 ease cursor-pointer ${passwordLoading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
                                         >
                                             {passwordLoading && (
                                                 <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent via-white/35 to-transparent" />

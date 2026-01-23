@@ -8,17 +8,19 @@ const ItemCard = ({ item }) => {
     const itemTotal = quantity * product.price;
 
     return (
-        <div className="flex gap-8 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark p-5 rounded-xl border border-border dark:border-border-dark shadow-sm">
-            <img src={product.image} alt={product.name} className="w-40 h-40 object-cover rounded-xl" />
+        <div className="flex gap-8 max-xs:gap-2 h-50 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark p-5 rounded-xl border border-border dark:border-border-dark shadow-sm">
+            <div>
+                <img src={product.image} alt={product.name} className="w-40 h-full object-cover rounded-xl" />
+            </div>
             <div className="flex flex-col w-full gap-1.5">
-                <p className="line-clamp-2 min-h-10 leading-snug hover:cursor-pointer hover:text-brand transition-color duration-300 ease">
+                <p className="line-clamp-2 min-h-10 leading-snug hover:cursor-pointer hover:text-brand transition-color duration-300 ease max-xs:text-end">
                     <Link to={`/product/${product.id}`}>{product.name}</Link>
                 </p>
-                <p className="line-clamp-2 min-h-10 leading-snug text-muted-text-dark dark:text-muted-text text-sm">
+                <p className="max-xs:hidden line-clamp-2 min-h-10 leading-snug text-muted-text-dark dark:text-muted-text text-sm">
                     {product.description}
                 </p>
-                <p className="text-brand">{formatMoney(product.price)}</p>
-                <div className="flex mt-auto justify-between text-primary-text dark:text-primary-text-dark">
+                <p className="text-brand max-xs:place-self-end-safe">{formatMoney(product.price)}</p>
+                <div className="flex max-xs:flex-col max-xs:gap-4 mt-auto justify-between text-primary-text dark:text-primary-text-dark max-xs:place-self-end-safe">
                     <div className="flex items-center gap-6">
                         <button
                             onClick={() => decrementItem(id)}
