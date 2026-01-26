@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const refreshApi = axios.create({
-    baseURL: "https://coretech-project-backend.onrender.com",
+    baseURL: "https://coretech-project-backend.onrender.com/api",
     withCredentials: true,
 });
 
