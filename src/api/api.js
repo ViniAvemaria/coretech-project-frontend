@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:8080/api",
+    baseURL: "https://coretech-project-backend.onrender.com",
     withCredentials: true,
 });
 
@@ -23,7 +23,7 @@ api.interceptors.response.use(
         }
 
         return Promise.reject(err);
-    }
+    },
 );
 
 export default api;
