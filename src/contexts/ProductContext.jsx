@@ -8,7 +8,9 @@ const ProductContext = createContext(null);
 export const ProductProvider = ({ children }) => {
     const [product, setProduct] = useState(null);
     const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [productLoading, setProductLoading] = useState(false);
+    const [productsLoading, setProductsLoading] = useState(false);
+    const [categoriesLoading, setCategoriesLoading] = useState(false);
     const [categories, setCategories] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
     const [search, setSearch] = useState("");
@@ -16,7 +18,7 @@ export const ProductProvider = ({ children }) => {
     const navigate = useNavigate();
 
     const fetchProducts = async (cat, query) => {
-        setLoading(true);
+        setProductsLoading(true);
         try {
             const res = await getAllProducts(cat ?? undefined, query ?? undefined);
             setProducts(res.data.data);
@@ -24,12 +26,14 @@ export const ProductProvider = ({ children }) => {
             console.error(err);
             setProducts([]);
         } finally {
-            setLoading(false);
+            setProductsLoading(false);
         }
     };
 
     const fetchProduct = async (id) => {
-        setLoading(true);
+        setProductLoading(true);
+        setProduct(null);
+
         try {
             const res = await getById(id);
             setProduct(res.data.data);
@@ -37,19 +41,19 @@ export const ProductProvider = ({ children }) => {
             console.error(err);
             setProduct(null);
         } finally {
-            setLoading(false);
+            setProductLoading(false);
         }
     };
 
     const fetchCategories = async () => {
-        setLoading(true);
+        setCategoriesLoading(true);
         try {
             const res = await getAllCategories();
             setCategories(res.data.data);
         } catch (err) {
             console.error(err);
         } finally {
-            setLoading(false);
+            setCategoriesLoading(false);
         }
     };
 
@@ -80,7 +84,9 @@ export const ProductProvider = ({ children }) => {
             value={{
                 products,
                 product,
-                loading,
+                productLoading,
+                productsLoading,
+                categoriesLoading,
                 categories,
                 search,
                 activeCategory,

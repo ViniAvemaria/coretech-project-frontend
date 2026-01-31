@@ -1,5 +1,4 @@
-import { useSearchParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 
 const AccountStatus = () => {
     const [searchParams] = useSearchParams();
@@ -11,8 +10,8 @@ const AccountStatus = () => {
             icon: <i className="fa-solid fa-check text-green-500 text-7xl"></i>,
         },
         "confirmation-failure": {
-            title: "Invalid Activation Link",
-            message: "This link has already been used, expired, or is invalid",
+            title: "Invalid or Expired Link",
+            message: "This confirmation link is no longer valid",
             icon: <i className="fa-solid fa-x text-red-500 text-6xl"></i>,
         },
         "resend-success": {
@@ -25,9 +24,19 @@ const AccountStatus = () => {
             message: "Your account is already activated or you still have a valid activation link",
             icon: <i className="fa-solid fa-x text-red-500 text-6xl"></i>,
         },
+        "deletion-success": {
+            title: "Account Deleted",
+            message: "Your account has been permanently removed",
+            icon: <i className="fa-solid fa-check text-green-500 text-7xl"></i>,
+        },
+        "deletion-failure": {
+            title: "Invalid or Expired Link",
+            message: "This deletion link is no longer valid",
+            icon: <i className="fa-solid fa-x text-red-500 text-6xl"></i>,
+        },
         "not-found": {
-            title: "Confirmation Link not Found",
-            message: "The token in the link was not found in our database",
+            title: "Link not Found",
+            message: "This link was not found in our database",
             icon: <h1 className="text-brand text-7xl font-semibold font-mono">404</h1>,
         },
     };
@@ -41,7 +50,7 @@ const AccountStatus = () => {
     return (
         <div className="max-w-[425px] w-full py-12">
             <div className="flex justify-center items-center text-primary-text dark:text-primary-text-dark">
-                <div className="flex flex-col items-center bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-xl p-10">
+                <div className="flex flex-col items-center bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg p-10">
                     {icon}
                     <h1 className="text-center font-semibold text-xl mt-10 mb-4">{title}</h1>
                     <h2 className="text-center text-muted-text-dark dark:text-muted-text">{message}</h2>

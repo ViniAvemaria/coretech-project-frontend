@@ -43,7 +43,7 @@ const ProductCard = ({ product }) => {
     };
 
     return (
-        <div className="h-[545px] w-[275px] bg-card dark:bg-card-dark border rounded-xl border-border dark:border-border-dark overflow-hidden shadow-sm">
+        <div className="h-[545px] w-[275px] bg-card dark:bg-card-dark border rounded-lg border-border dark:border-border-dark overflow-hidden shadow-sm">
             <div className="group h-[300px] overflow-hidden">
                 <Link to={`/product/${product.id}`} state={{ from: location.pathname }}>
                     <img

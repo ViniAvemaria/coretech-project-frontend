@@ -11,7 +11,7 @@ const registerSchema = z.object({
     firstName: z.string().min(1, "First name is required"),
     lastName: z.string().min(1, "Last name is required"),
     email: z.email(),
-    password: z.string().min(6, "Password must be at least 6 characters"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
 const Register = () => {
@@ -46,7 +46,7 @@ const Register = () => {
 
     return (
         <div className="max-w-[425px] w-full py-12">
-            <div className="flex flex-col gap-2 w-full h-fit border border-border dark:border-border-dark rounded-xl p-8 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark">
+            <div className="flex flex-col gap-2 w-full h-fit border border-border dark:border-border-dark rounded-lg p-8 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark">
                 <p className="place-self-center">Create Account</p>
                 <p className="text-muted-text-dark dark:text-muted-text place-self-center">Sign up to get started</p>
 
@@ -135,7 +135,7 @@ const Register = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className={`relative overflow-hidden px-3.5 py-2.5 rounded-xl text-white transition-colors duration-300 ease cursor-pointer ${loading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
+                        className={`relative overflow-hidden px-3.5 py-2.5 rounded-lg text-white transition-colors duration-300 ease cursor-pointer ${loading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
                     >
                         {loading && (
                             <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent via-white/35 to-transparent" />

@@ -18,7 +18,7 @@ const Cart = () => {
                         <ItemCard key={item.id} item={item} />
                     ))}
                 </div>
-                <div className="flex flex-col gap-3 sticky top-10 h-fit p-5 bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-xl text-primary-text dark:text-primary-text-dark shadow-sm">
+                <div className="flex flex-col gap-3 sticky top-10 h-fit p-5 bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-lg text-primary-text dark:text-primary-text-dark shadow-sm">
                     <p className="mb-4">Order Summary</p>
                     <div className="flex justify-between text-muted-text-dark dark:text-muted-text">
                         <p>
@@ -35,7 +35,7 @@ const Cart = () => {
                         <p>Total</p>
                         <p className="text-brand">{formatMoney(cartTotal)}</p>
                     </div>
-                    <button className="mt-2 bg-brand text-white rounded-xl py-3 hover:cursor-pointer hover:bg-brand-hover transition-color duration-300 ease">
+                    <button className="mt-2 bg-brand text-white rounded-lg py-3 hover:cursor-pointer hover:bg-brand-hover transition-color duration-300 ease">
                         Proceed to Checkout
                     </button>
                 </div>

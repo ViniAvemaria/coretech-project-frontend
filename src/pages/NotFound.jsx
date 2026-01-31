@@ -7,7 +7,7 @@ const NotFound = () => {
             <h2 className="text-4xl">Page Not Found!</h2>
             <Link
                 to={"/"}
-                className="text-white bg-brand rounded-xl px-3 py-1.5 hover:cursor-pointer hover:bg-brand-hover transition-colors duration-300 ease"
+                className="text-white bg-brand rounded-lg px-3 py-1.5 hover:cursor-pointer hover:bg-brand-hover transition-colors duration-300 ease"
             >
                 Go back Home
             </Link>

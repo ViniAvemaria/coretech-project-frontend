@@ -1,12 +1,12 @@
 const ImportConflictsModal = ({ existingProducts, setExistingProducts }) => {
     return (
         <div className="flex items-center justify-center fixed inset-0 bg-black/75 px-16">
-            <div className="flex flex-col max-w-150 text-primary-text dark:text-primary-text-dark px-6 py-8 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-xl max-h-[80vh] overflow-y-auto">
+            <div className="flex flex-col max-w-150 text-primary-text dark:text-primary-text-dark px-6 py-8 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg max-h-[80vh] overflow-y-auto">
                 <div className="flex justify-between">
                     <h2 className="section-title mb-0">{`Existing products (${existingProducts.length})`}</h2>
                     <button
                         onClick={() => setExistingProducts([])}
-                        className="place-self-center py-1 px-2.5 hover:bg-edit-hover dark:hover:bg-edit-hover-dark text-white transition-colors duration-300 ease cursor-pointer rounded-xl"
+                        className="place-self-center py-1 px-2.5 hover:bg-edit-hover dark:hover:bg-edit-hover-dark text-white transition-colors duration-300 ease cursor-pointer rounded-lg"
                     >
                         <i className="fa-solid fa-x"></i>
                     </button>

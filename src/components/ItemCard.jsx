@@ -8,9 +8,9 @@ const ItemCard = ({ item }) => {
     const itemTotal = quantity * product.price;
 
     return (
-        <div className="flex gap-8 max-xs:gap-2 h-50 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark p-5 rounded-xl border border-border dark:border-border-dark shadow-sm">
+        <div className="flex gap-8 max-xs:gap-2 h-50 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark p-5 rounded-lg border border-border dark:border-border-dark shadow-sm">
             <div>
-                <img src={product.image} alt={product.name} className="w-40 h-full object-cover rounded-xl" />
+                <img src={product.image} alt={product.name} className="w-40 h-full object-cover rounded-lg" />
             </div>
             <div className="flex flex-col w-full gap-1.5">
                 <p className="line-clamp-2 min-h-10 leading-snug hover:cursor-pointer hover:text-brand transition-color duration-300 ease max-xs:text-end">

@@ -92,7 +92,7 @@ const Review = ({ productId, review }) => {
     }
 
     return (
-        <div className="flex flex-col gap-4 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark py-5 px-8 rounded-xl border border-border dark:border-border-dark">
+        <div className="flex flex-col gap-4 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark py-5 px-8 rounded-lg border border-border dark:border-border-dark">
             <div className="flex justify-between">
                 <div className="flex gap-2">
                     {editing ? (
@@ -143,7 +143,7 @@ const Review = ({ productId, review }) => {
                                 <span className="flex items-center text-xs px-2 py-0.5 rounded bg-gray-200 text-gray-600 dark:bg-gray-600 dark:text-gray-200">
                                     Edited
                                 </span>
-                                <div className="absolute right-full top-0 ml-2 py-2 px-3 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-xl pointer-events-none shadow opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity">
+                                <div className="absolute right-full top-0 ml-2 py-2 px-3 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg pointer-events-none shadow opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity">
                                     <p className="text-sm whitespace-nowrap text-muted-text-dark dark:text-muted-text">
                                         {timeAgo(review.createdAt, review.updatedAt)}
                                     </p>
@@ -182,7 +182,7 @@ const Review = ({ productId, review }) => {
                     <div className="flex gap-4 mt-2">
                         <button
                             type="submit"
-                            className="px-3 py-1.5 bg-brand text-white hover:bg-brand-hover rounded-xl transition-colors duration-300 ease cursor-pointer"
+                            className="px-3 py-1.5 bg-brand text-white hover:bg-brand-hover rounded-lg transition-colors duration-300 ease cursor-pointer"
                         >
                             <i className="fa-regular fa-floppy-disk mr-2"></i>
                             Save
@@ -190,7 +190,7 @@ const Review = ({ productId, review }) => {
                         <button
                             type="button"
                             onClick={() => setEditing(false)}
-                            className="px-3 py-1.5 bg-gray-300 dark:bg-gray-500 text-black dark:text-white hover:bg-gray-400 dark:hover:bg-gray-600 rounded-xl transition-colors duration-300 ease cursor-pointer"
+                            className="px-3 py-1.5 bg-gray-300 dark:bg-gray-500 text-black dark:text-white hover:bg-gray-400 dark:hover:bg-gray-600 rounded-lg transition-colors duration-300 ease cursor-pointer"
                         >
                             Cancel
                         </button>

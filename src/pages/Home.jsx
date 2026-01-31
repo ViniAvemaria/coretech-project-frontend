@@ -3,11 +3,11 @@ import { useProducts } from "../contexts/ProductContext";
 import Loading from "../components/Loading";
 
 const Home = () => {
-    const { products, categories, activeCategory, setActiveCategory, loading } = useProducts();
+    const { products, categories, activeCategory, setActiveCategory, productsLoading } = useProducts();
 
     return (
         <div className="max-w-[1200px] w-full pb-12">
-            {loading ? (
+            {productsLoading ? (
                 <div className="flex items-center justify-center h-full">
                     <Loading />
                 </div>

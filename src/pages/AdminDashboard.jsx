@@ -9,7 +9,7 @@ import { useProducts } from "../contexts/ProductContext";
 import Loading from "../components/Loading";
 
 const AdminDashborad = () => {
-    const { products, fetchProducts, fetchCategories, loading } = useProducts();
+    const { products, fetchProducts, fetchCategories, productsLoading } = useProducts();
     const [existingProducts, setExistingProducts] = useState([]);
     const [orders, setOrders] = useState([]);
     const [activeTab, setActiveTab] = useState("products");
@@ -85,7 +85,7 @@ const AdminDashborad = () => {
             {activeTab === "orders" && (
                 <div className="text-primary-text dark:text-primary-text-dark mt-6 mb-6">
                     <h2>Orders Management</h2>
-                    <div className="flex flex-col items-center gap-5 w-full px-10 py-12 rounded-xl border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark mt-8">
+                    <div className="flex flex-col items-center gap-5 w-full px-10 py-12 rounded-lg border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark mt-8">
                         <i className="fa-solid fa-box text-5xl text-muted-text-dark dark:text-muted-text"></i>
                         <p className="text-primary-text dark:text-primary-text-dark">No orders yet</p>
                     </div>
@@ -93,7 +93,7 @@ const AdminDashborad = () => {
             )}
 
             {activeTab === "products" &&
-                (loading ? (
+                (productsLoading ? (
                     <div className="flex items-center justify-center h-full w-full">
                         <Loading />
                     </div>
@@ -104,7 +104,7 @@ const AdminDashborad = () => {
                             <div className="flex gap-2">
                                 <button
                                     onClick={() => fileInputRef.current.click()}
-                                    className="edit-button py-2 px-3.5 rounded-xl"
+                                    className="edit-button py-2 px-3.5 rounded-lg"
                                 >
                                     <i className="fa-solid fa-file-import mr-2"></i>
                                     Import CSV
@@ -127,7 +127,7 @@ const AdminDashborad = () => {
                                             product: null,
                                         })
                                     }
-                                    className="text-white bg-brand py-2 px-3.5 rounded-xl cursor-pointer hover:bg-brand-hover transition-colors duration-300 ease"
+                                    className="text-white bg-brand py-2 px-3.5 rounded-lg cursor-pointer hover:bg-brand-hover transition-colors duration-300 ease"
                                 >
                                     <i className="fa-solid fa-plus text-sm mr-2"></i>
                                     Add Product
@@ -135,7 +135,7 @@ const AdminDashborad = () => {
                             </div>
                         </div>
 
-                        <div className="rounded-xl overflow-hidden text-primary-text dark:text-primary-text-dark text-left border border-border dark:border-border-dark bg-header dark:bg-header-dark">
+                        <div className="rounded-lg overflow-hidden text-primary-text dark:text-primary-text-dark text-left border border-border dark:border-border-dark bg-header dark:bg-header-dark">
                             <table className="min-w-full table-fixed ">
                                 <thead className="bg-card dark:bg-card-dark">
                                     <tr>
@@ -154,7 +154,7 @@ const AdminDashborad = () => {
                                                     <img
                                                         src={product.image}
                                                         alt={product.name}
-                                                        className="w-16 h-16 object-cover rounded-xl shrink-0"
+                                                        className="w-16 h-16 object-cover rounded-lg shrink-0"
                                                     />
                                                     <span className="truncate hover:cursor-pointer hover:text-brand transition-color duration-300 ease">
                                                         <Link

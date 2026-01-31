@@ -116,7 +116,7 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
 
     return (
         <div className="flex items-center justify-center fixed inset-0 bg-black/75">
-            <div className="flex flex-col max-w-150 text-primary-text dark:text-primary-text-dark p-8 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-xl max-h-[80vh] overflow-y-auto">
+            <div className="flex flex-col max-w-150 text-primary-text dark:text-primary-text-dark p-8 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg max-h-[80vh] overflow-y-auto">
                 <h2 className="section-title mb-6">{action == "add" ? "Add New Product" : "Edit Product"}</h2>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                     <div className="grid grid-cols-2 gap-4">
@@ -292,7 +292,7 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
                     <div className="flex gap-4 pt-4">
                         <button
                             type="submit"
-                            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl cursor-pointer transition-colors duration-300 ease"
+                            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg cursor-pointer transition-colors duration-300 ease"
                         >
                             Submit
                         </button>
@@ -304,7 +304,7 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
                                     product: null,
                                 })
                             }
-                            className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 rounded-xl cursor-pointer transition-colors duration-300 ease"
+                            className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg cursor-pointer transition-colors duration-300 ease"
                         >
                             Cancel
                         </button>

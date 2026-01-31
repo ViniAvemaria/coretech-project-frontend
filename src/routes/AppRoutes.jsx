@@ -14,6 +14,8 @@ import ResetPassword from "../pages/ResetPassword";
 import ProtectedRoute from "./ProtectedRoute";
 import AdminRoute from "./AdminRoute";
 import PublicRoute from "./PublicRoute";
+import DeleteAccount from "../pages/DeleteAccount";
+import AccountDeletion from "../pages/AccountDeletion";
 
 const AppRoutes = () => {
     return (
@@ -25,6 +27,7 @@ const AppRoutes = () => {
                 <Route path="/account-status" element={<AccountStatus />} />
                 <Route path="/recover-password" element={<RecoverPassword />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="/account-deletion" element={<AccountDeletion />} />
 
                 <Route
                     path="/login"
@@ -51,6 +54,16 @@ const AppRoutes = () => {
                         </ProtectedRoute>
                     }
                 />
+
+                <Route
+                    path="/delete-account"
+                    element={
+                        <ProtectedRoute>
+                            <DeleteAccount />
+                        </ProtectedRoute>
+                    }
+                />
+
                 <Route
                     path="/cart"
                     element={

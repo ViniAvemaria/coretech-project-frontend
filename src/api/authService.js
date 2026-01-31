@@ -22,3 +22,5 @@ export const requestPasswordChange = () => api.get(`${API_URL}/change-password`)
 export const validateEmailChange = (data) => api.post(`${API_URL}/validate-email-change`, data);
 
 export const validatePasswordChange = (data) => api.post(`${API_URL}/validate-password-change`, data);
+
+export const deleteAccount = () => api.get(`${API_URL}/delete-account`);
