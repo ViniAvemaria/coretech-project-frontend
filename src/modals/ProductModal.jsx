@@ -115,7 +115,7 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
     };
 
     return (
-        <div className="flex items-center justify-center fixed inset-0 bg-black/75">
+        <div className="flex items-center justify-center fixed inset-0 bg-black/75 px-4">
             <div className="flex flex-col max-w-150 text-primary-text dark:text-primary-text-dark p-8 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg max-h-[80vh] overflow-y-auto">
                 <h2 className="section-title mb-6">{action == "add" ? "Add New Product" : "Edit Product"}</h2>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-6">

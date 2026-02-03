@@ -21,7 +21,7 @@ export const ProductProvider = ({ children }) => {
         setProductsLoading(true);
         try {
             const res = await getAllProducts(cat ?? undefined, query ?? undefined);
-            setProducts(res.data.data);
+            setProducts(res.data.data.content);
         } catch (err) {
             console.error(err);
             setProducts([]);
@@ -72,7 +72,9 @@ export const ProductProvider = ({ children }) => {
         }
 
         const timer = setTimeout(() => {
-            navigate("/");
+            if (search !== "") {
+                navigate("/");
+            }
             fetchProducts(activeCategory, search);
         }, 650);
 

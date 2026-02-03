@@ -10,6 +10,7 @@ import Loading from "../components/Loading";
 
 const AdminDashborad = () => {
     const { products, fetchProducts, fetchCategories, productsLoading } = useProducts();
+    const [importLoading, setImportLoading] = useState(false);
     const [existingProducts, setExistingProducts] = useState([]);
     const [orders, setOrders] = useState([]);
     const [activeTab, setActiveTab] = useState("products");
@@ -26,6 +27,7 @@ const AdminDashborad = () => {
     };
 
     const handleSubmit = async (e) => {
+        setImportLoading(true);
         e.preventDefault();
         try {
             const formData = new FormData();
@@ -39,6 +41,7 @@ const AdminDashborad = () => {
             toast.error(err.response?.data?.message || "Failed to import products");
         } finally {
             fileInputRef.current.value = "";
+            setImportLoading(false);
         }
     };
 
@@ -99,7 +102,7 @@ const AdminDashborad = () => {
                     </div>
                 ) : (
                     <>
-                        <div className="flex items-center justify-between text-primary-text dark:text-primary-text-dark mt-6 mb-6">
+                        <div className="flex items-center justify-between text-primary-text dark:text-primary-text-dark mt-6 mb-6 max-[550px]:flex-col max-[550px]:items-start max-[550px]:gap-4">
                             <h2>Product Management</h2>
                             <div className="flex gap-2">
                                 <button
@@ -135,7 +138,7 @@ const AdminDashborad = () => {
                             </div>
                         </div>
 
-                        <div className="rounded-lg overflow-hidden text-primary-text dark:text-primary-text-dark text-left border border-border dark:border-border-dark bg-header dark:bg-header-dark">
+                        <div className="max-[850px]:hidden rounded-lg overflow-hidden text-primary-text dark:text-primary-text-dark text-left border border-border dark:border-border-dark bg-header dark:bg-header-dark">
                             <table className="min-w-full table-fixed ">
                                 <thead className="bg-card dark:bg-card-dark">
                                     <tr>

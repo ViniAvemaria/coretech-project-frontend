@@ -16,7 +16,7 @@ const App = () => {
         <main className="min-h-screen flex flex-col bg-main dark:bg-main-dark min-w-[360px]">
             <ToastContainer theme={theme == "dark" ? "dark" : "light"} limit={3} position="top-left" />
             <Header />
-            <section className="flex justify-center min-h-dvh flex-1 px-12">
+            <section className="flex justify-center min-h-dvh flex-1 px-4">
                 {loading ? <Loading /> : <Outlet />}
                 <ScrollToTopButton />
             </section>
