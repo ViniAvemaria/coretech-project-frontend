@@ -167,6 +167,10 @@ const Header = () => {
                 </ul>
             </nav>
 
+            {open && (
+                <div className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm" onClick={() => setOpen(false)}></div>
+            )}
+
             <nav
                 className={`${open ? "opacity-100 pointer-events-auto translate-x-0" : "opacity-0 pointer-events-none translate-x-full"} fixed top-0 right-0 z-100  transition-transform-opacity duration-300 ease`}
             >

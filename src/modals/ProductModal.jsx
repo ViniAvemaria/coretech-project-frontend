@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useProducts } from "../contexts/ProductContext";
 
 const ProductModal = ({ productModalObj, setProductModalObj }) => {
+    const [loading, setLoading] = useState(false);
     const { action, product } = productModalObj;
     const { categories, fetchProducts, fetchCategories } = useProducts();
     const [form, setForm] = useState({
@@ -71,6 +72,7 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         if (action == "add") {
             try {
                 const payload = {
@@ -92,6 +94,8 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
                 });
             } catch (err) {
                 toast.error(err.response?.data?.message || "Failed to add product");
+            } finally {
+                setLoading(false);
             }
         } else {
             try {
@@ -108,6 +112,8 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
                 });
             } catch (err) {
                 toast.error(err.response?.data?.message || "Failed to update product");
+            } finally {
+                setLoading(false);
             }
         }
         fetchProducts();
@@ -115,12 +121,12 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
     };
 
     return (
-        <div className="flex items-center justify-center fixed inset-0 bg-black/75 px-4">
+        <div className="flex items-center justify-center fixed inset-0 bg-black/75 px-8">
             <div className="flex flex-col max-w-150 text-primary-text dark:text-primary-text-dark p-8 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg max-h-[80vh] overflow-y-auto">
                 <h2 className="section-title mb-6">{action == "add" ? "Add New Product" : "Edit Product"}</h2>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="col-span-2">
+                    <div className="grid grid-cols-2 gap-4 max-[550px]:grid-cols-1">
+                        <div className="col-span-2 max-[550px]:col-span-1">
                             <label htmlFor="name" className="font-semibold text-muted-text-dark dark:text-muted-text">
                                 Name
                             </label>
@@ -189,6 +195,7 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
                                 list="categories"
                                 autoComplete="off"
                                 value={form.category}
+                                onFocus={() => setForm((f) => ({ ...f, category: "" }))}
                                 onChange={handleChange}
                                 required
                             />
@@ -292,11 +299,21 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
                     <div className="flex gap-4 pt-4">
                         <button
                             type="submit"
-                            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg cursor-pointer transition-colors duration-300 ease"
+                            disabled={loading}
+                            className={`flex-1 relative overflow-hidden py-2 rounded-lg text-white transition-colors duration-300 ease cursor-pointer ${loading ? "bg-brand/95 cursor-not-allowed" : "bg-brand hover:bg-brand-hover"}`}
                         >
-                            Submit
+                            {loading && (
+                                <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent via-white/35 to-transparent" />
+                            )}
+                            <span className="relative z-10">
+                                {loading
+                                    ? `${productModalObj.action === "add" ? "Adding..." : "Updating..."}`
+                                    : `${productModalObj.action === "add" ? "Add" : "Update"}`}
+                            </span>
                         </button>
+
                         <button
+                            disabled={loading}
                             type="button"
                             onClick={() =>
                                 setProductModalObj({
@@ -304,7 +321,7 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
                                     product: null,
                                 })
                             }
-                            className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg cursor-pointer transition-colors duration-300 ease"
+                            className={`flex-1 bg-red-600  text-white py-2 rounded-lg transition-colors duration-300 ease ${loading ? "cursor-not-allowed bg-red-600/50" : "cursor-pointer hover:bg-red-700"}`}
                         >
                             Cancel
                         </button>
