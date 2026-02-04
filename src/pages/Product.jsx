@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { formatMoney } from "../utils/formatMoney";
 import { useCart } from "../contexts/CartContext";
@@ -128,22 +128,6 @@ const Product = () => {
         }
     };
 
-    const contentRef = useRef(null);
-    const imageRef = useRef(null);
-
-    useEffect(() => {
-        if (!contentRef.current || !imageRef.current) return;
-
-        const observer = new ResizeObserver(() => {
-            if (!contentRef.current || !imageRef.current) return;
-            const height = contentRef.current.getBoundingClientRect().height;
-            imageRef.current.style.height = `${height}px`;
-        });
-
-        observer.observe(contentRef.current);
-        return () => observer.disconnect();
-    }, [product]);
-
     if (productLoading || !product) {
         return (
             <div className="flex items-center justify-center min-h-screen">
@@ -154,81 +138,83 @@ const Product = () => {
 
     return (
         <div className="max-w-[1100px] w-full py-12">
-            <div className="flex max-md:flex-col text-primary-text dark:text-primary-text-dark gap-7 max-lg:gap-0">
-                <div className="w-1/2 max-md:w-full relative">
-                    <img
-                        ref={imageRef}
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full object-cover rounded-lg max-lg:rounded-tr-none max-lg:rounded-br-none max-lg:border-r-0 border border-border dark:border-border-dark max-md:rounded-bl-none max-md:rounded-tr-lg max-md:border-b-0"
-                    />
-                    <p className="absolute bottom-3 right-3 text-xs text-white bg-black/60 px-2 py-1 rounded-md">
-                        Photo by{" "}
-                        <a
-                            href={product.photoCredit.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="underline"
-                        >
-                            {product.photoCredit.authorName}
-                        </a>{" "}
-                        on {product.photoCredit.source}
-                    </p>
-                </div>
-
-                <div
-                    ref={contentRef}
-                    className="flex flex-col w-1/2 max-md:w-full h-fit gap-6 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg p-8 max-lg:rounded-tl-none max-lg:rounded-bl-none max-md:rounded-tr-none max-md:rounded-bl-lg"
-                >
-                    <div className="flex gap-2">
-                        <p>{renderStars(product.rating)}</p>
-                        <p>{product.rating}</p>
-                    </div>
-                    <p>{product.name}</p>
-
-                    <p className="text-xl text-brand">{formatMoney(product.price)}</p>
-
-                    <div>
-                        <p>Description</p>
-                        <p className="text-muted-text-dark dark:text-muted-text mt-2">{product.description}</p>
+            <div className="text-primary-text dark:text-primary-text-dark w-full bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg">
+                <section className="flex flex-col gap-6 p-8 max-[500px]:p-4">
+                    <div className="flex flex-col gap-2">
+                        <div className="flex gap-2">
+                            <p>{renderStars(product.rating)}</p>
+                            <p>{product.rating}</p>
+                        </div>
+                        <p>{product.name}</p>
                     </div>
 
-                    <div>
-                        <p>Specifications</p>
-                        <ul className="flex flex-col gap-2 list-disc pl-5 marker:text-brand text-muted-text-dark dark:text-muted-text mt-2">
-                            {product.specifications.map((spec, index) => (
-                                <li key={index}>{spec}</li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    <div className="mt-2">
-                        {product.stockQuantity != 0 ? (
-                            <p className="py-3 px-4 rounded-lg text-green-500 bg-green-500/10">
-                                <i className="fa-solid fa-check mr-2"></i>
-                                In Stock
+                    <section className="flex max-[600px]:flex-col gap-6">
+                        <div className="relative flex-1">
+                            <img
+                                src={product.image}
+                                alt={product.name}
+                                className="w-full h-full max-[600px]:h-120 object-cover rounded-lg border border-border dark:border-border-dark"
+                            />
+                            <p className="text-center absolute ml-3 bottom-3 right-3 text-xs text-white bg-black/60 px-2 py-1 rounded-md">
+                                Photo by{" "}
+                                <a
+                                    href={product.photoCredit.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="underline"
+                                >
+                                    {product.photoCredit.authorName}
+                                </a>{" "}
+                                on {product.photoCredit.source}
                             </p>
-                        ) : (
-                            <p className="py-3 px-4 rounded-lg text-red-500 bg-red-500/10">
-                                <i className="fa-solid fa-x mr-2"></i>
-                                Out of Stock
-                            </p>
-                        )}
-                        <button
-                            disabled={product.stockQuantity == 0}
-                            onClick={handleAddItem}
-                            className="add-button py-3.5 rounded-lg w-full mt-4"
-                        >
-                            <i className="fa-solid fa-cart-shopping mr-2"></i>
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
+                        </div>
+
+                        <div className="flex flex-col gap-4 flex-1">
+                            <p className="text-xl text-brand">{formatMoney(product.price)}</p>
+
+                            <div>
+                                <p>Description</p>
+                                <p className="text-muted-text-dark dark:text-muted-text mt-2">{product.description}</p>
+                            </div>
+
+                            <div>
+                                <p>Specifications</p>
+                                <ul className="flex flex-col gap-2 list-disc pl-5 marker:text-brand text-muted-text-dark dark:text-muted-text mt-2">
+                                    {product.specifications.map((spec, index) => (
+                                        <li key={index}>{spec}</li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <div className="mt-2">
+                                {product.stockQuantity != 0 ? (
+                                    <p className="py-3 px-4 rounded-lg text-green-500 bg-green-500/10">
+                                        <i className="fa-solid fa-check mr-2"></i>
+                                        In Stock
+                                    </p>
+                                ) : (
+                                    <p className="py-3 px-4 rounded-lg text-red-500 bg-red-500/10">
+                                        <i className="fa-solid fa-x mr-2"></i>
+                                        Out of Stock
+                                    </p>
+                                )}
+                                <button
+                                    disabled={product.stockQuantity == 0}
+                                    onClick={handleAddItem}
+                                    className="add-button py-3.5 rounded-lg w-full mt-4"
+                                >
+                                    <i className="fa-solid fa-cart-shopping mr-2"></i>
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                </section>
             </div>
 
             <div
                 id="review-section"
-                className=" mt-7 p-8 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg text-primary-text dark:text-primary-text-dark"
+                className=" mt-7 p-8 max-[500px]:p-4 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg text-primary-text dark:text-primary-text-dark"
             >
                 <div className="flex max-[876px]:flex-col gap-6">
                     <div className="flex flex-col gap-6 w-1/2 max-[876px]:w-full max-[876px]:order-2">
