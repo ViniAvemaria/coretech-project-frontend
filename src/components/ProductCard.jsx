@@ -49,7 +49,7 @@ const ProductCard = ({ product }) => {
                     <img
                         src={product.image}
                         alt={product.name}
-                        className="w-full h-[300px] object-cover rounded-t-xl hover:cursor-pointer group-hover:scale-105 transition-transform duration-300 ease-out"
+                        className="w-full h-[300px] object-cover rounded-t-lg hover:cursor-pointer group-hover:scale-105 transition-transform duration-300 ease-out"
                     />
                 </Link>
             </div>
