@@ -3,7 +3,28 @@ import { useProducts } from "../contexts/ProductContext";
 import Loading from "../components/Loading";
 
 const Home = () => {
-    const { products, categories, activeCategory, setActiveCategory, productsLoading } = useProducts();
+    const {
+        products,
+        categories,
+        activeCategory,
+        setActiveCategory,
+        productsLoading,
+        totalElements,
+        page,
+        totalPages,
+        fetchProducts,
+        search,
+    } = useProducts();
+
+    const handleNextPage = async () => {
+        fetchProducts(activeCategory, search, page + 1, undefined);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    const handlePreviousPage = async () => {
+        fetchProducts(activeCategory, search, page - 1, undefined);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
 
     return (
         <div className="max-w-[1200px] w-full pb-12">
@@ -32,11 +53,29 @@ const Home = () => {
                             </button>
                         ))}
                     </div>
-                    <h2 className="text-muted-text-dark dark:text-muted-text text-xl mt-26 mb-6">{`${products.length} products found`}</h2>
+                    <h2 className="text-muted-text-dark dark:text-muted-text text-xl mt-26 mb-6">{`${totalElements} products found`}</h2>
                     <div className="grid grid-cols-[repeat(auto-fit,minmax(275px,1fr))] place-items-center gap-8">
                         {products.map((product) => (
                             <ProductCard key={product.id} product={product} />
                         ))}
+                    </div>
+
+                    <div className="flex justify-center items-center gap-2 text-primary-text dark:text-primary-text-dark mt-12">
+                        <div>
+                            <button disabled={page === 0} onClick={handlePreviousPage} className="page-button">
+                                <i className="fa-solid fa-angle-left"></i>
+                            </button>
+                        </div>
+
+                        <div className="flex px-2.5 py-1 border border-border dark:border-border-dark rounded-lg">
+                            <p className="text-center w-2.5 font-semibold">{page + 1}</p>
+                        </div>
+
+                        <div>
+                            <button disabled={page === totalPages - 1} onClick={handleNextPage} className="page-button">
+                                <i className="fa-solid fa-angle-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </>
             )}

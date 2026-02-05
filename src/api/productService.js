@@ -4,11 +4,14 @@ const API_URL = "/products";
 
 export const getById = (id) => api.get(`${API_URL}/${id}`);
 
-export const getAll = (category, search) =>
+export const getAll = (category, search, page, size, sort) =>
     api.get(API_URL, {
         params: {
             ...(category && { category }),
             ...(search && { search }),
+            ...(page !== undefined && { page }),
+            ...(size && { size }),
+            ...(sort && { sort }),
         },
     });
 
