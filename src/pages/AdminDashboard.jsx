@@ -205,8 +205,8 @@ const AdminDashborad = () => {
                                     setSort({ field, dir });
                                 }}
                             >
-                                <option value="createdAt-asc">Newest&nbsp;&nbsp;↑</option>
-                                <option value="createdAt-desc">Oldest&nbsp;&nbsp;↓</option>
+                                <option value="createdAt-desc">Newest</option>
+                                <option value="createdAt-asc">Oldest</option>
                                 <option value="price-desc">Price&nbsp;&nbsp;↑</option>
                                 <option value="price-asc">Price&nbsp;&nbsp;↓</option>
                                 <option value="rating-desc">Rating&nbsp;&nbsp;↑</option>
