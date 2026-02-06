@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { create, update } from "../api/productService";
 import { toast } from "react-toastify";
-import { useProducts } from "../contexts/ProductContext";
+import { useAdminProducts } from "../contexts/AdminProductContext";
 
 const ProductModal = ({ productModalObj, setProductModalObj }) => {
     const [loading, setLoading] = useState(false);
     const { action, product } = productModalObj;
-    const { categories, fetchProducts, fetchCategories } = useProducts();
+    const { categories, fetchProducts, fetchCategories } = useAdminProducts();
     const [form, setForm] = useState({
         name: "",
         description: "",
@@ -19,25 +19,22 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
     });
 
     useEffect(() => {
-        const init = async () => {
-            if (action === "edit" && product) {
-                setForm({
-                    name: product.name ?? "",
-                    description: product.description ?? "",
-                    price: String(product.price ?? ""),
-                    image: product.image ?? "",
-                    stockQuantity: String(product.stockQuantity ?? ""),
-                    specifications: product.specifications?.length ? product.specifications : [""],
-                    photoCredit: {
-                        authorName: product.photoCredit?.authorName ?? "",
-                        url: product.photoCredit?.url ?? "",
-                        source: product.photoCredit?.source ?? "",
-                    },
-                    category: product.category ?? "",
-                });
-            }
-        };
-        init();
+        if (action === "edit" && product) {
+            setForm({
+                name: product.name ?? "",
+                description: product.description ?? "",
+                price: String(product.price ?? ""),
+                image: product.image ?? "",
+                stockQuantity: String(product.stockQuantity ?? ""),
+                specifications: product.specifications?.length ? product.specifications : [""],
+                photoCredit: {
+                    authorName: product.photoCredit?.authorName ?? "",
+                    url: product.photoCredit?.url ?? "",
+                    source: product.photoCredit?.source ?? "",
+                },
+                category: product.category ?? "",
+            });
+        }
     }, [action, product]);
 
     useEffect(() => {

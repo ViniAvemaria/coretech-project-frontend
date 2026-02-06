@@ -10,7 +10,18 @@ export const getAll = (category, search, page, size, sort) =>
             ...(category && { category }),
             ...(search && { search }),
             ...(page !== undefined && { page }),
-            ...(size && { size }),
+            ...(size !== undefined && { size }),
+            ...(sort && { sort }),
+        },
+    });
+
+export const getAdvancedSort = (category, search, page, size, sort) =>
+    api.get(`${API_URL}/advanced-sort`, {
+        params: {
+            ...(category && { category }),
+            ...(search && { search }),
+            ...(page !== undefined && { page }),
+            ...(size !== undefined && { size }),
             ...(sort && { sort }),
         },
     });

@@ -14,7 +14,15 @@ const ProductCardDashboard = ({ product, setProductModalObj, handleDelete }) => 
                             {product.name}
                         </Link>
                     </span>
-                    <p className="text-muted-text-dark dark:text-muted-text text-sm capitalize">{product.category}</p>
+                    <section className="flex justify-between">
+                        <p className="text-muted-text-dark dark:text-muted-text text-sm capitalize">
+                            {product.category}
+                        </p>
+                        <p className="flex items-center gap-1 text-sm text-muted-text-dark dark:text-muted-text">
+                            <i className="fa-solid fa-star text-xs text-yellow-400"></i>
+                            {`${product.rating} (${product.totalReviews})`}
+                        </p>
+                    </section>
                     <div className="flex justify-between items-center">
                         <p>{formatMoney(product.price)}</p>
                         {product.stockQuantity != 0 ? (

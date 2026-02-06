@@ -16,6 +16,7 @@ import AdminRoute from "./AdminRoute";
 import PublicRoute from "./PublicRoute";
 import DeleteAccount from "../pages/DeleteAccount";
 import AccountDeletion from "../pages/AccountDeletion";
+import { AdminProductProvider } from "../contexts/AdminProductContext";
 
 const AppRoutes = () => {
     return (
@@ -77,7 +78,9 @@ const AppRoutes = () => {
                     path="/admin"
                     element={
                         <AdminRoute>
-                            <AdminDashboard />
+                            <AdminProductProvider>
+                                <AdminDashboard />
+                            </AdminProductProvider>
                         </AdminRoute>
                     }
                 />

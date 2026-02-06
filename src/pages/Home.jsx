@@ -14,6 +14,8 @@ const Home = () => {
         totalPages,
         fetchProducts,
         search,
+        sort,
+        setSort,
     } = useProducts();
 
     const handleNextPage = async () => {
@@ -53,7 +55,27 @@ const Home = () => {
                             </button>
                         ))}
                     </div>
-                    <h2 className="text-muted-text-dark dark:text-muted-text text-xl mt-26 mb-6">{`${totalElements} products found`}</h2>
+
+                    <section className="flex justify-end-safe mt-26 mb-6">
+                        <select
+                            className="w-fit px-4 py-2 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-lg focus-within:border-focus-ring transition-colors duration-300 ease cursor-pointer"
+                            value={`${sort.field}-${sort.dir}`}
+                            onChange={(e) => {
+                                const [field, dir] = e.target.value.split("-");
+                                setSort({ field, dir });
+                            }}
+                        >
+                            <option value="createdAt-desc">Newest</option>
+                            <option value="createdAt-asc">Oldest</option>
+                            <option value="price-desc">Price&nbsp;&nbsp;↑</option>
+                            <option value="price-asc">Price&nbsp;&nbsp;↓</option>
+                            <option value="rating-desc">Rating&nbsp;&nbsp;↑</option>
+                            <option value="rating-asc">Rating&nbsp;&nbsp;↓</option>
+                            <option value="reviews-desc">Reviews&nbsp;&nbsp;↑</option>
+                            <option value="reviews-asc">Reviews&nbsp;&nbsp;↓</option>
+                        </select>
+                    </section>
+
                     <div className="grid grid-cols-[repeat(auto-fit,minmax(275px,1fr))] place-items-center gap-8">
                         {products.map((product) => (
                             <ProductCard key={product.id} product={product} />

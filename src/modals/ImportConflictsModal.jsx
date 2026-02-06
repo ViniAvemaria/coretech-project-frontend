@@ -6,7 +6,7 @@ const ImportConflictsModal = ({ existingProducts, setExistingProducts }) => {
                     <h2 className="section-title mb-0">{`Existing products (${existingProducts.length})`}</h2>
                     <button
                         onClick={() => setExistingProducts([])}
-                        className="place-self-center py-1 px-2.5 hover:bg-edit-hover dark:hover:bg-edit-hover-dark text-white transition-colors duration-300 ease cursor-pointer rounded-lg"
+                        className="place-self-center py-1 px-2.5 hover:bg-edit-hover dark:hover:bg-edit-hover-dark text-primary-text dark:text-primary-text-dark transition-colors duration-300 ease cursor-pointer rounded-lg"
                     >
                         <i className="fa-solid fa-x"></i>
                     </button>

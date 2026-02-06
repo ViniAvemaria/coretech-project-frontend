@@ -5,12 +5,27 @@ import { createFromImport, deleteProduct } from "../api/productService";
 import { formatMoney } from "../utils/formatMoney";
 import { toast } from "react-toastify";
 import ProductModal from "../modals/ProductModal";
-import { useProducts } from "../contexts/ProductContext";
+import { useAdminProducts } from "../contexts/AdminProductContext";
 import Loading from "../components/Loading";
 import ProductCardDashboard from "../components/ProductCardDashboard";
 
 const AdminDashborad = () => {
-    const { products, fetchProducts, fetchCategories, productsLoading } = useProducts();
+    const {
+        products,
+        fetchProducts,
+        fetchCategories,
+        productsLoading,
+        page,
+        totalPages,
+        activeCategory,
+        search,
+        totalElements,
+        setSort,
+        sort,
+        categories,
+        setSearch,
+        setActiveCategory,
+    } = useAdminProducts();
     const [importLoading, setImportLoading] = useState(false);
     const [existingProducts, setExistingProducts] = useState([]);
     const [orders, setOrders] = useState([]);
@@ -56,6 +71,16 @@ const AdminDashborad = () => {
         }
     };
 
+    const handleNextPage = async () => {
+        fetchProducts(activeCategory, search, page + 1, undefined);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    const handlePreviousPage = async () => {
+        fetchProducts(activeCategory, search, page - 1, undefined);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
     return (
         <div className="max-w-[1200px] w-full py-12">
             <h2 className="text-lg font-bold text-primary-text dark:text-primary-text-dark mb-6">Admin Dashboard</h2>
@@ -70,7 +95,7 @@ const AdminDashborad = () => {
                     }`}
                 >
                     <i className="fa-solid fa-bag-shopping mr-2"></i>
-                    <p>{`Products (${products.length})`}</p>
+                    <p>{`Products (${totalElements})`}</p>
                 </button>
 
                 <button
@@ -104,7 +129,7 @@ const AdminDashborad = () => {
                             <button
                                 disabled={importLoading}
                                 onClick={() => fileInputRef.current.click()}
-                                className={`edit-button py-2 px-3.5 rounded-lg ${importLoading && `hover:bg-edit-button dark:hover:bg-edit-button-dark cursor-not-allowed opacity-90`}`}
+                                className={`edit-button py-1.5 px-3 rounded-lg ${importLoading && `hover:bg-edit-button dark:hover:bg-edit-button-dark cursor-not-allowed opacity-90`}`}
                             >
                                 <i className="fa-solid fa-file-import mr-2"></i>
                                 Import CSV
@@ -128,13 +153,70 @@ const AdminDashborad = () => {
                                         product: null,
                                     })
                                 }
-                                className={`text-white bg-brand py-2 px-3.5 rounded-lg transition-colors duration-300 ease ${importLoading ? `hover:bg-brand cursor-not-allowed opacity-90` : `cursor-pointer hover:bg-brand-hover`}`}
+                                className={`text-white bg-brand py-1.5 px-3 rounded-lg transition-colors duration-300 ease ${importLoading ? `hover:bg-brand cursor-not-allowed opacity-90` : `cursor-pointer hover:bg-brand-hover`}`}
                             >
                                 <i className="fa-solid fa-plus text-sm mr-2"></i>
                                 Add Product
                             </button>
                         </div>
                     </div>
+
+                    <section className="flex flex-col gap-4 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg mb-4 py-5 px-4 w-full">
+                        <div className="flex gap-4 max-[835px]:flex-col">
+                            <div className="group flex flex-1 items-center w-full border bg-input dark:bg-input-dark border-border px-4 py-2 rounded-lg gap-3 dark:border-border-dark focus-within:border-focus-ring transition-colors duration-300 ease">
+                                <i className="fa-solid fa-magnifying-glass text-muted-text dark:text-muted-text-dark group-focus-within:text-focus-ring transition-colors duration-300 ease"></i>
+                                <input
+                                    id="search-bar"
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                    type="text"
+                                    autoComplete="off"
+                                    placeholder="Search for products..."
+                                    className="w-full focus:outline-none text-primary-text dark:text-primary-text-dark"
+                                />
+                                <button
+                                    onMouseDown={(e) => e.preventDefault()}
+                                    onClick={() => {
+                                        setSearch("");
+                                    }}
+                                    className="text-muted-text dark:text-muted-text-dark group-focus-within:text-focus-ring transition-colors duration-300 ease text-sm cursor-pointer"
+                                >
+                                    {search && <i className="fa-solid fa-x"></i>}
+                                </button>
+                            </div>
+
+                            <select
+                                className="flex-1 px-4 py-2 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-lg w-full focus-within:border-focus-ring transition-colors duration-300 ease cursor-pointer capitalize"
+                                onChange={(e) => setActiveCategory(e.target.value)}
+                            >
+                                <option value="">All Categories</option>
+                                {categories.map((cat) => (
+                                    <option key={cat.id} value={cat.name}>
+                                        {cat.name}
+                                    </option>
+                                ))}
+                            </select>
+
+                            <select
+                                className="flex-1 px-4 py-2 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-lg w-full focus-within:border-focus-ring transition-colors duration-300 ease cursor-pointer"
+                                value={`${sort.field}-${sort.dir}`}
+                                onChange={(e) => {
+                                    const [field, dir] = e.target.value.split("-");
+                                    setSort({ field, dir });
+                                }}
+                            >
+                                <option value="createdAt-asc">Newest&nbsp;&nbsp;↑</option>
+                                <option value="createdAt-desc">Oldest&nbsp;&nbsp;↓</option>
+                                <option value="price-desc">Price&nbsp;&nbsp;↑</option>
+                                <option value="price-asc">Price&nbsp;&nbsp;↓</option>
+                                <option value="rating-desc">Rating&nbsp;&nbsp;↑</option>
+                                <option value="rating-asc">Rating&nbsp;&nbsp;↓</option>
+                                <option value="reviews-desc">Reviews&nbsp;&nbsp;↑</option>
+                                <option value="reviews-asc">Reviews&nbsp;&nbsp;↓</option>
+                            </select>
+                        </div>
+                        <p className="text-sm text-muted-text-dark dark:text-muted-text">{`Showing ${products.length} of ${totalElements} products`}</p>
+                    </section>
 
                     {productsLoading || importLoading ? (
                         <div className="flex items-center justify-center h-full w-full">
@@ -171,20 +253,26 @@ const AdminDashborad = () => {
                                                 className="border border-border dark:border-border-dark"
                                             >
                                                 <td className="w-2/5 px-5 py-3 max-w-xs">
-                                                    <div className="flex items-center gap-3 min-w-0">
+                                                    <div className="flex items-center gap-3">
                                                         <img
                                                             src={product.image}
                                                             alt={product.name}
                                                             className="w-16 h-16 object-cover rounded-lg shrink-0"
                                                         />
-                                                        <span className="truncate hover:cursor-pointer hover:text-brand transition-color duration-300 ease">
-                                                            <Link
-                                                                to={`/product/${product.id}`}
-                                                                state={{ from: location.pathname }}
-                                                            >
-                                                                {product.name}
-                                                            </Link>
-                                                        </span>
+                                                        <div className="truncate">
+                                                            <span className=" hover:cursor-pointer hover:text-brand transition-color duration-300 ease">
+                                                                <Link
+                                                                    to={`/product/${product.id}`}
+                                                                    state={{ from: location.pathname }}
+                                                                >
+                                                                    {product.name}
+                                                                </Link>
+                                                            </span>
+                                                            <p className="flex items-center gap-1 text-sm text-muted-text-dark dark:text-muted-text">
+                                                                <i className="fa-solid fa-star text-xs text-yellow-400"></i>
+                                                                {`${product.rating} (${product.totalReviews})`}
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                 </td>
                                                 <td className="px-5 py-3 capitalize">{product.category}</td>
@@ -223,6 +311,28 @@ const AdminDashborad = () => {
                                         ))}
                                     </tbody>
                                 </table>
+                            </div>
+
+                            <div className="flex justify-center items-center gap-2 text-primary-text dark:text-primary-text-dark mt-12">
+                                <div>
+                                    <button disabled={page === 0} onClick={handlePreviousPage} className="page-button">
+                                        <i className="fa-solid fa-angle-left"></i>
+                                    </button>
+                                </div>
+
+                                <div className="flex px-2.5 py-1 border border-border dark:border-border-dark rounded-lg">
+                                    <p className="text-center w-2.5 font-semibold">{page + 1}</p>
+                                </div>
+
+                                <div>
+                                    <button
+                                        disabled={page === totalPages - 1}
+                                        onClick={handleNextPage}
+                                        className="page-button"
+                                    >
+                                        <i className="fa-solid fa-angle-right"></i>
+                                    </button>
+                                </div>
                             </div>
                         </>
                     )}
