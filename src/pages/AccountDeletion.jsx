@@ -35,7 +35,9 @@ const AccountDeletion = () => {
             <div className="flex justify-center text-primary-text dark:text-primary-text-dark">
                 <div className="flex flex-col gap-4 text-center bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg p-8 w-fit">
                     <i className="fa-solid fa-triangle-exclamation text-yellow-400 dark:text-yellow-500 text-6xl mb-6"></i>
-                    <p>You are about to permanently delete your Core Tech account.</p>
+                    <p>
+                        You are about to permanently delete your <span translate="no">Core Tech</span> account.
+                    </p>
                     <p>This action is irreversible.</p>
                     <button
                         onClick={handleDeletion}

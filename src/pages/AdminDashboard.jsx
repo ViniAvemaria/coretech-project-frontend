@@ -8,6 +8,7 @@ import ProductModal from "../modals/ProductModal";
 import { useAdminProducts } from "../contexts/AdminProductContext";
 import Loading from "../components/Loading";
 import ProductCardDashboard from "../components/ProductCardDashboard";
+import AdminOrders from "../components/AdminOrders";
 
 const AdminDashborad = () => {
     const {
@@ -28,7 +29,6 @@ const AdminDashborad = () => {
     } = useAdminProducts();
     const [importLoading, setImportLoading] = useState(false);
     const [existingProducts, setExistingProducts] = useState([]);
-    const [orders, setOrders] = useState([]);
     const [activeTab, setActiveTab] = useState("products");
     const [productModalObj, setProductModalObj] = useState({
         action: null,
@@ -64,7 +64,6 @@ const AdminDashborad = () => {
     const handleDelete = async (id) => {
         try {
             await deleteProduct(id);
-            toast.success("Product deleted successfully");
             fetchProducts();
         } catch (err) {
             toast.error(err.response?.data?.message || "Failed to delete product");
@@ -95,7 +94,7 @@ const AdminDashborad = () => {
                     }`}
                 >
                     <i className="fa-solid fa-bag-shopping mr-2"></i>
-                    <p>{`Products (${totalElements})`}</p>
+                    <p>Products</p>
                 </button>
 
                 <button
@@ -107,19 +106,11 @@ const AdminDashborad = () => {
                     }`}
                 >
                     <i className="fa-solid fa-box mr-2"></i>
-                    <p>{`Orders (${orders.length})`}</p>
+                    <p>Orders</p>
                 </button>
             </div>
 
-            {activeTab === "orders" && (
-                <div className="text-primary-text dark:text-primary-text-dark mt-6 mb-6">
-                    <h2>Orders Management</h2>
-                    <div className="flex flex-col items-center gap-5 w-full px-10 py-12 rounded-lg border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark mt-8">
-                        <i className="fa-solid fa-box text-5xl text-muted-text-dark dark:text-muted-text"></i>
-                        <p className="text-primary-text dark:text-primary-text-dark">No orders yet</p>
-                    </div>
-                </div>
-            )}
+            {activeTab === "orders" && <AdminOrders />}
 
             {activeTab === "products" && (
                 <>
@@ -236,10 +227,10 @@ const AdminDashborad = () => {
                             </div>
 
                             <div className="max-[835px]:hidden rounded-lg overflow-hidden text-primary-text dark:text-primary-text-dark text-left border border-border dark:border-border-dark bg-header dark:bg-header-dark">
-                                <table className="min-w-full table-fixed ">
+                                <table className="min-w-full table-fixed">
                                     <thead className="bg-card dark:bg-card-dark">
                                         <tr>
-                                            <th className="w-2/5 px-5 py-4">Product</th>
+                                            <th className="px-5 py-4">Product</th>
                                             <th className="px-5 py-4">Category</th>
                                             <th className="px-5 py-4">Price</th>
                                             <th className="px-5 py-4">Stock</th>
@@ -252,7 +243,7 @@ const AdminDashborad = () => {
                                                 key={product.id}
                                                 className="border border-border dark:border-border-dark"
                                             >
-                                                <td className="w-2/5 px-5 py-3 max-w-xs">
+                                                <td className="px-5 py-3 max-w-xs">
                                                     <div className="flex items-center gap-3">
                                                         <img
                                                             src={product.image}
@@ -283,7 +274,7 @@ const AdminDashborad = () => {
                                                             In Stock
                                                         </p>
                                                     ) : (
-                                                        <p className="py-1 px-2 rounded-lg text-red-500 bg-red-500/10 text-sm w-fit">
+                                                        <p className="text-center py-1 px-2 rounded-lg text-red-500 bg-red-500/10 text-sm w-fit">
                                                             Out of Stock
                                                         </p>
                                                     )}

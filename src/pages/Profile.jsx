@@ -5,13 +5,25 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import AccountTab from "../components/AccountTab";
 import { updateName } from "../api/userService";
+import { useOrders } from "../contexts/OrderContext";
+import { formatMoney } from "../utils/formatMoney";
 
 const Profile = () => {
+    const { orders } = useOrders();
     const [editNameLoading, setEditNameLoading] = useState(false);
     const [editName, setEditName] = useState(false);
     const { user, isAuthenticated, logout, refreshUser } = useAuth();
     const [activeTab, setActiveTab] = useState("account");
     const navigate = useNavigate();
+    const STATUSES = ["PENDING", "PAID", "SHIPPED", "DELIVERED", "CANCELLED"];
+
+    const statusStyles = {
+        PENDING: "text-yellow-700 bg-yellow-100 dark:text-yellow-400 dark:bg-yellow-600/20",
+        PAID: "text-blue-700 bg-blue-100 dark:text-blue-400 dark:bg-blue-600/20",
+        SHIPPED: "text-purple-700 bg-purple-100 dark:text-purple-400 dark:bg-purple-600/20",
+        DELIVERED: "text-green-700 bg-green-100 dark:text-green-400 dark:bg-green-600/20",
+        CANCELLED: "text-red-700 bg-red-100 dark:text-red-400 dark:bg-red-600/20",
+    };
 
     const handleLogout = async () => {
         navigate("/");
@@ -48,6 +60,10 @@ const Profile = () => {
         } finally {
             setEditNameLoading(false);
         }
+    };
+
+    const formatOrderId = (id) => {
+        return String(id).padStart(5, "0");
     };
 
     return (
@@ -167,12 +183,51 @@ const Profile = () => {
                     {activeTab === "account" && <AccountTab />}
 
                     {activeTab === "orders" && (
-                        <div className="flex flex-col items-center gap-5 w-full px-10 py-12 rounded-lg border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark mt-8">
-                            <i className="fa-solid fa-box text-5xl text-muted-text-dark dark:text-muted-text"></i>
-                            <p className="text-primary-text dark:text-primary-text-dark">No orders yet</p>
-                            <p className="text-muted-text-dark dark:text-muted-text">
-                                Your order history will appear here after you complete a purchase.
-                            </p>
+                        <div>
+                            {orders.length === 0 ? (
+                                <div className="flex flex-col items-center gap-5 w-full rounded-lg border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark mt-8 px-10 py-12">
+                                    <i className="fa-solid fa-box text-5xl text-muted-text-dark dark:text-muted-text"></i>
+                                    <p className="text-primary-text dark:text-primary-text-dark">No orders yet</p>
+                                    <p className="text-muted-text-dark dark:text-muted-text">
+                                        Your order history will appear here after you complete a purchase.
+                                    </p>
+                                </div>
+                            ) : (
+                                <div className="flex flex-col gap-4 mt-6 max-h-130 overflow-hidden overflow-y-scroll">
+                                    {orders.map((order) => (
+                                        <div
+                                            key={order.id}
+                                            className="grid grid-cols-2 rounded-lg border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark p-4"
+                                        >
+                                            <div className="flex flex-col gap-1">
+                                                <p>{`Order #${formatOrderId(order.id)}`}</p>
+                                                <p className="text-muted-text-dark dark:text-muted-text text-sm">
+                                                    {new Date(order.createdAt).toLocaleDateString("en-GB", {
+                                                        day: "2-digit",
+                                                        month: "short",
+                                                        year: "numeric",
+                                                    })}
+                                                </p>
+                                                <p className="text-brand">{formatMoney(order.totalPrice)}</p>
+                                            </div>
+
+                                            <div className="flex flex-col justify-between items-end-safe">
+                                                <p
+                                                    className={`${statusStyles[order.status]} w-fit capitalize py-px px-2 rounded-lg`}
+                                                >
+                                                    {order.status.toLowerCase()}
+                                                </p>
+                                                <Link
+                                                    to={`/order/${order.id}`}
+                                                    className="text-brand cursor-pointer py-px px-1.5 tracking-wide hover:underline underline-offset-4"
+                                                >
+                                                    View Details
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     )}
 

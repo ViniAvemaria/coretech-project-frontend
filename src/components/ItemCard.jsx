@@ -8,7 +8,7 @@ const ItemCard = ({ item }) => {
     const itemTotal = quantity * product.price;
 
     return (
-        <div className="flex gap-8 max-xs:gap-2 h-50 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark p-5 rounded-lg border border-border dark:border-border-dark shadow-sm">
+        <div className="flex gap-8 max-xs:gap-2 h-50 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark p-5 rounded-lg border border-border dark:border-border-dark shadow-sm">
             <div>
                 <img src={product.image} alt={product.name} className="w-40 h-full object-cover rounded-lg" />
             </div>

@@ -10,9 +10,7 @@ const ProductCardDashboard = ({ product, setProductModalObj, handleDelete }) => 
             <div className="flex min-w-0">
                 <div className="flex flex-col justify-between w-full">
                     <span className="truncate hover:cursor-pointer hover:text-brand transition-color duration-300 ease">
-                        <Link to={`/product/${product.id}`} state={{ from: location.pathname }}>
-                            {product.name}
-                        </Link>
+                        <Link to={`/product/${product.id}`}>{product.name}</Link>
                     </span>
                     <section className="flex justify-between">
                         <p className="text-muted-text-dark dark:text-muted-text text-sm capitalize">

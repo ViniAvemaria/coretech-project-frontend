@@ -172,7 +172,6 @@ const Review = ({ productId, review }) => {
                         onChange={(e) => setReviewComment(e.target.value)}
                         defaultValue={reviewComment}
                         autoFocus
-                        required
                         onFocus={(e) => {
                             const v = e.target.value.length;
                             e.target.setSelectionRange(v, v);

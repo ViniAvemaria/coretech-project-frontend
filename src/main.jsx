@@ -9,6 +9,7 @@ import { CartProvider } from "./contexts/CartContext.jsx";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 import { ProductProvider } from "./contexts/ProductContext.jsx";
 import { ReviewProvider } from "./contexts/ReviewContext.jsx";
+import { OrderProvider } from "./contexts/OrderContext.jsx";
 
 createRoot(document.getElementById("root")).render(
     // <StrictMode>
@@ -18,13 +19,15 @@ createRoot(document.getElementById("root")).render(
                 <ProductProvider>
                     <CartProvider>
                         <ReviewProvider>
-                            <ScrollToTop />
-                            <AppRoutes />
+                            <OrderProvider>
+                                <ScrollToTop />
+                                <AppRoutes />
+                            </OrderProvider>
                         </ReviewProvider>
                     </CartProvider>
                 </ProductProvider>
             </ThemeProvider>
         </AuthProvider>
-    </BrowserRouter>
+    </BrowserRouter>,
     // </StrictMode>
 );

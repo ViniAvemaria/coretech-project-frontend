@@ -42,7 +42,10 @@ const Header = () => {
         <header className="flex items-center h-18 py-4 px-10 max-[550px]:pr-6 w-full bg-header dark:bg-header-dark max-[550px]:gap-8 gap-12 border-b border-b-border dark:border-b-border-dark">
             {!searchOpen && (
                 <Link to={"/"}>
-                    <h1 className="text-brand text-3xl font-bold whitespace-nowrap cursor-pointer hover:scale-105 transition-transform duration-300 ease">
+                    <h1
+                        translate="no"
+                        className="text-brand text-3xl font-bold whitespace-nowrap cursor-pointer hover:scale-105 transition-transform duration-300 ease"
+                    >
                         Core Tech
                     </h1>
                 </Link>

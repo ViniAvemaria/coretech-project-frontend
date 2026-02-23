@@ -122,7 +122,6 @@ const Product = () => {
                 id: product.id,
                 quantity: 1,
             });
-            toast.success("Product added to cart");
         } catch (err) {
             toast.error(err.message || "Failed to add item to cart");
         }
@@ -140,12 +139,12 @@ const Product = () => {
         <div className="max-w-[1100px] w-full py-12">
             <div className="text-primary-text dark:text-primary-text-dark w-full bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg">
                 <section className="flex flex-col gap-6 p-8 max-[500px]:p-4">
-                    <div className="flex flex-col gap-2">
-                        <div className="flex gap-2">
+                    <div className="flex flex-col gap-2 min-[600px]:hidden">
+                        <p className="text-lg font-semibold">{product.name}</p>
+                        <div className="flex items-center gap-2 text-sm">
                             <p>{renderStars(product.rating)}</p>
-                            <p>{product.rating}</p>
+                            <p>{`${product.rating} (${product.totalReviews})`}</p>
                         </div>
-                        <p>{product.name}</p>
                     </div>
 
                     <section className="flex max-[600px]:flex-col gap-6">
@@ -170,6 +169,14 @@ const Product = () => {
                         </div>
 
                         <div className="flex flex-col gap-4 flex-1">
+                            <div className="flex flex-col gap-2 max-[600px]:hidden">
+                                <p className="text-lg font-semibold">{product.name}</p>
+                                <div className="flex items-center gap-2 text-sm">
+                                    <p>{renderStars(product.rating)}</p>
+                                    <p className="text-muted-text-dark dark:text-muted-text">{`${product.rating} (${product.totalReviews})`}</p>
+                                </div>
+                            </div>
+
                             <p className="text-xl text-brand">{formatMoney(product.price)}</p>
 
                             <div>
@@ -262,7 +269,6 @@ const Product = () => {
                                 id="review"
                                 onChange={(e) => setReviewComment(e.target.value)}
                                 placeholder="Share your experience with this product..."
-                                required
                             ></textarea>
                             <p className="text-sm text-muted-text-dark dark:text-muted-text">
                                 {reviewComment.length}/1000

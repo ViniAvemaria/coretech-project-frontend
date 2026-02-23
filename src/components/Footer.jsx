@@ -3,7 +3,9 @@ const Footer = () => {
         <footer className="flex flex-col items-center py-12 px-10 bg-footer dark:bg-footer-dark border-t border-footer-border dark:border-footer-border-dark text-muted-text dark:text-muted-text-dark">
             <section className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-16 w-full justify-items-center-safe max-[1124px]:grid-cols-2 max-[710px]:grid-cols-1">
                 <div className="w-80">
-                    <h3 className="mb-4 text-footer-text">Core Tech</h3>
+                    <h3 translate="no" className="mb-4 text-footer-text">
+                        Core Tech
+                    </h3>
                     <p>
                         Mock e-commerce project built to showcase frontend and backend skills. Developed by Vinicius de
                         Moura Avemaria

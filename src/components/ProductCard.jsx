@@ -18,7 +18,6 @@ const ProductCard = ({ product }) => {
                 id: product.id,
                 quantity: 1,
             });
-            toast.success("Product added to cart");
         } catch (err) {
             toast.error(err.message || "Failed to add item to cart");
         }
@@ -45,7 +44,7 @@ const ProductCard = ({ product }) => {
     return (
         <div className="h-[545px] w-[275px] bg-card dark:bg-card-dark border rounded-lg border-border dark:border-border-dark overflow-hidden shadow-sm">
             <div className="group h-[300px] overflow-hidden">
-                <Link to={`/product/${product.id}`} state={{ from: location.pathname }}>
+                <Link to={`/product/${product.id}`}>
                     <img
                         src={product.image}
                         alt={product.name}

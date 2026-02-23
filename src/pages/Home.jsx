@@ -9,7 +9,6 @@ const Home = () => {
         activeCategory,
         setActiveCategory,
         productsLoading,
-        totalElements,
         page,
         totalPages,
         fetchProducts,
@@ -48,10 +47,10 @@ const Home = () => {
                                 onClick={() => setActiveCategory(category.name)}
                                 className={`${
                                     activeCategory === category.name ? "category-button" : "category-button-off"
-                                } whitespace-nowrap`}
+                                } whitespace-nowrap capitalize`}
                                 key={category.id}
                             >
-                                {category.name.charAt(0).toUpperCase() + category.name.slice(1)}
+                                {category.name}
                             </button>
                         ))}
                     </div>
