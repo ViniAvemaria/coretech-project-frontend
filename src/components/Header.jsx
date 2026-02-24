@@ -123,7 +123,11 @@ const Header = () => {
                                 setProfileOpen((prev) => !prev);
                             }}
                             state={{ from: location.pathname }}
-                            onBlur={() => setProfileOpen(false)}
+                            onBlur={() =>
+                                setTimeout(() => {
+                                    setProfileOpen(false);
+                                }, 100)
+                            }
                         >
                             <i className="fa-solid fa-user"></i>
                         </Link>
@@ -139,14 +143,14 @@ const Header = () => {
                                 </div>
                                 <hr className="text-muted-text dark:text-muted-text-dark" />
                                 <ul className="flex flex-col">
-                                    <Link to={"/profile"} onMouseDown={(e) => e.preventDefault()}>
+                                    <Link to={"/profile"}>
                                         <li className="flex items-center px-4 py-3 hover:bg-[#f3f4f6] dark:hover:bg-[#111827] transition-colors duration-300 ease cursor-pointer">
                                             <i className="fa-solid fa-user text-sm mr-2"></i>
                                             Profile
                                         </li>
                                     </Link>
                                     {user.roles.includes("ADMIN") && (
-                                        <Link to={"/admin"} onMouseDown={(e) => e.preventDefault()}>
+                                        <Link to={"/admin"}>
                                             <li className="flex items-center px-4 py-3 text-purple-600 hover:bg-[#f3f4f6] dark:hover:bg-[#111827] transition-colors duration-300 ease cursor-pointer">
                                                 <i className="fa-solid fa-shield text-sm mr-2"></i>
                                                 Dashboard
@@ -155,7 +159,6 @@ const Header = () => {
                                     )}
                                     <li className="flex items-center text-red-500 hover:bg-[#f3f4f6] dark:hover:bg-[#111827] transition-colors duration-300 ease rounded-b-xl">
                                         <button
-                                            onMouseDown={(e) => e.preventDefault()}
                                             onClick={() => handleLogout()}
                                             className="flex items-center px-4 py-3 w-full cursor-pointer"
                                         >
