@@ -138,6 +138,8 @@ npm run dev
 
 Após iniciar o servidor de desenvolvimento, a aplicação estará disponível em:
 
+```
 http://localhost:5173
+```
 
 Certifique-se de iniciar o servidor do backend antes de acessar a aplicação.
