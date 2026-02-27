@@ -41,17 +41,17 @@ const ProductCard = ({ product }) => {
     };
 
     return (
-        <div className="h-[545px] w-[275px] bg-card dark:bg-card-dark border rounded-lg border-border dark:border-border-dark overflow-hidden shadow-sm">
-            <div className="group h-[300px] overflow-hidden">
+        <div className="w-[275px] bg-card dark:bg-card-dark border rounded-lg border-border dark:border-border-dark overflow-hidden shadow-sm">
+            <div className="group h-85 overflow-hidden">
                 <Link to={`/product/${product.id}`}>
                     <img
                         src={product.image}
                         alt={product.name}
-                        className="w-full h-[300px] object-cover rounded-t-lg hover:cursor-pointer group-hover:scale-105 transition-transform duration-300 ease-out"
+                        className="w-full h-85 object-cover rounded-t-lg hover:cursor-pointer group-hover:scale-105 transition-transform duration-300 ease-out"
                     />
                 </Link>
             </div>
-            <div className="flex flex-col h-[245px] py-5 px-3 gap-3 text-primary-text dark:text-primary-text-dark">
+            <div className="flex flex-col h-62 py-5 px-3 gap-3 text-primary-text dark:text-primary-text-dark">
                 <div className="flex gap-2">
                     <p>{renderStars(product.rating)}</p>
                     <p>{product.rating}</p>
