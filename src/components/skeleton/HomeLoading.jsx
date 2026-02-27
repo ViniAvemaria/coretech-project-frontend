@@ -1,15 +1,11 @@
 const HomeLoading = () => {
     return (
-        <div className="max-w-[1200px] w-full pb-12">
-            <div className="flex items-center w-screen min-w-[360px] gap-2 px-10 absolute border-b border-border dark:border-border-dark h-18 left-0 bg-header dark:bg-header-dark">
-                {Array.from({ length: 6 }).map((_, i) => (
-                    <div key={i} className="relative skeleton-item rounded-lg h-10 w-32 overflow-hidden">
-                        <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent via-skeleton-shimmer dark:via-skeleton-shimmer-dark to-transparent" />
-                    </div>
-                ))}
+        <>
+            <div className="skeleton-item relative h-10 overflow-hidden rounded-lg mt-26 mb-6 w-30 place-self-end-safe">
+                <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent via-skeleton-shimmer dark:via-skeleton-shimmer-dark to-transparent" />
             </div>
 
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(275px,1fr))] place-items-center gap-8 mt-26">
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(275px,1fr))] place-items-center gap-8">
                 {Array.from({ length: 12 }).map((_, i) => (
                     <div
                         key={i}
@@ -40,7 +36,7 @@ const HomeLoading = () => {
                     </div>
                 ))}
             </div>
-        </div>
+        </>
     );
 };
 

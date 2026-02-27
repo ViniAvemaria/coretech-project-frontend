@@ -1,6 +1,7 @@
 import ProductCard from "../components/ProductCard";
 import { useProducts } from "../contexts/ProductContext";
 import HomeLoading from "../components/skeleton/HomeLoading";
+import CategoryLoading from "../components/skeleton/CategoryLoading";
 
 const Home = () => {
     const {
@@ -30,32 +31,34 @@ const Home = () => {
 
     return (
         <div className="max-w-[1200px] w-full pb-12">
-            {productsLoading || categoriesLoading ? (
-                <div className="flex">
-                    <HomeLoading />
+            {categoriesLoading ? (
+                <CategoryLoading />
+            ) : (
+                <div className="flex items-center w-screen min-w-[360px] gap-2 px-10 absolute bg-header dark:bg-header-dark border-b border-border dark:border-border-dark h-18 left-0 overflow-y-scroll">
+                    <button
+                        onClick={() => setActiveCategory(null)}
+                        className={`${activeCategory === null ? "category-button" : "category-button-off"} whitespace-nowrap`}
+                    >
+                        All Products
+                    </button>
+                    {categories.map((category) => (
+                        <button
+                            onClick={() => setActiveCategory(category.name)}
+                            className={`${
+                                activeCategory === category.name ? "category-button" : "category-button-off"
+                            } whitespace-nowrap capitalize`}
+                            key={category.id}
+                        >
+                            {category.name}
+                        </button>
+                    ))}
                 </div>
+            )}
+
+            {productsLoading ? (
+                <HomeLoading />
             ) : (
                 <>
-                    <div className="flex items-center w-screen min-w-[360px] gap-2 px-10 absolute bg-header dark:bg-header-dark border-b border-border dark:border-border-dark h-18 left-0 overflow-y-scroll">
-                        <button
-                            onClick={() => setActiveCategory(null)}
-                            className={`${activeCategory === null ? "category-button" : "category-button-off"} whitespace-nowrap`}
-                        >
-                            All Products
-                        </button>
-                        {categories.map((category) => (
-                            <button
-                                onClick={() => setActiveCategory(category.name)}
-                                className={`${
-                                    activeCategory === category.name ? "category-button" : "category-button-off"
-                                } whitespace-nowrap capitalize`}
-                                key={category.id}
-                            >
-                                {category.name}
-                            </button>
-                        ))}
-                    </div>
-
                     <section className="flex justify-end-safe mt-26 mb-6">
                         <select
                             className="w-fit px-4 py-2 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-lg focus-within:border-focus-ring transition-colors duration-300 ease cursor-pointer"

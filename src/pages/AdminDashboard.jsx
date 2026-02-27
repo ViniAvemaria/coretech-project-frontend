@@ -16,6 +16,7 @@ const AdminDashborad = () => {
         fetchProducts,
         fetchCategories,
         productsLoading,
+        categoriesLoading,
         page,
         totalPages,
         activeCategory,
@@ -152,69 +153,69 @@ const AdminDashborad = () => {
                         </div>
                     </div>
 
-                    <section className="flex flex-col gap-4 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg mb-4 py-5 px-4 w-full">
-                        <div className="flex gap-4 max-[835px]:flex-col">
-                            <div className="group flex flex-1 items-center w-full border bg-input dark:bg-input-dark border-border px-4 py-2 rounded-lg gap-3 dark:border-border-dark focus-within:border-focus-ring transition-colors duration-300 ease">
-                                <i className="fa-solid fa-magnifying-glass text-muted-text dark:text-muted-text-dark group-focus-within:text-focus-ring transition-colors duration-300 ease"></i>
-                                <input
-                                    id="search-bar"
-                                    value={search}
-                                    onChange={(e) => setSearch(e.target.value)}
-                                    type="text"
-                                    autoComplete="off"
-                                    placeholder="Search for products..."
-                                    className="w-full focus:outline-none text-primary-text dark:text-primary-text-dark"
-                                />
-                                <button
-                                    onMouseDown={(e) => e.preventDefault()}
-                                    onClick={() => {
-                                        setSearch("");
-                                    }}
-                                    className="text-muted-text dark:text-muted-text-dark group-focus-within:text-focus-ring transition-colors duration-300 ease text-sm cursor-pointer"
-                                >
-                                    {search && <i className="fa-solid fa-x"></i>}
-                                </button>
-                            </div>
-
-                            <select
-                                className="flex-1 px-4 py-2 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-lg w-full focus-within:border-focus-ring transition-colors duration-300 ease cursor-pointer capitalize"
-                                onChange={(e) => setActiveCategory(e.target.value)}
-                            >
-                                <option value="">All Categories</option>
-                                {categories.map((cat) => (
-                                    <option key={cat.id} value={cat.name}>
-                                        {cat.name}
-                                    </option>
-                                ))}
-                            </select>
-
-                            <select
-                                className="flex-1 px-4 py-2 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-lg w-full focus-within:border-focus-ring transition-colors duration-300 ease cursor-pointer"
-                                value={`${sort.field}-${sort.dir}`}
-                                onChange={(e) => {
-                                    const [field, dir] = e.target.value.split("-");
-                                    setSort({ field, dir });
-                                }}
-                            >
-                                <option value="createdAt-desc">Newest</option>
-                                <option value="createdAt-asc">Oldest</option>
-                                <option value="price-desc">Price&nbsp;&nbsp;↑</option>
-                                <option value="price-asc">Price&nbsp;&nbsp;↓</option>
-                                <option value="rating-desc">Rating&nbsp;&nbsp;↑</option>
-                                <option value="rating-asc">Rating&nbsp;&nbsp;↓</option>
-                                <option value="reviews-desc">Reviews&nbsp;&nbsp;↑</option>
-                                <option value="reviews-asc">Reviews&nbsp;&nbsp;↓</option>
-                            </select>
-                        </div>
-                        <p className="text-sm text-muted-text-dark dark:text-muted-text">{`Showing ${products.length} of ${totalElements} products`}</p>
-                    </section>
-
-                    {productsLoading || importLoading ? (
-                        <div className="flex items-center justify-center h-full w-full">
+                    {productsLoading || importLoading || categoriesLoading ? (
+                        <div className="flex items-center justify-center mt-30 w-full">
                             <Loading />
                         </div>
                     ) : (
                         <>
+                            <section className="flex flex-col gap-4 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg mb-4 py-5 px-4 w-full">
+                                <div className="flex gap-4 max-[835px]:flex-col">
+                                    <div className="group flex flex-1 items-center w-full border bg-input dark:bg-input-dark border-border px-4 py-2 rounded-lg gap-3 dark:border-border-dark focus-within:border-focus-ring transition-colors duration-300 ease">
+                                        <i className="fa-solid fa-magnifying-glass text-muted-text dark:text-muted-text-dark group-focus-within:text-focus-ring transition-colors duration-300 ease"></i>
+                                        <input
+                                            id="search-bar"
+                                            value={search}
+                                            onChange={(e) => setSearch(e.target.value)}
+                                            type="text"
+                                            autoComplete="off"
+                                            placeholder="Search for products..."
+                                            className="w-full focus:outline-none text-primary-text dark:text-primary-text-dark"
+                                        />
+                                        <button
+                                            onMouseDown={(e) => e.preventDefault()}
+                                            onClick={() => {
+                                                setSearch("");
+                                            }}
+                                            className="text-muted-text dark:text-muted-text-dark group-focus-within:text-focus-ring transition-colors duration-300 ease text-sm cursor-pointer"
+                                        >
+                                            {search && <i className="fa-solid fa-x"></i>}
+                                        </button>
+                                    </div>
+
+                                    <select
+                                        className="flex-1 px-4 py-2 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-lg w-full focus-within:border-focus-ring transition-colors duration-300 ease cursor-pointer capitalize"
+                                        onChange={(e) => setActiveCategory(e.target.value)}
+                                    >
+                                        <option value="">All Categories</option>
+                                        {categories.map((cat) => (
+                                            <option key={cat.id} value={cat.name}>
+                                                {cat.name}
+                                            </option>
+                                        ))}
+                                    </select>
+
+                                    <select
+                                        className="flex-1 px-4 py-2 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-lg w-full focus-within:border-focus-ring transition-colors duration-300 ease cursor-pointer"
+                                        value={`${sort.field}-${sort.dir}`}
+                                        onChange={(e) => {
+                                            const [field, dir] = e.target.value.split("-");
+                                            setSort({ field, dir });
+                                        }}
+                                    >
+                                        <option value="createdAt-desc">Newest</option>
+                                        <option value="createdAt-asc">Oldest</option>
+                                        <option value="price-desc">Price&nbsp;&nbsp;↑</option>
+                                        <option value="price-asc">Price&nbsp;&nbsp;↓</option>
+                                        <option value="rating-desc">Rating&nbsp;&nbsp;↑</option>
+                                        <option value="rating-asc">Rating&nbsp;&nbsp;↓</option>
+                                        <option value="reviews-desc">Reviews&nbsp;&nbsp;↑</option>
+                                        <option value="reviews-asc">Reviews&nbsp;&nbsp;↓</option>
+                                    </select>
+                                </div>
+                                <p className="text-sm text-muted-text-dark dark:text-muted-text">{`Showing ${products.length} of ${totalElements} products`}</p>
+                            </section>
+
                             <div className="flex flex-col min-[835px]:hidden text-primary-text dark:text-primary-text-dark ring-1 ring-border dark:ring-border-dark rounded-lg overflow-hidden">
                                 {products.map((product) => (
                                     <ProductCardDashboard

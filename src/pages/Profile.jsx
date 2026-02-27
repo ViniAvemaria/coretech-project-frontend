@@ -15,7 +15,6 @@ const Profile = () => {
     const { user, isAuthenticated, logout, refreshUser } = useAuth();
     const [activeTab, setActiveTab] = useState("account");
     const navigate = useNavigate();
-    const STATUSES = ["PENDING", "PAID", "SHIPPED", "DELIVERED", "CANCELLED"];
 
     const statusStyles = {
         PENDING: "text-yellow-700 bg-yellow-100 dark:text-yellow-400 dark:bg-yellow-600/20",

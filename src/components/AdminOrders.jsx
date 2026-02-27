@@ -46,7 +46,7 @@ const AdminOrders = () => {
         <div className=" text-primary-text dark:text-primary-text-dark mt-6 mb-6">
             <h2 className="mb-6">Orders Management</h2>
             {loading ? (
-                <div className="flex items-center justify-center h-full w-full">
+                <div className="flex items-center justify-center w-full mt-30">
                     <Loading />
                 </div>
             ) : orders.length === 0 ? (

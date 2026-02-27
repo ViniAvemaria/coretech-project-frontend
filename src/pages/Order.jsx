@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useOrders } from "../contexts/OrderContext";
-import Loading from "../components/Loading";
+import OrderLoading from "../components/skeleton/OrderLoading";
 import { formatMoney } from "../utils/formatMoney";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -70,9 +70,7 @@ const Order = () => {
     return (
         <div className="max-w-[800px] w-full py-12">
             {loading ? (
-                <div className="flex items-center justify-center h-full w-full">
-                    <Loading />
-                </div>
+                <OrderLoading />
             ) : (
                 <div className="flex flex-col gap-6 text-primary-text dark:text-primary-text-dark">
                     <div className="flex flex-col gap-2">
