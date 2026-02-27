@@ -1,13 +1,12 @@
 import { useCart } from "../contexts/CartContext";
 import { useAuth } from "../contexts/AuthContext";
 import { formatMoney } from "../utils/formatMoney";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const ProductCard = ({ product }) => {
     const { isAuthenticated } = useAuth();
     const { addItem } = useCart();
-    const location = useLocation();
 
     const handleAddItem = async () => {
         try {

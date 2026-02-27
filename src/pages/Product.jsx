@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { formatMoney } from "../utils/formatMoney";
 import { useCart } from "../contexts/CartContext";
-import Loading from "../components/Loading";
+import ReviewLoading from "../components/skeleton/ReviewLoading";
+import ProductLoading from "../components/skeleton/ProductLoading";
 import Review from "../components/Review";
 import { useAuth } from "../contexts/AuthContext";
 import { useReviews } from "../contexts/ReviewContext";
@@ -129,8 +130,8 @@ const Product = () => {
 
     if (productLoading || !product) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
-                <Loading />
+            <div className="flex w-full justify-center">
+                <ProductLoading />
             </div>
         );
     }
@@ -219,122 +220,128 @@ const Product = () => {
                 </section>
             </div>
 
-            <div
-                id="review-section"
-                className=" mt-7 p-8 max-[500px]:p-4 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg text-primary-text dark:text-primary-text-dark"
-            >
-                <div className="flex max-[876px]:flex-col gap-6">
-                    <div className="flex flex-col gap-6 w-1/2 max-[876px]:w-full max-[876px]:order-2">
-                        <h2 className="section-title m-0 place-self-center">Leave a Review</h2>
-                        <div>
-                            <p className="mb-3">Rating</p>
-                            <div className="flex items-center">
-                                <div>
-                                    {[1, 2, 3, 4, 5].map((star) => {
-                                        const value = hover || rating;
-                                        return (
-                                            <button
-                                                key={star}
-                                                type="button"
-                                                onMouseMove={(e) => setHover(getValue(e, star))}
-                                                onMouseLeave={() => setHover(0)}
-                                                onClick={(e) => setRating(getValue(e, star))}
-                                                className="cursor-pointer"
-                                            >
-                                                <i
-                                                    className={
-                                                        value >= star
-                                                            ? "fa-solid fa-star text-3xl text-yellow-400"
-                                                            : value >= star - 0.5
-                                                              ? "fa-regular fa-star-half-stroke text-3xl text-yellow-400"
-                                                              : "fa-regular fa-star text-3xl text-yellow-400"
-                                                    }
-                                                />
-                                            </button>
-                                        );
-                                    })}
+            {reviewsLoading ? (
+                <div className="flex">
+                    <ReviewLoading />
+                </div>
+            ) : (
+                <div
+                    id="review-section"
+                    className=" mt-7 p-8 max-[500px]:p-4 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg text-primary-text dark:text-primary-text-dark"
+                >
+                    <div className="flex max-[876px]:flex-col gap-6">
+                        <div className="flex flex-col gap-6 w-1/2 max-[876px]:w-full max-[876px]:order-2">
+                            <h2 className="section-title m-0 place-self-center">Leave a Review</h2>
+                            <div>
+                                <p className="mb-3">Rating</p>
+                                <div className="flex items-center">
+                                    <div>
+                                        {[1, 2, 3, 4, 5].map((star) => {
+                                            const value = hover || rating;
+                                            return (
+                                                <button
+                                                    key={star}
+                                                    type="button"
+                                                    onMouseMove={(e) => setHover(getValue(e, star))}
+                                                    onMouseLeave={() => setHover(0)}
+                                                    onClick={(e) => setRating(getValue(e, star))}
+                                                    className="cursor-pointer"
+                                                >
+                                                    <i
+                                                        className={
+                                                            value >= star
+                                                                ? "fa-solid fa-star text-3xl text-yellow-400"
+                                                                : value >= star - 0.5
+                                                                  ? "fa-regular fa-star-half-stroke text-3xl text-yellow-400"
+                                                                  : "fa-regular fa-star text-3xl text-yellow-400"
+                                                        }
+                                                    />
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                    <p className="ml-3 text-muted-text-dark dark:text-muted-text">{`${rating} ${
+                                        rating < 2 ? "star" : "stars"
+                                    }`}</p>
                                 </div>
-                                <p className="ml-3 text-muted-text-dark dark:text-muted-text">{`${rating} ${
-                                    rating < 2 ? "star" : "stars"
-                                }`}</p>
+                            </div>
+                            <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+                                <p>Your Review</p>
+                                <textarea
+                                    className="input h-32 resize-none"
+                                    value={reviewComment}
+                                    maxLength={1000}
+                                    name="review"
+                                    id="review"
+                                    onChange={(e) => setReviewComment(e.target.value)}
+                                    placeholder="Share your experience with this product..."
+                                ></textarea>
+                                <p className="text-sm text-muted-text-dark dark:text-muted-text">
+                                    {reviewComment.length}/1000
+                                </p>
+                                <button
+                                    type="submit"
+                                    className="mt-2 bg-brand hover:bg-brand-hover cursor-pointer transition-colors duration-300 ease text-white py-3 px-4.5 rounded-lg"
+                                >
+                                    Submit Review
+                                </button>
+                            </form>
+                        </div>
+
+                        <div className="flex flex-col items-center justify-center w-1/2 max-[876px]:w-full gap-8 max-[876px]:order-1">
+                            <div className="flex flex-col items-center gap-1">
+                                <h2 className="font-bold text-4xl">{product.rating}</h2>
+                                <p>{renderStars(product.rating)}</p>
+                                <p>{`${reviews.length} ${reviews.length < 2 ? "review" : "reviews"}`}</p>
+                            </div>
+                            <div className="space-y-1.5 w-full">
+                                <Row label="5" value={stars[5]} total={stars.total} />
+                                <Row label="4" value={stars[4]} total={stars.total} />
+                                <Row label="3" value={stars[3]} total={stars.total} />
+                                <Row label="2" value={stars[2]} total={stars.total} />
+                                <Row label="1" value={stars[1]} total={stars.total} />
                             </div>
                         </div>
-                        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-                            <p>Your Review</p>
-                            <textarea
-                                className="input h-32 resize-none"
-                                value={reviewComment}
-                                maxLength={1000}
-                                name="review"
-                                id="review"
-                                onChange={(e) => setReviewComment(e.target.value)}
-                                placeholder="Share your experience with this product..."
-                            ></textarea>
-                            <p className="text-sm text-muted-text-dark dark:text-muted-text">
-                                {reviewComment.length}/1000
-                            </p>
-                            <button
-                                type="submit"
-                                className="mt-2 bg-brand hover:bg-brand-hover cursor-pointer transition-colors duration-300 ease text-white py-3 px-4.5 rounded-lg"
-                            >
-                                Submit Review
-                            </button>
-                        </form>
                     </div>
 
-                    <div className="flex flex-col items-center justify-center w-1/2 max-[876px]:w-full gap-8 max-[876px]:order-1">
-                        <div className="flex flex-col items-center gap-1">
-                            <h2 className="font-bold text-4xl">{product.rating}</h2>
-                            <p>{renderStars(product.rating)}</p>
-                            <p>{`${reviews.length} ${reviews.length < 2 ? "review" : "reviews"}`}</p>
+                    <hr className="mt-10 mb-10 text-muted-text-dark dark:text-muted-text" />
+
+                    {userReview && (
+                        <div className="flex flex-col gap-2">
+                            <h2 className="section-title">Your Review</h2>
+                            <Review productId={product.id} review={userReview} />
+                            <hr className="mt-10 mb-10 text-muted-text-dark dark:text-muted-text" />
                         </div>
-                        <div className="space-y-1.5 w-full">
-                            <Row label="5" value={stars[5]} total={stars.total} />
-                            <Row label="4" value={stars[4]} total={stars.total} />
-                            <Row label="3" value={stars[3]} total={stars.total} />
-                            <Row label="2" value={stars[2]} total={stars.total} />
-                            <Row label="1" value={stars[1]} total={stars.total} />
+                    )}
+
+                    <div className="flex gap-4 justify-between items-center mb-6 max-[500px]:flex-col max-[500px]:items-start">
+                        <h2 className="section-title mb-0">Customer reviews</h2>
+                        <select
+                            id="sort-select"
+                            value={sort}
+                            onChange={(e) => setSort(e.target.value)}
+                            className="input w-fit py-2"
+                        >
+                            <option value="newest">Newest</option>
+                            <option value="oldest">Oldest</option>
+                            <option value="highest">Highest rating</option>
+                            <option value="lowest">Lowest rating</option>
+                        </select>
+                    </div>
+
+                    {reviews.length === 0 ? (
+                        <div>
+                            <h2 className="text-center font-semibold py-12">No reviews found</h2>
                         </div>
-                    </div>
+                    ) : (
+                        <div className="flex flex-col gap-5">
+                            {reviews.map((review) => (
+                                <Review key={review.id} productId={product.id} review={review} />
+                            ))}
+                        </div>
+                    )}
                 </div>
-
-                <hr className="mt-10 mb-10 text-muted-text-dark dark:text-muted-text" />
-
-                {userReview && (
-                    <div className="flex flex-col gap-2">
-                        <h2 className="section-title">Your Review</h2>
-                        <Review productId={product.id} review={userReview} />
-                        <hr className="mt-10 mb-10 text-muted-text-dark dark:text-muted-text" />
-                    </div>
-                )}
-
-                <div className="flex justify-between items-center mb-6">
-                    <h2 className="section-title mb-0">Customer reviews</h2>
-                    <select
-                        id="sort-select"
-                        value={sort}
-                        onChange={(e) => setSort(e.target.value)}
-                        className="input w-fit"
-                    >
-                        <option value="newest">Newest</option>
-                        <option value="oldest">Oldest</option>
-                        <option value="highest">Highest rating</option>
-                        <option value="lowest">Lowest rating</option>
-                    </select>
-                </div>
-
-                {reviewsLoading ? (
-                    <div className="flex items-center justify-center h-full w-full">
-                        <Loading />
-                    </div>
-                ) : (
-                    <div className="flex flex-col gap-5">
-                        {reviews.map((review) => (
-                            <Review key={review.id} productId={product.id} review={review} />
-                        ))}
-                    </div>
-                )}
-            </div>
+            )}
         </div>
     );
 };

@@ -1,6 +1,6 @@
 import ProductCard from "../components/ProductCard";
 import { useProducts } from "../contexts/ProductContext";
-import Loading from "../components/Loading";
+import HomeLoading from "../components/skeleton/HomeLoading";
 
 const Home = () => {
     const {
@@ -9,6 +9,7 @@ const Home = () => {
         activeCategory,
         setActiveCategory,
         productsLoading,
+        categoriesLoading,
         page,
         totalPages,
         fetchProducts,
@@ -29,9 +30,9 @@ const Home = () => {
 
     return (
         <div className="max-w-[1200px] w-full pb-12">
-            {productsLoading ? (
-                <div className="flex items-center justify-center h-full">
-                    <Loading />
+            {productsLoading || categoriesLoading ? (
+                <div className="flex">
+                    <HomeLoading />
                 </div>
             ) : (
                 <>

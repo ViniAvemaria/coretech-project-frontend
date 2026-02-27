@@ -3,13 +3,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Loading from "./components/Loading";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 import { useTheme } from "./contexts/ThemeContext";
-import { useAuth } from "./contexts/AuthContext";
 
 const App = () => {
-    const { loading } = useAuth();
     const { theme } = useTheme();
 
     return (
@@ -17,7 +14,7 @@ const App = () => {
             <ToastContainer theme={theme == "dark" ? "dark" : "light"} limit={3} position="top-left" />
             <Header />
             <section className="flex justify-center min-h-dvh flex-1 px-8">
-                {loading ? <Loading /> : <Outlet />}
+                <Outlet />
                 <ScrollToTopButton />
             </section>
             <Footer />

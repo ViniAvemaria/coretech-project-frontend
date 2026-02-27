@@ -1,8 +1,16 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import Loading from "../components/Loading";
 
 const ProtectedRoute = ({ children }) => {
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, loading } = useAuth();
+
+    if (loading)
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <Loading />
+            </div>
+        );
 
     if (!isAuthenticated) {
         return <Navigate to="/login" replace />;

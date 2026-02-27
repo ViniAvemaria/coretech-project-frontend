@@ -31,6 +31,9 @@
     --color-cancel-button: #fbe4e4;
     --color-cancel-button-hover: #f5caca;
 
+    --color-skeleton: #e5e7eb;
+    --color-skeleton-shimmer: #f3f4f6;
+
     /* Dark */
     --color-main-dark: #030712;
     --color-header-dark: #111827;
@@ -51,6 +54,9 @@
     --color-cancel-text-dark: #fca5a5;
     --color-cancel-button-dark: #3b1f1f;
     --color-cancel-hover-dark: #4b2626;
+
+    --color-skeleton-dark: #18212f;
+    --color-skeleton-shimmer-dark: #243244;
 }
 
 @layer base {
@@ -318,6 +324,14 @@
                 cursor: not-allowed;
                 background-color: var(--color-gray-800);
             }
+        }
+    }
+
+    .skeleton-item {
+        background-color: var(--color-skeleton);
+
+        @variant dark {
+            background-color: var(--color-skeleton-dark);
         }
     }
 }
