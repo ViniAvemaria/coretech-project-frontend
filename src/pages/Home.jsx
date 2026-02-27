@@ -61,7 +61,7 @@ const Home = () => {
                 <>
                     <section className="flex justify-end-safe mt-26 mb-6">
                         <select
-                            className="w-fit px-4 py-2 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-lg focus-within:border-focus-ring transition-colors duration-300 ease cursor-pointer"
+                            className="w-fit px-4 py-2 text-primary-text dark:text-primary-text-dark bg-header dark:bg-input-dark border border-border dark:border-border-dark rounded-lg focus-within:border-focus-ring transition-colors duration-300 ease cursor-pointer"
                             value={`${sort.field}-${sort.dir}`}
                             onChange={(e) => {
                                 const [field, dir] = e.target.value.split("-");

@@ -14,7 +14,7 @@
     --color-header: #ffffff;
     --color-footer: #111827;
     --color-card: #ffffff;
-    --color-input: #ffffff;
+    --color-input: #eeeff2;
 
     --color-primary-text: #000000;
     --color-muted-text: #9ca3af;
@@ -225,10 +225,14 @@
     .inactive-button {
         color: black;
         border-radius: 8px;
-        background-color: var(--color-gray-300);
+        background-color: var(--color-gray-200);
         padding: 7px 15px;
         transition: background-color 0.3s ease;
         cursor: pointer;
+
+        @variant dark {
+            background-color: var(--color-gray-300);
+        }
     }
 
     .section-title {
@@ -277,14 +281,14 @@
 
     .category-button-off {
         color: black;
-        background-color: var(--color-edit-button);
+        background-color: hsl(225, 13%, 94%);
         border-radius: 8px;
         padding: 7px 13px;
         cursor: pointer;
         transition: background-color 0.3s ease;
 
         &:hover {
-            background-color: #c9d4e6;
+            background-color: hsl(220, 14%, 88%);
         }
 
         @variant dark {

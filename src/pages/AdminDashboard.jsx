@@ -184,7 +184,7 @@ const AdminDashborad = () => {
                                     </div>
 
                                     <select
-                                        className="flex-1 px-4 py-2 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-lg w-full focus-within:border-focus-ring transition-colors duration-300 ease cursor-pointer capitalize"
+                                        className="flex-1 px-4 py-2 text-primary-text dark:text-primary-text-dark bg-input dark:bg-input-dark border border-border dark:border-border-dark rounded-lg w-full focus-within:border-focus-ring transition-colors duration-300 ease cursor-pointer capitalize"
                                         onChange={(e) => setActiveCategory(e.target.value)}
                                     >
                                         <option value="">All Categories</option>
@@ -196,7 +196,7 @@ const AdminDashborad = () => {
                                     </select>
 
                                     <select
-                                        className="flex-1 px-4 py-2 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-lg w-full focus-within:border-focus-ring transition-colors duration-300 ease cursor-pointer"
+                                        className="flex-1 px-4 py-2 text-primary-text dark:text-primary-text-dark bg-input dark:bg-input-dark border border-border dark:border-border-dark rounded-lg w-full focus-within:border-focus-ring transition-colors duration-300 ease cursor-pointer"
                                         value={`${sort.field}-${sort.dir}`}
                                         onChange={(e) => {
                                             const [field, dir] = e.target.value.split("-");

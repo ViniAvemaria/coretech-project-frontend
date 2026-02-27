@@ -133,7 +133,7 @@ const Header = () => {
                         </Link>
                         {isAuthenticated && (
                             <div
-                                className={`absolute right-0 w-60 z-10 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark border border-border dark:border-border-dark rounded-lg transition-opacity duration-300 ${profileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+                                className={`absolute right-0 w-60 z-10 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark border border-muted-text-dark dark:border-muted-text rounded-lg transition-opacity duration-300 ${profileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
                             >
                                 <div className="flex flex-col px-4 py-3 gap-0.5">
                                     <p className="text-muted-text-dark dark:text-muted-text">Signed in as</p>
@@ -141,7 +141,7 @@ const Header = () => {
                                         user.lastName ? ` ${user.lastName}` : ""
                                     }`}</p>
                                 </div>
-                                <hr className="text-muted-text dark:text-muted-text-dark" />
+                                <hr className="text-muted-text-dark dark:text-muted-text" />
                                 <ul className="flex flex-col">
                                     <Link to={"/profile"}>
                                         <li className="flex items-center px-4 py-3 hover:bg-[#f3f4f6] dark:hover:bg-[#111827] transition-colors duration-300 ease cursor-pointer">
