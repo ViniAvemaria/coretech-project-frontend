@@ -1,23 +1,17 @@
-import { useEffect } from "react";
 import { useOrders } from "../contexts/OrderContext";
 import { formatMoney } from "../utils/formatMoney";
 import { useCart } from "../contexts/CartContext";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Loading from "../components/Loading";
 
 const Checkout = () => {
     const navigate = useNavigate();
     const { createOrder, createLoading } = useOrders();
-    const { items, itemCount, totalPrice, fetchCart, loading } = useCart();
+    const { items, itemCount, totalPrice, fetchCart } = useCart();
     const subTotal = totalPrice;
     const tax = subTotal * 0.1;
     const shipping = 10;
     const cartTotal = subTotal + tax + shipping;
-
-    useEffect(() => {
-        fetchCart();
-    }, []);
 
     const handlePurchase = async () => {
         try {
@@ -50,32 +44,23 @@ const Checkout = () => {
                 <div className="min-[1000px]:col-span-2 text-primary-text dark:text-primary-text-dark">
                     <div className="flex flex-col gap-4 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg p-5">
                         <h2 className="mb-2">Order Items</h2>
-                        {loading ? (
-                            <div className="flex items-center justify-center h-full">
-                                <Loading />
-                            </div>
-                        ) : (
-                            items.map((item) => (
-                                <div key={item.product.id} className="flex h-28 gap-5">
-                                    <img
-                                        src={item.product.image}
-                                        alt=""
-                                        className="w-30 h-full object-cover rounded-lg"
-                                    />
-                                    <div className="grid grid-cols-3 w-full max-[640px]:grid-cols-1">
-                                        <div className="col-span-2 flex flex-col gap-2 max-[640px]:col-span-1">
-                                            <p className="line-clamp-2">{item.product.name}</p>
-                                            <p className="text-muted-text-dark dark:text-muted-text text-sm">
-                                                Quantity: {item.quantity}
-                                            </p>
-                                        </div>
-                                        <p className="text-brand text-end max-[640px]:text-start">
-                                            {formatMoney(item.product.price)}
+
+                        {items.map((item) => (
+                            <div key={item.product.id} className="flex h-28 gap-5">
+                                <img src={item.product.image} alt="" className="w-30 h-full object-cover rounded-lg" />
+                                <div className="grid grid-cols-3 w-full max-[640px]:grid-cols-1">
+                                    <div className="col-span-2 flex flex-col gap-2 max-[640px]:col-span-1">
+                                        <p className="line-clamp-2">{item.product.name}</p>
+                                        <p className="text-muted-text-dark dark:text-muted-text text-sm">
+                                            Quantity: {item.quantity}
                                         </p>
                                     </div>
+                                    <p className="text-brand text-end max-[640px]:text-start">
+                                        {formatMoney(item.product.price)}
+                                    </p>
                                 </div>
-                            ))
-                        )}
+                            </div>
+                        ))}
                     </div>
                     <div className="flex gap-6 mt-6">
                         <Link to={"/cart"} className="flex-1 edit-button flex items-center justify-center">

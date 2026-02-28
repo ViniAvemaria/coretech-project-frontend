@@ -13,9 +13,11 @@ const CartContext = createContext(null);
 export const CartProvider = ({ children }) => {
     const { isAuthenticated } = useAuth();
     const [cart, setCart] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const fetchCart = async () => {
+        setLoading(true);
+
         if (!isAuthenticated) {
             setCart(null);
             setLoading(false);

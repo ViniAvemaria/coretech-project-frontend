@@ -63,8 +63,14 @@ const ProductCard = ({ product }) => {
                 <div className="flex justify-between items-end-safe mt-auto">
                     <p className="text-brand">{formatMoney(product.price)}</p>
                     <button disabled={product.stockQuantity == 0} onClick={handleAddItem} className="add-button">
-                        <i className="fa-solid fa-cart-shopping mr-2"></i>
-                        Add
+                        {product.stockQuantity == 0 ? (
+                            "Out of Stock"
+                        ) : (
+                            <>
+                                <i className="fa-solid fa-cart-shopping mr-2"></i>
+                                Add
+                            </>
+                        )}
                     </button>
                 </div>
             </div>
