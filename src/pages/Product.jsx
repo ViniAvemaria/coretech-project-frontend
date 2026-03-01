@@ -94,7 +94,7 @@ const Product = () => {
             setReviewComment("");
             setRating(1);
         } catch (err) {
-            toast.error(err.message || "Failed to submit review");
+            toast.error(err.response.data?.message || "Failed to submit review");
         }
     };
 
@@ -124,7 +124,7 @@ const Product = () => {
                 quantity: 1,
             });
         } catch (err) {
-            toast.error(err.message || "Failed to add item to cart");
+            toast.error(err.response.data?.message || "Failed to add item to cart");
         }
     };
 

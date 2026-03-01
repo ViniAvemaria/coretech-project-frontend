@@ -18,7 +18,7 @@ const ProductCard = ({ product }) => {
                 quantity: 1,
             });
         } catch (err) {
-            toast.error(err.message || "Failed to add item to cart");
+            toast.error(err.response.data?.message || "Failed to add item to cart");
         }
     };
 

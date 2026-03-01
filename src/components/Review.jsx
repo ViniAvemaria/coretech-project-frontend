@@ -78,6 +78,9 @@ const Review = ({ productId, review }) => {
         const now = new Date();
         const diffMs = now - date;
 
+        const diffMinutes = Math.floor(diffMs / (1000 * 60));
+        if (diffMinutes < 60) return `${diffMinutes} minute${diffMinutes !== 1 ? "s" : ""} ago`;
+
         const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
         if (diffHours < 24) return `${diffHours} hour${diffHours !== 1 ? "s" : ""} ago`;
 
@@ -138,7 +141,7 @@ const Review = ({ productId, review }) => {
                 </div>
                 {!editing && (
                     <div className="flex items-center gap-2 max-xs:flex-col">
-                        {review.createdAt != review.updatedAt && (
+                        {review.edited && (
                             <div className="relative inline-block group cursor-pointer">
                                 <span className="flex items-center text-xs px-2 py-0.5 rounded bg-gray-200 text-gray-600 dark:bg-gray-600 dark:text-gray-200">
                                     Edited
