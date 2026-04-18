@@ -2,6 +2,7 @@ import ProductCard from "../components/ProductCard";
 import { useProducts } from "../contexts/ProductContext";
 import HomeLoading from "../components/skeleton/HomeLoading";
 import CategoryLoading from "../components/skeleton/CategoryLoading";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Home = () => {
     const {
@@ -88,17 +89,17 @@ const Home = () => {
                     <div className="flex justify-center items-center gap-2 text-primary-text dark:text-primary-text-dark mt-12">
                         <div>
                             <button disabled={page === 0} onClick={handlePreviousPage} className="page-button">
-                                <i className="fa-solid fa-angle-left"></i>
+                                <ChevronLeft size={22} />
                             </button>
                         </div>
 
-                        <div className="flex px-2.5 py-1 border border-border dark:border-border-dark rounded-lg">
+                        <div className="flex py-1.5 px-3.25 border border-border dark:border-border-dark rounded-lg">
                             <p className="text-center w-2.5 font-semibold">{page + 1}</p>
                         </div>
 
                         <div>
                             <button disabled={page === totalPages - 1} onClick={handleNextPage} className="page-button">
-                                <i className="fa-solid fa-angle-right"></i>
+                                <ChevronRight size={22} />
                             </button>
                         </div>
                     </div>

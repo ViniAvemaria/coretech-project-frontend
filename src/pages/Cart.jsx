@@ -3,6 +3,7 @@ import { formatMoney } from "../utils/formatMoney";
 import ItemCard from "../components/ItemCard";
 import { Link } from "react-router-dom";
 import CartLoading from "../components/skeleton/CartLoading";
+import { ShoppingCart } from "lucide-react";
 
 const Cart = () => {
     const { items, totalPrice, loading, itemCount } = useCart();
@@ -20,7 +21,7 @@ const Cart = () => {
 
                     {items.length === 0 ? (
                         <div className="flex flex-col items-center justify-center gap-7 h-80 text-primary-text dark:text-primary-text-dark">
-                            <i className="fa-solid fa-cart-shopping text-5xl"></i>
+                            <ShoppingCart size={85} />
                             <h2 className="text-lg">Your cart is empty</h2>
                             <Link
                                 to={"/"}

@@ -9,6 +9,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useReviews } from "../contexts/ReviewContext";
 import { useProducts } from "../contexts/ProductContext";
 import { toast } from "react-toastify";
+import { Check, X, ShoppingCart } from "lucide-react";
 
 const Row = ({ label, value, total }) => (
     <div className="flex items-center justify-center gap-2">
@@ -196,22 +197,22 @@ const Product = () => {
 
                             <div className="mt-2">
                                 {product.stockQuantity != 0 ? (
-                                    <p className="py-3 px-4 rounded-lg text-green-500 bg-green-500/10">
-                                        <i className="fa-solid fa-check mr-2"></i>
+                                    <p className="flex items-center py-3 px-4 rounded-lg text-green-500 bg-green-500/10">
+                                        <Check size={18} className="mr-2" />
                                         In Stock
                                     </p>
                                 ) : (
-                                    <p className="py-3 px-4 rounded-lg text-red-500 bg-red-500/10">
-                                        <i className="fa-solid fa-x mr-2"></i>
+                                    <p className="flex items-center py-3 px-4 rounded-lg text-red-500 bg-red-500/10">
+                                        <X size={18} className="mr-2" />
                                         Out of Stock
                                     </p>
                                 )}
                                 <button
                                     disabled={product.stockQuantity == 0}
                                     onClick={handleAddItem}
-                                    className="add-button py-3.5 rounded-lg w-full mt-4"
+                                    className="add-button py-3.5 rounded-lg w-full mt-4 flex items-center justify-center"
                                 >
-                                    <i className="fa-solid fa-cart-shopping mr-2"></i>
+                                    <ShoppingCart size={18} className="mr-2" />
                                     Add to Cart
                                 </button>
                             </div>

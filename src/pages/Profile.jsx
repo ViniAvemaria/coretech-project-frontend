@@ -7,6 +7,7 @@ import AccountTab from "../components/AccountTab";
 import { updateName } from "../api/userService";
 import { useOrders } from "../contexts/OrderContext";
 import { formatMoney } from "../utils/formatMoney";
+import { User, Shield, LogOut, Package, Mail, Trash2 } from "lucide-react";
 
 const Profile = () => {
     const { orders } = useOrders();
@@ -96,8 +97,8 @@ const Profile = () => {
                         </div>
 
                         <div className="flex items-center">
-                            <div className="flex items-center place-self-start bg-gray-200 dark:bg-gray-700 px-4.5 py-4 rounded-[50%] mr-6">
-                                <i className="fa-regular fa-user text-2xl text-gray-500 dark:text-gray-400"></i>
+                            <div className="flex items-center place-self-start bg-gray-200 dark:bg-gray-700 p-4 rounded-[50%] mr-6">
+                                <User size={28} className="text-gray-500 dark:text-gray-400" />
                             </div>
                             {editName ? (
                                 <form onSubmit={handleEditName} className="flex flex-col gap-4 w-full max-w-90">
@@ -157,7 +158,7 @@ const Profile = () => {
                         <hr className="text-muted-text-dark dark:text-muted-text" />
                         <div>
                             <div className="flex items-center text-muted-text-dark dark:text-muted-text">
-                                <i className="fa-regular fa-envelope mr-2"></i>
+                                <Mail size={18} className="mr-2" />
                                 <p>Email Address</p>
                             </div>
                             <p>{user.email}</p>
@@ -185,7 +186,7 @@ const Profile = () => {
                         <div>
                             {orders.length === 0 ? (
                                 <div className="flex flex-col items-center gap-5 w-full rounded-lg border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark mt-8 px-10 py-12">
-                                    <i className="fa-solid fa-box text-5xl text-muted-text-dark dark:text-muted-text"></i>
+                                    <Package size={50} className="text-muted-text-dark dark:text-muted-text" />
                                     <p className="text-primary-text dark:text-primary-text-dark">No orders yet</p>
                                     <p className="text-muted-text-dark dark:text-muted-text">
                                         Your order history will appear here after you complete a purchase.
@@ -235,7 +236,7 @@ const Profile = () => {
                         {user.roles.includes("ADMIN") && (
                             <Link to={"/admin"}>
                                 <button className="action-button bg-purple-600 hover:bg-purple-700">
-                                    <i className="fa-solid fa-shield mr-2 "></i>
+                                    <Shield size={18} className="mr-2" />
                                     Admin Dashboard
                                 </button>
                             </Link>
@@ -244,13 +245,13 @@ const Profile = () => {
                             onClick={() => handleLogout()}
                             className="action-button bg-gray-400 hover:bg-gray-500 dark:bg-gray-500 dark:hover:bg-gray-600"
                         >
-                            <i className="fa-solid fa-arrow-right-from-bracket mr-2"></i>
+                            <LogOut size={18} className="mr-2" />
                             Sign Out
                         </button>
                         {!user.roles.includes("ADMIN") && (
                             <Link to={"/delete-account"}>
                                 <button className="action-button bg-red-600 hover:bg-red-700">
-                                    <i className="fa-solid fa-trash-can mr-2 "></i>
+                                    <Trash2 size={18} className="mr-2" />
                                     Delete Account
                                 </button>
                             </Link>

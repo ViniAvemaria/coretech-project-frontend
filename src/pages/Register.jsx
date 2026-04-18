@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import z from "zod";
+import { Eye, EyeClosed } from "lucide-react";
 
 const registerSchema = z.object({
     firstName: z.string().min(1, "First name is required"),
@@ -120,11 +121,7 @@ const Register = () => {
                                 onClick={() => setShowPassword((prev) => !prev)}
                                 className="flex items-center cursor-pointer w-5 ml-2"
                             >
-                                {showPassword ? (
-                                    <i className="fa-solid fa-eye-slash"></i>
-                                ) : (
-                                    <i className="fa-solid fa-eye"></i>
-                                )}
+                                {showPassword ? <EyeClosed size={18} /> : <Eye size={18} />}
                             </button>
                         </div>
                         {errors.password && (

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import z from "zod";
+import { Eye, EyeClosed } from "lucide-react";
 
 const loginSchema = z.object({
     email: z.email(),
@@ -81,11 +82,7 @@ const Login = () => {
                                 onClick={() => setShowPassword((prev) => !prev)}
                                 className="flex items-center cursor-pointer w-5 ml-2"
                             >
-                                {showPassword ? (
-                                    <i className="fa-solid fa-eye-slash"></i>
-                                ) : (
-                                    <i className="fa-solid fa-eye"></i>
-                                )}
+                                {showPassword ? <EyeClosed size={18} /> : <Eye size={18} />}
                             </button>
                         </div>
                         {errors.password && (

@@ -5,6 +5,7 @@ import OrderLoading from "../components/skeleton/OrderLoading";
 import { formatMoney } from "../utils/formatMoney";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Clock, DollarSign, Truck, Check, Ban } from "lucide-react";
 
 const Order = () => {
     const { id } = useParams();
@@ -25,11 +26,11 @@ const Order = () => {
     };
 
     const statusIcons = {
-        PENDING: <i className="fa-regular fa-clock mr-2" />,
-        PAID: <i className="fa-solid fa-dollar-sign mr-2" />,
-        SHIPPED: <i className="fa-solid fa-truck mr-2" />,
-        DELIVERED: <i className="fa-solid fa-check mr-2" />,
-        CANCELLED: <i className="fa-solid fa-ban mr-2" />,
+        PENDING: <Clock size={18} className="mr-2" />,
+        PAID: <DollarSign size={18} className="mr-2" />,
+        SHIPPED: <Truck size={18} className="mr-2" />,
+        DELIVERED: <Check size={18} className="mr-2" />,
+        CANCELLED: <Ban size={18} className="mr-2" />,
     };
 
     const fetchOrder = async () => {

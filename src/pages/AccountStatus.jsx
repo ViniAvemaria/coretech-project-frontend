@@ -1,4 +1,5 @@
 import { useSearchParams, Link } from "react-router-dom";
+import { Shield, ShieldQuestionMark, ShieldCheck, ShieldX, ShieldOff } from "lucide-react";
 
 const AccountStatus = () => {
     const [searchParams] = useSearchParams();
@@ -7,44 +8,44 @@ const AccountStatus = () => {
         "confirmation-success": {
             title: "Account Activated!",
             message: "You can now log in to your Core Tech account",
-            icon: <i className="fa-solid fa-check text-green-500 text-7xl"></i>,
+            icon: <ShieldCheck size={85} className="text-green-500" />,
         },
         "confirmation-failure": {
             title: "Invalid or Expired Link",
             message: "This confirmation link is no longer valid",
-            icon: <i className="fa-solid fa-x text-red-500 text-6xl"></i>,
+            icon: <ShieldX size={85} className="text-red-500" />,
         },
         "resend-success": {
             title: "Activation Email Sent!",
             message: "Check your email for the new activation link",
-            icon: <i className="fa-solid fa-check text-green-500 text-7xl"></i>,
+            icon: <ShieldCheck size={85} className="text-green-500" />,
         },
         "resend-failure": {
             title: "No Email Sent",
             message: "Your account is already activated or you still have a valid activation link",
-            icon: <i className="fa-solid fa-x text-red-500 text-6xl"></i>,
+            icon: <ShieldX size={85} className="text-red-500" />,
         },
         "deletion-success": {
             title: "Account Deleted",
             message: "Your account has been permanently removed",
-            icon: <i className="fa-solid fa-check text-green-500 text-7xl"></i>,
+            icon: <ShieldCheck size={85} className="text-green-500" />,
         },
         "deletion-failure": {
             title: "Invalid or Expired Link",
             message: "This deletion link is no longer valid",
-            icon: <i className="fa-solid fa-x text-red-500 text-6xl"></i>,
+            icon: <ShieldX size={85} className="text-red-500" />,
         },
         "not-found": {
             title: "Link not Found",
             message: "This link was not found in our database",
-            icon: <h1 className="text-brand text-7xl font-semibold font-mono">404</h1>,
+            icon: <ShieldOff size={85} className="text-brand" />,
         },
     };
 
     const { title, message, icon } = statusMap[status] || {
         title: "Unknown Status",
         message: "An unknown status occurred",
-        icon: <i className="fa-regular fa-circle-question text-brand text-7xl"></i>,
+        icon: <ShieldQuestionMark size={85} className="text-brand" />,
     };
 
     return (

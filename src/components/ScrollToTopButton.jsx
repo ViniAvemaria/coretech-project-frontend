@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { ArrowUp } from "lucide-react";
 
 const ScrollToTopButton = () => {
     const [visible, setVisible] = useState(false);
@@ -21,10 +22,10 @@ const ScrollToTopButton = () => {
     return (
         <button
             onClick={scrollToTop}
-            className="fixed bottom-6 right-6 z-50 px-3 py-1.5 rounded-full bg-brand text-white shadow-lg hover:bg-brand-hover transition hover:cursor-pointer"
+            className="fixed bottom-6 right-6 z-50 p-2.5 rounded-full bg-brand text-white shadow-lg hover:bg-brand-hover transition hover:cursor-pointer"
             aria-label="Scroll to top"
         >
-            <i className="fa-solid fa-arrow-up"></i>
+            <ArrowUp size={20} />
         </button>
     );
 };

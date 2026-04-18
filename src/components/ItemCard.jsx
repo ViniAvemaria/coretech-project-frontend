@@ -1,6 +1,7 @@
 import { useCart } from "../contexts/CartContext";
 import { formatMoney } from "../utils/formatMoney";
 import { Link } from "react-router-dom";
+import { Plus, Minus, Trash2 } from "lucide-react";
 
 const ItemCard = ({ item }) => {
     const { id, product, quantity } = item;
@@ -24,22 +25,22 @@ const ItemCard = ({ item }) => {
                     <div className="flex items-center gap-6">
                         <button
                             onClick={() => decrementItem(id)}
-                            className="flex items-center hover:cursor-pointer border border-border dark:border-border-dark px-2 pt-1.75 pb-1.25 rounded-sm hover:bg-gray-300 hover:dark:bg-gray-600 transition-colors duration-300 ease"
+                            className="flex items-center hover:cursor-pointer border border-border dark:border-border-dark px-2 py-1.75 rounded-sm hover:bg-gray-300 hover:dark:bg-gray-600 transition-colors duration-300 ease"
                         >
-                            <i className="fa-solid fa-minus text-sm"></i>
+                            <Minus size={18} />
                         </button>
                         <p>{quantity}</p>
                         <button
                             onClick={() => incrementItem(id)}
-                            className="flex items-center hover:cursor-pointer border border-border dark:border-border-dark px-2 pt-1.75 pb-1.25 rounded-sm hover:bg-gray-300 hover:dark:bg-gray-600 transition-colors duration-300 ease"
+                            className="flex items-center hover:cursor-pointer border border-border dark:border-border-dark px-2 py-1.75 rounded-sm hover:bg-gray-300 hover:dark:bg-gray-600 transition-colors duration-300 ease"
                         >
-                            <i className="fa-solid fa-plus text-sm"></i>
+                            <Plus size={18} />
                         </button>
                     </div>
                     <div className="flex justify-end-safe items-center gap-4">
                         <p>{formatMoney(itemTotal)}</p>
                         <button onClick={() => deleteFromCart(id)} className="hover:cursor-pointer">
-                            <i className="fa-solid fa-trash-can text-red-500"></i>
+                            <Trash2 size={20} className="text-red-500" />
                         </button>
                     </div>
                 </div>

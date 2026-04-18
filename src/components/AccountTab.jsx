@@ -11,6 +11,7 @@ import {
     requestPasswordChange,
     validatePasswordChange,
 } from "../api/authService";
+import { Eye, EyeClosed } from "lucide-react";
 
 const emailSchema = z.object({
     email: z.email(),
@@ -394,11 +395,7 @@ const AccountTab = () => {
                                     onClick={() => setShowPassword((prev) => !prev)}
                                     className="flex items-center cursor-pointer w-5 ml-2"
                                 >
-                                    {showPassword ? (
-                                        <i className="fa-solid fa-eye-slash"></i>
-                                    ) : (
-                                        <i className="fa-solid fa-eye"></i>
-                                    )}
+                                    {showPassword ? <EyeClosed /> : <Eye />}
                                 </button>
                             </div>
                             {passwordErrors.password && (
@@ -420,11 +417,7 @@ const AccountTab = () => {
                                     onClick={() => setShowPassword((prev) => !prev)}
                                     className="flex items-center cursor-pointer w-5 ml-2"
                                 >
-                                    {showPassword ? (
-                                        <i className="fa-solid fa-eye-slash"></i>
-                                    ) : (
-                                        <i className="fa-solid fa-eye"></i>
-                                    )}
+                                    {showPassword ? <EyeClosed /> : <Eye />}
                                 </button>
                             </div>
                             {passwordErrors.confirmPassword && (

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { create, update } from "../api/productService";
 import { toast } from "react-toastify";
 import { useAdminProducts } from "../contexts/AdminProductContext";
+import { Plus, X } from "lucide-react";
 
 const ProductModal = ({ productModalObj, setProductModalObj }) => {
     const [loading, setLoading] = useState(false);
@@ -237,16 +238,16 @@ const ProductModal = ({ productModalObj, setProductModalObj }) => {
                                     onClick={() => removeSpecification(i)}
                                     className="text-red-500 hover:text-red-600 cursor-pointer"
                                 >
-                                    <i className="fa-solid fa-x"></i>
+                                    <X />
                                 </button>
                             </div>
                         ))}
                         <button
                             type="button"
                             onClick={addSpecification}
-                            className="text-sm text-blue-600 hover:text-blue-700 self-start cursor-pointer"
+                            className="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700 self-start cursor-pointer"
                         >
-                            <i className="fa-solid fa-plus text-sm mr-2"></i>
+                            <Plus size={18} />
                             Add specification
                         </button>
                     </div>

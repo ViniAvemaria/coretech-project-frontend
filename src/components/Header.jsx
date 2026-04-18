@@ -5,6 +5,7 @@ import { useCart } from "../contexts/CartContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useProducts } from "../contexts/ProductContext";
 import { toast } from "react-toastify";
+import { ShoppingCart, User, Moon, Sun, Shield, LogOut, Menu, X, Search as Magnifying } from "lucide-react";
 
 const Header = () => {
     const searchRef = useRef(null);
@@ -55,7 +56,11 @@ const Header = () => {
                 onBlur={() => setSearchOpen(false)}
                 className={`ml-auto ${searchOpen ? "max-[550px]:visible" : "max-[550px]:hidden"} group flex items-center w-full max-w-xl border bg-input dark:bg-input-dark border-border px-4 py-2 rounded-3xl gap-3 dark:border-border-dark focus-within:border-focus-ring transition-colors duration-300 ease`}
             >
-                <i className="fa-solid fa-magnifying-glass text-muted-text dark:text-muted-text-dark group-focus-within:text-focus-ring transition-colors duration-300 ease"></i>
+                <Magnifying
+                    size={18}
+                    className="text-muted-text dark:text-muted-text-dark group-focus-within:text-focus-ring transition-colors duration-300 ease"
+                />
+
                 <input
                     ref={searchRef}
                     id="search-bar"
@@ -73,7 +78,7 @@ const Header = () => {
                     }}
                     className="text-muted-text dark:text-muted-text-dark group-focus-within:text-focus-ring transition-colors duration-300 ease text-sm cursor-pointer"
                 >
-                    {search && <i className="fa-solid fa-x"></i>}
+                    {search && <X size={18} />}
                 </button>
             </div>
 
@@ -82,14 +87,14 @@ const Header = () => {
                     onClick={() => setSearchOpen(true)}
                     className={`flex items-center justify-center ${searchOpen ? "max-[550px]:hidden" : "min-[550px]:hidden"} text-primary-text dark:text-primary-text-dark nav-icons`}
                 >
-                    <i className="fa-solid fa-magnifying-glass"></i>
+                    <Magnifying size={18} />
                 </button>
 
                 <button
                     className="flex items-center justify-center min-[850px]:hidden nav-icons"
                     onClick={() => setOpen(true)}
                 >
-                    <i className="fa-solid fa-bars text-primary-text dark:text-primary-text-dark text-2xl"></i>
+                    <Menu />
                 </button>
             </div>
 
@@ -97,11 +102,7 @@ const Header = () => {
                 <ul className="flex gap-8">
                     <li>
                         <button onClick={toggleTheme} className="flex items-center justify-center h-full nav-icons">
-                            {theme == "light" ? (
-                                <i className="fa-solid fa-moon"></i>
-                            ) : (
-                                <i className="fa-solid fa-sun"></i>
-                            )}
+                            {theme == "light" ? <Moon /> : <Sun />}
                         </button>
                     </li>
                     <li>
@@ -111,7 +112,7 @@ const Header = () => {
                                     {itemCount}
                                 </span>
                             )}
-                            <i className="fa-solid fa-cart-shopping"></i>
+                            <ShoppingCart />
                         </Link>
                     </li>
                     <li className="relative group">
@@ -129,11 +130,11 @@ const Header = () => {
                                 }, 100)
                             }
                         >
-                            <i className="fa-solid fa-user"></i>
+                            <User />
                         </Link>
                         {isAuthenticated && (
                             <div
-                                className={`absolute right-0 w-60 z-10 text-primary-text dark:text-primary-text-dark bg-card dark:bg-card-dark border border-muted-text-dark dark:border-muted-text rounded-lg transition-opacity duration-300 ${profileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+                                className={`absolute right-0 w-60 z-10 text-primary-text dark:text-primary-text-dark bg-main dark:bg-header-dark border border-border dark:border-border-dark rounded-lg transition-opacity duration-300 ${profileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
                             >
                                 <div className="flex flex-col px-4 py-3 gap-0.5">
                                     <p className="text-muted-text-dark dark:text-muted-text">Signed in as</p>
@@ -141,29 +142,29 @@ const Header = () => {
                                         user.lastName ? ` ${user.lastName}` : ""
                                     }`}</p>
                                 </div>
-                                <hr className="text-muted-text-dark dark:text-muted-text" />
+                                <hr className="border-border dark:border-border-dark" />
                                 <ul className="flex flex-col">
                                     <Link to={"/profile"}>
-                                        <li className="flex items-center px-4 py-3 hover:bg-[#f3f4f6] dark:hover:bg-[#111827] transition-colors duration-300 ease cursor-pointer">
-                                            <i className="fa-solid fa-user text-sm mr-2"></i>
+                                        <li className="flex items-center px-4 py-3 hover:bg-gray-200 dark:hover:bg-[#374151] transition-colors duration-300 ease cursor-pointer">
+                                            <User size={18} className="mr-2" />
                                             Profile
                                         </li>
                                     </Link>
                                     {user.roles.includes("ADMIN") && (
                                         <Link to={"/admin"}>
-                                            <li className="flex items-center px-4 py-3 text-purple-600 hover:bg-[#f3f4f6] dark:hover:bg-[#111827] transition-colors duration-300 ease cursor-pointer">
-                                                <i className="fa-solid fa-shield text-sm mr-2"></i>
+                                            <li className="flex items-center px-4 py-3 text-purple-600 hover:bg-gray-200 dark:hover:bg-[#374151] transition-colors duration-300 ease cursor-pointer">
+                                                <Shield size={18} className="mr-2" />
                                                 Dashboard
                                             </li>
                                         </Link>
                                     )}
-                                    <li className="flex items-center text-red-500 hover:bg-[#f3f4f6] dark:hover:bg-[#111827] transition-colors duration-300 ease rounded-b-xl">
+                                    <li className="flex items-center text-red-500 hover:bg-gray-200 dark:hover:bg-[#374151] transition-colors duration-300 ease rounded-b-lg">
                                         <button
                                             onClick={() => handleLogout()}
                                             className="flex items-center px-4 py-3 w-full cursor-pointer"
                                         >
-                                            <i className="fa-solid fa-arrow-right-from-bracket text-sm mr-2"></i> Sign
-                                            out
+                                            <LogOut size={18} className="mr-2" />
+                                            Sign out
                                         </button>
                                     </li>
                                 </ul>
@@ -186,7 +187,7 @@ const Header = () => {
                             className="flex items-center gap-3 w-full p-6 cursor-pointer hover:bg-gray-300 hover:dark:bg-card-dark transition-colors duration-300 ease"
                             onClick={() => setOpen(false)}
                         >
-                            <i className="fa-solid fa-x min-w-4.5"></i>
+                            <X size={18} />
                             Close
                         </button>
                     </li>
@@ -196,7 +197,7 @@ const Header = () => {
                                 onClick={() => setOpen(false)}
                                 className="flex items-center gap-3 w-full p-6 cursor-pointer hover:bg-gray-300 hover:dark:bg-card-dark transition-colors duration-300 ease"
                             >
-                                <i className="fa-solid fa-user text-sm min-w-4.5"></i>
+                                <User size={18} />
                                 Profile
                             </button>
                         </Link>
@@ -212,7 +213,7 @@ const Header = () => {
                                         {itemCount}
                                     </span>
                                 )}
-                                <i className="fa-solid fa-cart-shopping min-w-4.5"></i>
+                                <ShoppingCart size={18} />
                                 Cart
                             </button>
                         </Link>
@@ -222,11 +223,7 @@ const Header = () => {
                             onClick={toggleTheme}
                             className="flex items-center gap-3 w-full p-6 cursor-pointer hover:bg-gray-300 hover:dark:bg-card-dark transition-colors duration-300 ease"
                         >
-                            {theme == "light" ? (
-                                <i className="fa-solid fa-moon min-w-4.5"></i>
-                            ) : (
-                                <i className="fa-solid fa-sun min-w-4.5"></i>
-                            )}
+                            {theme == "light" ? <Moon size={18} /> : <Sun size={18} />}
 
                             <p>Theme</p>
                         </button>

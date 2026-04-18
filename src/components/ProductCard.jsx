@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { formatMoney } from "../utils/formatMoney";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ShoppingCart } from "lucide-react";
 
 const ProductCard = ({ product }) => {
     const { isAuthenticated } = useAuth();
@@ -62,12 +63,16 @@ const ProductCard = ({ product }) => {
                 <p className="text-muted-text-dark dark:text-muted-text text-sm line-clamp-3">{product.description}</p>
                 <div className="flex justify-between items-end-safe mt-auto">
                     <p className="text-brand">{formatMoney(product.price)}</p>
-                    <button disabled={product.stockQuantity == 0} onClick={handleAddItem} className="add-button">
+                    <button
+                        disabled={product.stockQuantity == 0}
+                        onClick={handleAddItem}
+                        className="add-button flex items-center"
+                    >
                         {product.stockQuantity == 0 ? (
                             "Out of Stock"
                         ) : (
                             <>
-                                <i className="fa-solid fa-cart-shopping mr-2"></i>
+                                <ShoppingCart size={18} className="mr-2" />
                                 Add
                             </>
                         )}

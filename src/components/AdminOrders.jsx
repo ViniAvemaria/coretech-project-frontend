@@ -3,6 +3,7 @@ import { getAllAdmin } from "../api/orderService";
 import Loading from "./Loading";
 import { formatMoney } from "../utils/formatMoney";
 import { useOrders } from "../contexts/OrderContext";
+import { Package } from "lucide-react";
 
 const AdminOrders = () => {
     const [orders, setOrders] = useState([]);
@@ -52,7 +53,7 @@ const AdminOrders = () => {
             ) : orders.length === 0 ? (
                 <div className="text-primary-text dark:text-primary-text-dark">
                     <div className="flex flex-col items-center gap-5 w-full px-10 py-12 rounded-lg border border-border dark:border-border-dark bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark mt-8">
-                        <i className="fa-solid fa-box text-5xl text-muted-text-dark dark:text-muted-text"></i>
+                        <Package size={50} className="text-muted-text-dark dark:text-muted-text" />
                         <p className="text-primary-text dark:text-primary-text-dark">No orders yet</p>
                     </div>
                 </div>

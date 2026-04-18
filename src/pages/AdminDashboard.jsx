@@ -9,6 +9,18 @@ import { useAdminProducts } from "../contexts/AdminProductContext";
 import Loading from "../components/Loading";
 import ProductCardDashboard from "../components/ProductCardDashboard";
 import AdminOrders from "../components/AdminOrders";
+import {
+    Plus,
+    Pencil,
+    Trash2,
+    Search as Magnifying,
+    FileUp,
+    ShoppingBag,
+    Package,
+    X,
+    ChevronLeft,
+    ChevronRight,
+} from "lucide-react";
 
 const AdminDashborad = () => {
     const {
@@ -94,7 +106,7 @@ const AdminDashborad = () => {
                             : "hover:text-gray-400 dark:hover:text-gray-500"
                     }`}
                 >
-                    <i className="fa-solid fa-bag-shopping mr-2"></i>
+                    <ShoppingBag size={18} className="mr-2" />
                     <p>Products</p>
                 </button>
 
@@ -106,7 +118,7 @@ const AdminDashborad = () => {
                             : "hover:text-gray-400 dark:hover:text-gray-500"
                     }`}
                 >
-                    <i className="fa-solid fa-box mr-2"></i>
+                    <Package size={18} className="mr-2" />
                     <p>Orders</p>
                 </button>
             </div>
@@ -121,9 +133,9 @@ const AdminDashborad = () => {
                             <button
                                 disabled={importLoading}
                                 onClick={() => fileInputRef.current.click()}
-                                className={`edit-button py-1.5 px-3 rounded-lg ${importLoading && `hover:bg-edit-button dark:hover:bg-edit-button-dark cursor-not-allowed opacity-90`}`}
+                                className={`flex items-center edit-button py-1.5 px-3 rounded-lg ${importLoading && `hover:bg-edit-button dark:hover:bg-edit-button-dark cursor-not-allowed opacity-90`}`}
                             >
-                                <i className="fa-solid fa-file-import mr-2"></i>
+                                <FileUp size={18} className="mr-2" />
                                 Import CSV
                             </button>
 
@@ -145,9 +157,9 @@ const AdminDashborad = () => {
                                         product: null,
                                     })
                                 }
-                                className={`text-white bg-brand py-1.5 px-3 rounded-lg transition-colors duration-300 ease ${importLoading ? `hover:bg-brand cursor-not-allowed opacity-90` : `cursor-pointer hover:bg-brand-hover`}`}
+                                className={`flex items-center text-white bg-brand py-1.5 px-3 rounded-lg transition-colors duration-300 ease ${importLoading ? `hover:bg-brand cursor-not-allowed opacity-90` : `cursor-pointer hover:bg-brand-hover`}`}
                             >
-                                <i className="fa-solid fa-plus text-sm mr-2"></i>
+                                <Plus size={18} className="mr-2" />
                                 Add Product
                             </button>
                         </div>
@@ -161,8 +173,11 @@ const AdminDashborad = () => {
                         <>
                             <section className="flex flex-col gap-4 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg mb-4 py-5 px-4 w-full">
                                 <div className="flex gap-4 max-[835px]:flex-col">
-                                    <div className="group flex flex-1 items-center w-full border bg-input dark:bg-input-dark border-border px-4 py-2 rounded-lg gap-3 dark:border-border-dark focus-within:border-focus-ring transition-colors duration-300 ease">
-                                        <i className="fa-solid fa-magnifying-glass text-muted-text dark:text-muted-text-dark group-focus-within:text-focus-ring transition-colors duration-300 ease"></i>
+                                    <div className="group flex flex-1 items-center w-full border bg-input dark:bg-input-dark border-border px-4 py-2 rounded-lg gap-2 dark:border-border-dark focus-within:border-focus-ring transition-colors duration-300 ease">
+                                        <Magnifying
+                                            size={18}
+                                            className="text-muted-text dark:text-muted-text-dark group-focus-within:text-focus-ring transition-colors duration-300 ease"
+                                        />
                                         <input
                                             id="search-bar"
                                             value={search}
@@ -179,7 +194,7 @@ const AdminDashborad = () => {
                                             }}
                                             className="text-muted-text dark:text-muted-text-dark group-focus-within:text-focus-ring transition-colors duration-300 ease text-sm cursor-pointer"
                                         >
-                                            {search && <i className="fa-solid fa-x"></i>}
+                                            {search && <X size={18} />}
                                         </button>
                                     </div>
 
@@ -290,13 +305,13 @@ const AdminDashborad = () => {
                                                         }
                                                         className="px-2 py-1 text-blue-600 hover:text-blue-500 cursor-pointer transition-colors duration-300 ease mr-2"
                                                     >
-                                                        <i className="fa-solid fa-pen"></i>
+                                                        <Pencil size={18} />
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(product.id)}
                                                         className="px-2 py-1 text-red-600 hover:text-red-500 cursor-pointer transition-colors duration-300 ease"
                                                     >
-                                                        <i className="fa-solid fa-trash-can"></i>
+                                                        <Trash2 size={18} />
                                                     </button>
                                                 </td>
                                             </tr>
@@ -308,11 +323,11 @@ const AdminDashborad = () => {
                             <div className="flex justify-center items-center gap-2 text-primary-text dark:text-primary-text-dark mt-12">
                                 <div>
                                     <button disabled={page === 0} onClick={handlePreviousPage} className="page-button">
-                                        <i className="fa-solid fa-angle-left"></i>
+                                        <ChevronLeft size={22} />
                                     </button>
                                 </div>
 
-                                <div className="flex px-2.5 py-1 border border-border dark:border-border-dark rounded-lg">
+                                <div className="flex py-1.5 px-3.25 border border-border dark:border-border-dark rounded-lg">
                                     <p className="text-center w-2.5 font-semibold">{page + 1}</p>
                                 </div>
 
@@ -322,7 +337,7 @@ const AdminDashborad = () => {
                                         onClick={handleNextPage}
                                         className="page-button"
                                     >
-                                        <i className="fa-solid fa-angle-right"></i>
+                                        <ChevronRight size={22} />
                                     </button>
                                 </div>
                             </div>

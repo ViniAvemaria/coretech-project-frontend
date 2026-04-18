@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { deleteUser } from "../api/userService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { ShieldAlert } from "lucide-react";
 
 const AccountDeletion = () => {
     const { setUser } = useAuth();
@@ -34,7 +35,7 @@ const AccountDeletion = () => {
         <div className="max-w-[800px] w-full py-12">
             <div className="flex justify-center text-primary-text dark:text-primary-text-dark">
                 <div className="flex flex-col gap-4 text-center bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg p-8 w-fit">
-                    <i className="fa-solid fa-triangle-exclamation text-yellow-400 dark:text-yellow-500 text-6xl mb-6"></i>
+                    <ShieldAlert size={85} className="text-yellow-400 dark:text-yellow-500 mb-6 place-self-center" />
                     <p>
                         You are about to permanently delete your <span translate="no">Core Tech</span> account.
                     </p>

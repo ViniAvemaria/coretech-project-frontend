@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { formatMoney } from "../utils/formatMoney";
+import { Pencil, Trash2 } from "lucide-react";
 
 const ProductCardDashboard = ({ product, setProductModalObj, handleDelete }) => {
     return (
@@ -39,16 +40,16 @@ const ProductCardDashboard = ({ product, setProductModalObj, handleDelete }) => 
                             product: product,
                         })
                     }
-                    className="flex-1 bg-edit-button dark:bg-edit-button-dark text-brand py-1.5 px-2 rounded-lg cursor-pointer hover:bg-edit-hover hover:dark:bg-edit-hover-dark transition-colors duration-300 ease"
+                    className="flex-1 flex items-center justify-center bg-edit-button dark:bg-edit-button-dark text-brand py-1.5 px-2 rounded-lg cursor-pointer hover:bg-edit-hover hover:dark:bg-edit-hover-dark transition-colors duration-300 ease"
                 >
-                    <i className="fa-solid fa-pen mr-2"></i>
+                    <Pencil size={14} className="mr-2" />
                     Edit
                 </button>
                 <button
                     onClick={() => handleDelete(product.id)}
-                    className="flex-1 bg-edit-button dark:bg-edit-button-dark text-red-500 py-1.5 px-2 rounded-lg cursor-pointer hover:bg-edit-hover hover:dark:bg-edit-hover-dark transition-colors duration-300 ease"
+                    className="flex-1 flex items-center justify-center bg-edit-button dark:bg-edit-button-dark text-red-500 py-1.5 px-2 rounded-lg cursor-pointer hover:bg-edit-hover hover:dark:bg-edit-hover-dark transition-colors duration-300 ease"
                 >
-                    <i className="fa-solid fa-trash-can mr-2"></i>
+                    <Trash2 size={14} className="mr-2" />
                     Delete
                 </button>
             </div>

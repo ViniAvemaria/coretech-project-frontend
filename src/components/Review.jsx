@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useReviews } from "../contexts/ReviewContext";
 import { useProducts } from "../contexts/ProductContext";
 import { toast } from "react-toastify";
+import { Save, Trash2, Pencil, Pen } from "lucide-react";
 
 const Review = ({ productId, review }) => {
     const { user, isAuthenticated } = useAuth();
@@ -184,9 +185,9 @@ const Review = ({ productId, review }) => {
                     <div className="flex gap-4 mt-2">
                         <button
                             type="submit"
-                            className="px-3 py-1.5 bg-brand text-white hover:bg-brand-hover rounded-lg transition-colors duration-300 ease cursor-pointer"
+                            className="flex items-center px-3 py-1.5 bg-brand text-white hover:bg-brand-hover rounded-lg transition-colors duration-300 ease cursor-pointer"
                         >
-                            <i className="fa-regular fa-floppy-disk mr-2"></i>
+                            <Save size={18} className="mr-2" />
                             Save
                         </button>
                         <button
@@ -223,13 +224,13 @@ const Review = ({ productId, review }) => {
                                 onClick={() => setEditing(true)}
                                 className="text-blue-600 hover:text-blue-500 cursor-pointer transition-colors duration-300 ease"
                             >
-                                <i className="fa-solid fa-pen"></i>
+                                <Pencil size={18} />
                             </button>
                             <button
                                 onClick={handleDelete}
                                 className="text-red-600 hover:text-red-500 cursor-pointer transition-colors duration-300 ease"
                             >
-                                <i className="fa-solid fa-trash-can"></i>
+                                <Trash2 size={18} />
                             </button>
                         </div>
                     )}

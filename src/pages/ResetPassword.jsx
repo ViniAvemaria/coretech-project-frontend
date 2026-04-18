@@ -7,6 +7,7 @@ import z from "zod";
 import { resetPassword } from "../api/authService";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { Eye, EyeClosed, ShieldOff, ShieldX, ShieldQuestionMark } from "lucide-react";
 
 const passwordSchema = z
     .object({
@@ -35,19 +36,19 @@ const ResetPassword = () => {
         failure: {
             title: "Invalid Recovery Link",
             message: "This link has already been used, expired, or is invalid",
-            icon: <i className="fa-solid fa-x text-red-500 text-6xl place-self-center"></i>,
+            icon: <ShieldX size={85} className="text-red-500" />,
         },
         "not-found": {
             title: "Recovery link not found",
             message: "The token in the link was not found in our database",
-            icon: <h1 className="text-brand text-7xl font-semibold font-mono text-center">404</h1>,
+            icon: <ShieldOff size={85} className="text-brand" />,
         },
     };
 
     const { title, message, icon } = statusMap[status] || {
         title: "Unknown Status",
         message: "An unknown status occurred.",
-        icon: <i className="fa-regular fa-circle-question text-brand text-7xl place-self-center"></i>,
+        icon: <ShieldQuestionMark size={85} className="text-brand" />,
     };
 
     const [loading, setLoading] = useState(false);
@@ -78,7 +79,7 @@ const ResetPassword = () => {
 
     return (
         <div className="max-w-[425px] w-full py-12">
-            <div className="flex flex-col border border-border dark:border-border-dark rounded-lg p-8 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark">
+            <div className="flex flex-col items-center border border-border dark:border-border-dark rounded-lg p-8 text-primary-text dark:text-primary-text-dark bg-header dark:bg-header-dark">
                 {icon}
                 <h1 className={`text-center font-semibold text-xl mb-4 ${status != "success" && "mt-10"}`}>{title}</h1>
                 <h2 className="text-center text-muted-text-dark dark:text-muted-text">{message}</h2>
@@ -100,11 +101,7 @@ const ResetPassword = () => {
                                     onClick={() => setShowPassword((prev) => !prev)}
                                     className="flex items-center cursor-pointer w-5 ml-2"
                                 >
-                                    {showPassword ? (
-                                        <i className="fa-solid fa-eye-slash"></i>
-                                    ) : (
-                                        <i className="fa-solid fa-eye"></i>
-                                    )}
+                                    {showPassword ? <EyeClosed size={18} /> : <Eye size={18} />}
                                 </button>
                             </div>
                             {errors.password && (
@@ -126,11 +123,7 @@ const ResetPassword = () => {
                                     onClick={() => setShowPassword((prev) => !prev)}
                                     className="flex items-center cursor-pointer w-5 ml-2"
                                 >
-                                    {showPassword ? (
-                                        <i className="fa-solid fa-eye-slash"></i>
-                                    ) : (
-                                        <i className="fa-solid fa-eye"></i>
-                                    )}
+                                    {showPassword ? <EyeClosed size={18} /> : <Eye size={18} />}
                                 </button>
                             </div>
                             {errors.confirmPassword && (

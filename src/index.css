@@ -205,6 +205,9 @@
     }
 
     .action-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         color: white;
         width: 100%;
         border-radius: 8px;
@@ -302,7 +305,7 @@
     }
 
     .page-button {
-        padding: 4px 10px;
+        padding: 6px;
         border: 1px solid var(--color-border);
         border-radius: 8px;
         cursor: pointer;
