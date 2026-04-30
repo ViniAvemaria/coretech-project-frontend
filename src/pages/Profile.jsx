@@ -103,7 +103,12 @@ const Profile = () => {
                             {editName ? (
                                 <form onSubmit={handleEditName} className="flex flex-col gap-4 w-full max-w-90">
                                     <div>
-                                        <label htmlFor="firstName">First Name</label>
+                                        <label
+                                            htmlFor="firstName"
+                                            className="text-muted-text-dark dark:text-muted-text"
+                                        >
+                                            First Name
+                                        </label>
                                         <div className="flex border bg-input dark:bg-input-dark border-border dark:border-border-dark px-3 py-1.5 mt-2 rounded-md bg-i rounded-2md focus-within:border-focus-ring transition-colors duration-300 ease">
                                             <input
                                                 defaultValue={user.firstName}
@@ -119,7 +124,9 @@ const Profile = () => {
                                     </div>
 
                                     <div>
-                                        <label htmlFor="lastName">Last Name</label>
+                                        <label htmlFor="lastName" className="text-muted-text-dark dark:text-muted-text">
+                                            Last Name
+                                        </label>
                                         <div className="flex border bg-input dark:bg-input-dark border-border dark:border-border-dark px-3 py-1.5 mt-2 rounded-md bg-i rounded-2md focus-within:border-focus-ring transition-colors duration-300 ease">
                                             <input
                                                 defaultValue={user.lastName}
@@ -208,7 +215,7 @@ const Profile = () => {
                                                         year: "numeric",
                                                     })}
                                                 </p>
-                                                <p className="text-brand">{formatMoney(order.totalPrice)}</p>
+                                                <p>{formatMoney(order.totalPrice)}</p>
                                             </div>
 
                                             <div className="flex flex-col justify-between items-end-safe">

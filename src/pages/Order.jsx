@@ -33,6 +33,41 @@ const Order = () => {
         CANCELLED: <Ban size={18} className="mr-2" />,
     };
 
+    const displayPayment = {
+        CARD: {
+            title: <p>Credit Card</p>,
+            icon: (
+                <div className="min-w-5 flex justify-center items-center">
+                    <i class="fa-solid fa-credit-card min-w-5"></i>
+                </div>
+            ),
+        },
+        PAYPAL: {
+            title: <p>Paypal</p>,
+            icon: (
+                <div className="min-w-5 flex justify-center items-center">
+                    <i class="fa-brands fa-paypal text-lg"></i>
+                </div>
+            ),
+        },
+        PIX: {
+            title: <p>Pix</p>,
+            icon: (
+                <div className="min-w-5 flex justify-center items-center">
+                    <i class="fa-brands fa-pix text-lg min-w-5"></i>
+                </div>
+            ),
+        },
+        BOLETO: {
+            title: <p>Boleto</p>,
+            icon: (
+                <div className="min-w-5 flex justify-center items-center">
+                    <i class="fa-brands fa-pix text-lg min-w-5"></i>
+                </div>
+            ),
+        },
+    };
+
     const fetchOrder = async () => {
         try {
             const res = await getOrderById(id);
@@ -93,7 +128,7 @@ const Order = () => {
                         </p>
                     </div>
 
-                    <div className="flex flex-col gap-4 border border-border dark:border-border-dark rounded-lg bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark p-5">
+                    <div className="flex flex-col gap-4 border border-border dark:border-border-dark rounded-lg bg-header dark:bg-header-dark text-primary-text dark:text-primary-text-dark p-6">
                         <h2>Order Items</h2>
                         {order.items.map((item) => (
                             <div
@@ -126,7 +161,29 @@ const Order = () => {
                         ))}
                     </div>
 
-                    <div className="flex flex-col gap-3 p-5 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg text-primary-text dark:text-primary-text-dark shadow-sm">
+                    <div className="flex flex-col gap-4 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg p-6">
+                        <h2 className="mb-2">Payment Method</h2>
+
+                        <div className="flex gap-3 text-muted-text-dark dark:text-muted-text">
+                            {displayPayment[order.paymentMethod].icon}
+
+                            {displayPayment[order.paymentMethod].title}
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col gap-4 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg p-6">
+                        <h2 className="mb-2">Shipping Address</h2>
+
+                        <div className="flex flex-col text-muted-text-dark dark:text-muted-text">
+                            <p>{`${order.shippingAddress.street}, ${order.shippingAddress.number}`}</p>
+                            {order.shippingAddress.complement && <p>{order.shippingAddress.complement}</p>}
+                            <p>{order.shippingAddress.neighborhood}</p>
+                            <p>{`${order.shippingAddress.city} - ${order.shippingAddress.state}`}</p>
+                            <p>{order.shippingAddress.zipCode}</p>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col gap-3 p-6 bg-header dark:bg-header-dark border border-border dark:border-border-dark rounded-lg text-primary-text dark:text-primary-text-dark shadow-sm">
                         <p className="mb-4">Order Summary</p>
                         <div className="flex justify-between text-muted-text-dark dark:text-muted-text">
                             <p>

@@ -48,7 +48,7 @@
 
     --color-border-dark: #374151;
 
-    --color-edit-button-dark: #1f2937;
+    --color-edit-button-dark: #232e3e;
     --color-edit-hover-dark: #374151;
 
     --color-cancel-text-dark: #fca5a5;
@@ -162,7 +162,7 @@
     }
 
     .edit-button {
-        padding: 5px 13px;
+        padding: 7px 14px;
         color: var(--color-brand);
         background-color: var(--color-edit-button);
         border-radius: 8px;
@@ -183,7 +183,7 @@
     }
 
     .cancel-button {
-        padding: 5px 13px;
+        padding: 7px 14px;
         color: var(--color-cancel-text);
         background-color: var(--color-cancel-button);
         border-radius: 8px;
