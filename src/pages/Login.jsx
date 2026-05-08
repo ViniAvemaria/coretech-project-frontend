@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import z from "zod";
 import { Eye, EyeClosed } from "lucide-react";
+import googleLogo from "../assets/google-logo.svg";
+import { googleLogin } from "../api/authService";
 
 const loginSchema = z.object({
     email: z.email(),
@@ -101,7 +103,22 @@ const Login = () => {
                         <span className="relative z-10">{loading ? "Signing in..." : "Sign in"}</span>
                     </button>
                 </form>
-                <p className="text-md text-muted-text-dark dark:text-muted-text text-center mt-6">
+
+                <div className="flex items-center gap-4  my-5">
+                    <hr className="w-full border-muted-text-dark dark:border-muted-text" />
+                    <p className="text-muted-text-dark dark:text-muted-text">or</p>
+                    <hr className="w-full border-muted-text-dark dark:border-muted-text" />
+                </div>
+
+                <button
+                    onClick={() => googleLogin()}
+                    className="flex items-center justify-center gap-3 border border-border dark:border-border-dark rounded-lg px-3.5 py-2.5 bg-header dark:bg-input-dark cursor-pointer hover:bg-gray-200 hover:dark:bg-gray-700 transition-colors duration-300 ease"
+                >
+                    <img src={googleLogo} alt="Google logo" className="w-6" />
+                    Sign in with Google
+                </button>
+
+                <p className="text-md text-muted-text-dark dark:text-muted-text text-center mt-4">
                     Don't have an account?
                     <Link to={"/register"} className="ml-1 cursor-pointer text-brand">
                         Register
