@@ -4,15 +4,18 @@ import { formatMoney } from "../utils/formatMoney";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ShoppingCart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
     const { isAuthenticated } = useAuth();
     const { addItem } = useCart();
+    const navigate = useNavigate();
 
     const handleAddItem = async () => {
         try {
             if (!isAuthenticated) {
-                throw new Error("You must sign in to use the cart");
+                navigate("/login");
+                return;
             }
             await addItem({
                 id: product.id,

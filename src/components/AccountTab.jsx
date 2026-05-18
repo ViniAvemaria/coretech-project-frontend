@@ -38,7 +38,7 @@ const AccountTab = () => {
     const [editPassword, setEditPassword] = useState(false);
     const [emailCode, setEmailCode] = useState(null);
     const [passwordCode, setPasswordCode] = useState(null);
-    const { refreshUser } = useAuth();
+    const { refreshUser, provider } = useAuth();
 
     const sendChangeCode = async (changeType) => {
         if (changeType === "email") {
@@ -193,6 +193,7 @@ const AccountTab = () => {
                             </button>
                         ) : (
                             <button
+                                disabled={provider === "GOOGLE"}
                                 onClick={() => {
                                     setEditEmail(true);
                                     setEmailStep("send");
@@ -203,11 +204,16 @@ const AccountTab = () => {
                             </button>
                         )}
                     </div>
-                    {!editEmail && (
-                        <p className="text-muted-text-dark dark:text-muted-text">
-                            Update your email address to change how you sign in.
-                        </p>
-                    )}
+                    {!editEmail &&
+                        (provider === "GOOGLE" ? (
+                            <p className="text-muted-text-dark dark:text-muted-text">
+                                Email is managed by your Google account.
+                            </p>
+                        ) : (
+                            <p className="text-muted-text-dark dark:text-muted-text">
+                                Update your email address to change how you sign in.
+                            </p>
+                        ))}
 
                     {emailStep === "send" && (
                         <div className="flex flex-col gap-6">
@@ -310,6 +316,7 @@ const AccountTab = () => {
                             </button>
                         ) : (
                             <button
+                                disabled={provider === "GOOGLE"}
                                 onClick={() => {
                                     setEditPassword(true);
                                     setPasswordStep("send");
@@ -320,11 +327,16 @@ const AccountTab = () => {
                             </button>
                         )}
                     </div>
-                    {!editPassword && (
-                        <p className="text-muted-text-dark dark:text-muted-text">
-                            Update your password to keep your account secure.
-                        </p>
-                    )}
+                    {!editPassword &&
+                        (provider === "GOOGLE" ? (
+                            <p className="text-muted-text-dark dark:text-muted-text">
+                                Password is managed by your Google account.
+                            </p>
+                        ) : (
+                            <p className="text-muted-text-dark dark:text-muted-text">
+                                Update your password to keep your account secure.
+                            </p>
+                        ))}
 
                     {passwordStep === "send" && (
                         <div className="flex flex-col gap-6">

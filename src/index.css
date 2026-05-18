@@ -173,11 +173,21 @@
             background-color: var(--color-edit-hover);
         }
 
+        &:disabled {
+            background-color: var(--color-edit-hover);
+            cursor: not-allowed;
+        }
+
         @variant dark {
             background-color: var(--color-edit-button-dark);
 
             &:hover {
                 background-color: var(--color-edit-hover-dark);
+            }
+
+            &:disabled {
+                background-color: var(--color-edit-hover-dark);
+                cursor: not-allowed;
             }
         }
     }
