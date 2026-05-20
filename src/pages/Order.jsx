@@ -38,7 +38,7 @@ const Order = () => {
             title: <p>Credit Card</p>,
             icon: (
                 <div className="min-w-5 flex justify-center items-center">
-                    <i class="fa-solid fa-credit-card min-w-5"></i>
+                    <i className="fa-solid fa-credit-card min-w-5"></i>
                 </div>
             ),
         },
@@ -46,7 +46,7 @@ const Order = () => {
             title: <p>Paypal</p>,
             icon: (
                 <div className="min-w-5 flex justify-center items-center">
-                    <i class="fa-brands fa-paypal text-lg"></i>
+                    <i className="fa-brands fa-paypal text-lg"></i>
                 </div>
             ),
         },
@@ -54,7 +54,7 @@ const Order = () => {
             title: <p>Pix</p>,
             icon: (
                 <div className="min-w-5 flex justify-center items-center">
-                    <i class="fa-brands fa-pix text-lg min-w-5"></i>
+                    <i className="fa-brands fa-pix text-lg min-w-5"></i>
                 </div>
             ),
         },
@@ -62,7 +62,7 @@ const Order = () => {
             title: <p>Boleto</p>,
             icon: (
                 <div className="min-w-5 flex justify-center items-center">
-                    <i class="fa-brands fa-pix text-lg min-w-5"></i>
+                    <i className="fa-brands fa-pix text-lg min-w-5"></i>
                 </div>
             ),
         },

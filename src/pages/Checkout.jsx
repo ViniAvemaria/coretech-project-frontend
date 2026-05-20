@@ -5,7 +5,7 @@ import { useCart } from "../contexts/CartContext";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AddressSection from "../components/AddressSection";
-import { Square, SquareCheck } from "lucide-react";
+import { Square, SquareCheck, Check } from "lucide-react";
 
 const Checkout = () => {
     const [activeTab, setActiveTab] = useState("address");
@@ -24,7 +24,7 @@ const Checkout = () => {
             title: <p>Credit Card</p>,
             icon: (
                 <div className="min-w-5 flex justify-center items-center">
-                    <i class="fa-solid fa-credit-card min-w-5"></i>
+                    <i className="fa-solid fa-credit-card min-w-5"></i>
                 </div>
             ),
         },
@@ -32,7 +32,7 @@ const Checkout = () => {
             title: <p>Paypal</p>,
             icon: (
                 <div className="min-w-5 flex justify-center items-center">
-                    <i class="fa-brands fa-paypal text-lg"></i>
+                    <i className="fa-brands fa-paypal text-lg"></i>
                 </div>
             ),
         },
@@ -40,7 +40,7 @@ const Checkout = () => {
             title: <p>Pix</p>,
             icon: (
                 <div className="min-w-5 flex justify-center items-center">
-                    <i class="fa-brands fa-pix text-lg min-w-5"></i>
+                    <i className="fa-brands fa-pix text-lg min-w-5"></i>
                 </div>
             ),
         },
@@ -48,7 +48,7 @@ const Checkout = () => {
             title: <p>Boleto</p>,
             icon: (
                 <div className="min-w-5 flex justify-center items-center">
-                    <i class="fa-brands fa-pix text-lg min-w-5"></i>
+                    <i className="fa-brands fa-pix text-lg min-w-5"></i>
                 </div>
             ),
         },
@@ -83,12 +83,79 @@ const Checkout = () => {
         <div className="max-w-[1200px] w-full py-12">
             <h2 className="section-title">Checkout</h2>
 
+            <div className="w-full flex justify-center gap-6 max-xs:gap-4 text-muted-text-dark dark:text-muted-text my-10">
+                <div className="flex flex-col items-center">
+                    <div className="flex">
+                        <span
+                            className={`flex border-2 bg-brand border-brand text-primary-text dark:text-primary-text-dark py-2.5 px-3.5 rounded-3xl`}
+                        >
+                            {activeTab !== "address" ? (
+                                <Check size={18} className="h-6 text-white" />
+                            ) : (
+                                <p className="flex items-center justify-center min-w-4.5">1</p>
+                            )}
+                        </span>
+                    </div>
+                    <p className="text-primary-text dark:text-primary-text-dark mt-2">Shipping</p>
+                </div>
+
+                <span
+                    className={`max-w-30 w-full h-0.5 inline-block mt-5.75 rounded-lg ${activeTab !== "address" ? "bg-brand" : "bg-muted-text-dark dark:bg-muted-text"}`}
+                ></span>
+
+                <div className="flex flex-col items-center">
+                    <div className="flex">
+                        <span
+                            className={`flex border-2 text-primary-text dark:text-primary-text-dark py-2.5 px-3.5 rounded-3xl ${activeTab === "payment" || activeTab === "review" ? "bg-brand border-brand" : " border-muted-text-dark dark:border-muted-text"}`}
+                        >
+                            {activeTab === "review" ? (
+                                <Check size={18} className="h-6 text-white" />
+                            ) : (
+                                <p
+                                    className={`flex items-center justify-center min-w-4.5 ${activeTab === "payment" ? "text-white" : "text-muted-text-dark dark:text-muted-text"}`}
+                                >
+                                    2
+                                </p>
+                            )}
+                        </span>
+                    </div>
+                    <p
+                        className={` mt-2 ${activeTab === "payment" || activeTab === "review" ? "text-primary-text dark:text-primary-text-dark" : "text-muted-text-dark dark:text-muted-text"}`}
+                    >
+                        Payment
+                    </p>
+                </div>
+
+                <span
+                    className={`max-w-30 w-full h-0.5 inline-block mt-5.75 rounded-lg ${activeTab === "review" ? "bg-brand" : "bg-muted-text-dark dark:bg-muted-text"}`}
+                ></span>
+
+                <div className="flex flex-col items-center">
+                    <div className="flex">
+                        <span
+                            className={`flex border-2  text-primary-text dark:text-primary-text-dark py-2.5 px-3.5 rounded-3xl ${activeTab === "review" ? "border-brand bg-brand" : "border-muted-text-dark dark:border-muted-text"}`}
+                        >
+                            <p
+                                className={`flex items-center justify-center min-w-4.5 ${activeTab === "review" ? "text-white" : "text-muted-text-dark dark:text-muted-text"}`}
+                            >
+                                3
+                            </p>
+                        </span>
+                    </div>
+                    <p
+                        className={` mt-2 ${activeTab === "review" ? "text-primary-text dark:text-primary-text-dark" : "text-muted-text-dark dark:text-muted-text"}`}
+                    >
+                        Review
+                    </p>
+                </div>
+            </div>
+
             <div className="grid grid-cols-3 max-lg:grid-cols-1 gap-8">
                 <div className="min-[1000px]:col-span-2 text-primary-text dark:text-primary-text-dark">
                     {activeTab === "address" && (
                         <>
                             <AddressSection shippingAddress={shippingAddress} setShippingAddress={setShippingAddress} />
-                            <div className="flex gap-4 mt-6">
+                            <div className="flex gap-4 mt-5">
                                 <Link to={"/cart"} className="flex-1 edit-button flex items-center justify-center">
                                     Back
                                 </Link>
@@ -122,7 +189,7 @@ const Checkout = () => {
                                     </button>
 
                                     <div className="min-w-5 flex justify-center items-center">
-                                        <i class="fa-solid fa-credit-card min-w-5"></i>
+                                        <i className="fa-solid fa-credit-card min-w-5"></i>
                                     </div>
 
                                     <div>
@@ -146,7 +213,7 @@ const Checkout = () => {
                                     </button>
 
                                     <div className="min-w-5 flex justify-center items-center">
-                                        <i class="fa-brands fa-paypal text-lg"></i>
+                                        <i className="fa-brands fa-paypal text-lg"></i>
                                     </div>
 
                                     <div>
@@ -170,7 +237,7 @@ const Checkout = () => {
                                     </button>
 
                                     <div className="min-w-5 flex justify-center items-center">
-                                        <i class="fa-brands fa-pix text-lg min-w-5"></i>
+                                        <i className="fa-brands fa-pix text-lg min-w-5"></i>
                                     </div>
 
                                     <div>
@@ -194,7 +261,7 @@ const Checkout = () => {
                                     </button>
 
                                     <div className="min-w-5 flex justify-center items-center">
-                                        <i class="fa-solid fa-barcode text-lg min-w-5"></i>
+                                        <i className="fa-solid fa-barcode text-lg min-w-5"></i>
                                     </div>
 
                                     <div>
@@ -206,7 +273,7 @@ const Checkout = () => {
                                 </div>
                             </div>
 
-                            <div className="flex gap-4 mt-6">
+                            <div className="flex gap-4 mt-5">
                                 <button
                                     onClick={() => setActiveTab("address")}
                                     className="flex-1 edit-button flex items-center justify-center"
@@ -273,7 +340,7 @@ const Checkout = () => {
                                     </div>
                                 ))}
                             </div>
-                            <div className="flex gap-4 mt-6">
+                            <div className="flex gap-4 mt-5">
                                 <button
                                     onClick={() => setActiveTab("payment")}
                                     className="flex-1 edit-button flex items-center justify-center"
