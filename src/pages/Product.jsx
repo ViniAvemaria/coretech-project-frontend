@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { formatMoney } from "../utils/formatMoney";
 import { useCart } from "../contexts/CartContext";
 import ReviewLoading from "../components/skeleton/ReviewLoading";
@@ -31,6 +31,7 @@ const Product = () => {
     const [hover, setHover] = useState(0);
     const [userReview, setUserReview] = useState(null);
     const [reviewComment, setReviewComment] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchProduct(id);
@@ -118,7 +119,8 @@ const Product = () => {
     const handleAddItem = async () => {
         try {
             if (!isAuthenticated) {
-                throw new Error("You must sign in to use the cart");
+                navigate("/login");
+                return;
             }
             await addItem({
                 id: product.id,
