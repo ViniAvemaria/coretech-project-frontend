@@ -96,7 +96,7 @@ const Product = () => {
             setReviewComment("");
             setRating(1);
         } catch (err) {
-            toast.error(err.response.data?.message || "Failed to submit review");
+            toast.error(err.response?.data?.message || err.message || "Failed to submit review");
         }
     };
 
